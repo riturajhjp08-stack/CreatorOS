@@ -27,12 +27,12 @@ st.markdown("""
     div[data-testid="stSidebar"] { background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); }
     div[data-testid="stSidebar"] * { color: white !important; }
     .main-header {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
         font-weight: 700;
         background: linear-gradient(90deg, #667eea, #764ba2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 0.5rem;
+        margin: 1rem 0 0.5rem 0;
         text-align: center;
         white-space: nowrap;
     }
