@@ -306,18 +306,21 @@ if view_option == "Overview":
     if 'Sales' not in filtered.columns:
         st.error("Cannot display overview: 'Sales' column missing.")
     else:
-        total_sales = filtered['Sales'].sum()
-    total_profit = filtered['Profit'].sum()
-    total_orders = filtered['Order ID'].nunique()
-    avg_discount = filtered['Discount'].mean() * 100
-    profit_margin = (total_profit / total_sales * 100) if total_sales else 0
+        total_sales = filtered['Sales'].sum() if 'Sales' in filtered.columns else 0
+        total_profit = filtered['Profit'].sum() if 'Profit' in filtered.columns else 0
+        total_orders = filtered['Order ID'].nunique() if 'Order ID' in filtered.columns else len(filtered)
+        avg_discount = (filtered['Discount'].mean() * 100) if 'Discount' in filtered.columns else None
+        profit_margin = (total_profit / total_sales * 100) if total_sales else 0
 
     c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Total Sales", f"${total_sales:,.0f}")
     c2.metric("Total Profit", f"${total_profit:,.0f}")
     c3.metric("Orders", f"{total_orders:,}")
     c4.metric("Profit Margin", f"{profit_margin:.1f}%")
-    c5.metric("Avg Discount", f"{avg_discount:.1f}%")
+    if avg_discount is None:
+        c5.metric("Avg Discount", "N/A")
+    else:
+        c5.metric("Avg Discount", f"{avg_discount:.1f}%")
 
     st.markdown("####")
 
