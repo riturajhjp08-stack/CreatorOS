@@ -2,6 +2,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+from io import StringIO
 
 # --- Page Config ---
 st.set_page_config(
@@ -42,45 +43,82 @@ st.markdown("""
 
 # --- Load Data ---
 @st.cache_data
-def load_data():
-    df = pd.read_csv('Sample - Superstore.csv', encoding='latin1')
-    df['Order Date'] = pd.to_datetime(df['Order Date'])
-    df['Ship Date'] = pd.to_datetime(df['Ship Date'])
-    df['Year'] = df['Order Date'].dt.year
-    df['Month'] = df['Order Date'].dt.to_period('M').astype(str)
+# Make the loader flexible: either use the built-in sample file or accept an uploaded CSV
+# Returns a cleaned DataFrame with parsed dates and additional columns used by the dashboard.
+def load_data(uploaded_file=None):
+    if uploaded_file is not None:
+        try:
+            # streamlit provides a BytesIO-like object
+            df = pd.read_csv(uploaded_file, encoding='latin1')
+        except Exception:
+            st.error("Could not read the uploaded file. Please make sure it's a valid CSV with the same structure as the sample.")
+            return pd.DataFrame()
+    else:
+        df = pd.read_csv('Sample - Superstore.csv', encoding='latin1')
+
+    # Ensure expected columns exist before converting datatypes
+    for col in ['Order Date', 'Ship Date']:
+        if col in df.columns:
+            df[col] = pd.to_datetime(df[col], errors='coerce')
+
+    if 'Order Date' in df.columns:
+        df['Year'] = df['Order Date'].dt.year
+        df['Month'] = df['Order Date'].dt.to_period('M').astype(str)
     return df
 
-df = load_data()
+# allow the user to upload their own dataset; falls back to sample
+uploaded = st.sidebar.file_uploader("Upload CSV (optional)", type=["csv"])
+df = load_data(uploaded)
 
-# --- Sidebar Filters ---
+if df.empty:
+    st.stop()
+
+# --- Sidebar Filters & Instructions ---
 with st.sidebar:
+    st.markdown("## 📘 Quick Guide")
+    with st.expander("How to use this dashboard", expanded=True):
+        st.markdown(
+            """
+            1. **Upload your own file** or use the built-in sample dataset.
+            2. Choose filters below; you can select multiple values for each attribute.
+            3. Pick a view and explore interactive charts. Hover and click for details.
+            4. Beginners: start with the **Overview** tab before diving deeper.
+            """
+        )
+    st.markdown("---")
+
     st.markdown("## 🎛️ Filters")
+
+    # use multiselect so beginners can select multiple or keep "All" automatically
+    years = sorted(df['Year'].dropna().unique().tolist())
+    selected_year = st.multiselect(
+        "📅 Year (pick one or more, blank = all)",
+        options=years,
+        default=years if len(years) <= 3 else []  # start with none if many options
+    )
+
+    regions = sorted(df['Region'].dropna().unique().tolist())
+    selected_region = st.multiselect(
+        "🌍 Region (pick one or more)",
+        options=regions,
+    )
+
+    categories = sorted(df['Category'].dropna().unique().tolist())
+    selected_category = st.multiselect(
+        "📦 Category (pick one or more)",
+        options=categories,
+    )
+
+    segments = sorted(df['Segment'].dropna().unique().tolist())
+    selected_segment = st.multiselect(
+        "👥 Segment (pick one or more)",
+        options=segments,
+    )
+
     st.markdown("---")
 
-    selected_year = st.selectbox(
-        "📅 Select Year",
-        options=["All"] + sorted(df['Year'].unique().tolist()),
-    )
-
-    selected_region = st.selectbox(
-        "🌍 Select Region",
-        options=["All"] + sorted(df['Region'].unique().tolist()),
-    )
-
-    selected_category = st.selectbox(
-        "📦 Select Category",
-        options=["All"] + sorted(df['Category'].unique().tolist()),
-    )
-
-    selected_segment = st.selectbox(
-        "👥 Select Segment",
-        options=["All"] + sorted(df['Segment'].unique().tolist()),
-    )
-
-    st.markdown("---")
-
-    view_option = st.selectbox(
-        "📊 Dashboard View",
+    view_option = st.radio(
+        "📊 Choose a view",  # radio makes it easier to see all options
         options=[
             "Overview",
             "Top Products",
@@ -92,22 +130,40 @@ with st.sidebar:
 
 # --- Apply Filters ---
 filtered = df.copy()
-if selected_year != "All":
-    filtered = filtered[filtered['Year'] == selected_year]
-if selected_region != "All":
-    filtered = filtered[filtered['Region'] == selected_region]
-if selected_category != "All":
-    filtered = filtered[filtered['Category'] == selected_category]
-if selected_segment != "All":
-    filtered = filtered[filtered['Segment'] == selected_segment]
+# each selection is a list; if it's non-empty, keep only those values
+if selected_year:
+    filtered = filtered[filtered['Year'].isin(selected_year)]
+if selected_region:
+    filtered = filtered[filtered['Region'].isin(selected_region)]
+if selected_category:
+    filtered = filtered[filtered['Category'].isin(selected_category)]
+if selected_segment:
+    filtered = filtered[filtered['Segment'].isin(selected_segment)]
+
+# warn if no rows after filtering
+if filtered.empty:
+    st.warning("No records match the selected filters. Please adjust the year/region/category/segment selections or upload a different dataset.")
 
 # --- Header ---
 st.markdown('<div class="main-header">Superstore Sales Dashboard</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-header">Interactive analytics for sales, profit & product performance</div>', unsafe_allow_html=True)
 
+# allow user to download the current filtered data
+try:
+    csv = filtered.to_csv(index=False)
+    st.download_button("📥 Download filtered data", data=csv, file_name="filtered_data.csv", mime="text/csv")
+except Exception:
+    # filtered may not exist yet if upload failed
+    pass
+
+# provide an expandable raw table for beginners who want to peek at the rows
+with st.expander("🔍 View raw data (filtered)", expanded=False):
+    st.dataframe(filtered)
+
 
 # ======================= OVERVIEW =======================
 if view_option == "Overview":
+    st.markdown("### What you'll see\nThe overview gives you high-level KPIs and breakdowns by category, region, segment, and shipping mode. Use filters to narrow the data.")
     total_sales = filtered['Sales'].sum()
     total_profit = filtered['Profit'].sum()
     total_orders = filtered['Order ID'].nunique()
@@ -172,6 +228,7 @@ if view_option == "Overview":
 
 # ======================= TOP PRODUCTS =======================
 elif view_option == "Top Products":
+    st.markdown("### Product performance\nExplore which items are driving revenue and profit. Adjust the slider to show more or fewer products.")
     n = st.slider("Number of products to display", 5, 20, 10)
 
     col1, col2 = st.columns(2)
@@ -218,6 +275,7 @@ elif view_option == "Top Products":
 
 # ======================= SALES TRENDS =======================
 elif view_option == "Sales Trends":
+    st.markdown("### Trend analysis\nSee how sales and profit change over time. Hover over the lines for exact values and use filters to compare periods.")
     monthly = filtered.set_index('Order Date').resample('M')[['Sales', 'Profit']].sum().reset_index()
 
     fig = go.Figure()
@@ -277,6 +335,7 @@ elif view_option == "Sales Trends":
 
 # ======================= PROFIT ANALYSIS =======================
 elif view_option == "Profit Analysis":
+    st.markdown("### Profit insights\nCheck how discounts affect profit and identify loss‑making products. Use the scatter plots and bar charts to spot opportunities.")
     col1, col2 = st.columns(2)
 
     with col1:
@@ -335,6 +394,7 @@ elif view_option == "Profit Analysis":
 
 # ======================= REGIONAL BREAKDOWN =======================
 elif view_option == "Regional Breakdown":
+    st.markdown("### Geography view\nCompare performance across regions, states, and cities. The data table at the bottom gives an exact summary.")
     region_summary = filtered.groupby('Region').agg(
         Sales=('Sales', 'sum'),
         Profit=('Profit', 'sum'),
