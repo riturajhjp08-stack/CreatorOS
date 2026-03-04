@@ -203,11 +203,18 @@ if generic_mode:
     st.write("**Columns:**", df.columns.tolist())
     st.write(df.describe(include='all'))
     st.dataframe(filtered)
-    # show histograms for numeric columns
-    num_cols = filtered.select_dtypes(include='number').columns
-    for col in num_cols:
-        fig = px.histogram(filtered, x=col, title=f"Distribution of {col}")
-        st.plotly_chart(fig, use_container_width=True)
+    # show a histogram for every column, converting to numeric when possible
+    charts_shown = 0
+    for col in filtered.columns:
+        try:
+            fig = px.histogram(filtered, x=col, title=f"Distribution of {col}")
+            st.plotly_chart(fig, use_container_width=True)
+            charts_shown += 1
+        except Exception:
+            # skip columns that Plotly can't handle (rare)
+            continue
+    if charts_shown == 0:
+        st.info("No charts could be generated for this dataset. It may contain only non-numeric or unsupported types.")
     st.stop()
 
 # allow user to download the current filtered data
