@@ -78,10 +78,38 @@ if df.empty:
 required = ['Sales', 'Profit', 'Order ID']
 missing = [c for c in required if c not in df.columns]
 generic_mode = False
+column_mapping = {}
 if missing:
-    # instead of stopping, we'll switch into a generic explorer that works with any schema
-    st.warning(f"Dataset is missing preferred columns: {', '.join(missing)}. Switching to generic explorer mode.")
-    generic_mode = True
+    st.warning(f"Dataset is missing preferred columns: {', '.join(missing)}.")
+    st.markdown("#### Map your columns to the dashboard (optional)")
+    # let user map their columns to the expected names
+    cols_options = ["(none)"] + df.columns.tolist()
+    for req in required:
+        if req in df.columns:
+            # already present, no mapping needed
+            column_mapping[req] = req
+        else:
+            sel = st.selectbox(f"Map '{req}' to", options=cols_options, key=f"map_{req}")
+            if sel and sel != "(none)":
+                column_mapping[req] = sel
+
+    # if the user mapped all required fields, create/alias them and use specialised dashboard
+    if all(k in column_mapping for k in required):
+        for req, colname in column_mapping.items():
+            # copy or rename the column into the expected name
+            try:
+                df[req] = df[colname]
+            except Exception:
+                # if assignment fails, leave as-is and fall back to generic
+                st.warning(f"Could not map {colname} to {req} - will use generic explorer.")
+                generic_mode = True
+                break
+        else:
+            st.success("All required fields mapped — switching to specialised dashboard.")
+            generic_mode = False
+    else:
+        st.info("Not all required fields mapped — continuing in generic explorer mode.")
+        generic_mode = True
 
 # --- Sidebar Filters & Instructions ---
 with st.sidebar:
