@@ -13,57 +13,166 @@ st.set_page_config(
 
 # --- Home description ---
 st.markdown("""
-<div style="text-align: center; padding: 3rem 0; background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%); border-radius: 12px; margin-bottom: 2rem;">
-  <h1 style="margin: 0; color: #333; font-size: 2.5rem; font-weight: 700;">📊 Business Insights</h1>
-  <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 1.1rem;">Analyze your data in seconds</p>
+<div style="
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+text-align: center;
+padding: 4rem 2rem;
+border-radius: 20px;
+margin-bottom: 3rem;
+box-shadow: 0 15px 40px rgba(102,126,234,0.25);
+">
+  <h1 style="margin: 0; color: white; font-size: 3rem; font-weight: 700; letter-spacing: -1px;">📊 Business Insights</h1>
+  <p style="margin: 1rem 0 0 0; color: rgba(255,255,255,0.95); font-size: 1.2rem; font-weight: 400;">Analyze, visualize, and understand your data instantly</p>
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("---")
 
 st.markdown("""
-<div style="text-align: center; padding: 2rem; color: #666;">
-  <p><strong>👈 Use the sidebar to upload data, filter, and explore.</strong></p>
-  <p style="font-size: 0.95rem; margin-top: 1rem;">Upload a CSV file to get started, or use the sample dataset.</p>
+<div style="text-align: center; padding: 2.5rem; color: #495057; background: white; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+  <p style="font-size: 1.1rem; margin: 0; font-weight: 500;">👈 <strong>Start by uploading your data or exploring the sample dataset in the sidebar</strong></p>
 </div>
 """, unsafe_allow_html=True)
 
-# --- Custom CSS ---
+# --- Custom CSS (Canva-inspired) ---
 st.markdown("""
 <style>
-    * { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background: #f8f9fa; }
-    .block-container { 
-        padding-top: 1rem; 
-        padding-bottom: 1rem; 
-        padding-left: 2rem;
-        padding-right: 2rem;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * { 
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
+    
+    body { 
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+    }
+    
+    .block-container { 
+        padding-top: 2rem; 
+        padding-bottom: 2rem; 
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+    
     [data-testid="stMetric"] {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 20px 25px;
-        border-radius: 12px;
+        padding: 25px 30px;
+        border-radius: 16px;
         color: white;
-        box-shadow: 0 4px 15px rgba(102,126,234,0.2);
-        border: 1px solid rgba(102,126,234,0.3);
+        box-shadow: 0 10px 30px rgba(102,126,234,0.25);
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    [data-testid="stMetric"] label { color: rgba(255,255,255,0.85) !important; font-size: 0.85rem !important; font-weight: 600; }
-    [data-testid="stMetric"] [data-testid="stMetricValue"] { color: white !important; font-size: 2rem !important; font-weight: 700; }
+    
+    [data-testid="stMetric"]:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(102,126,234,0.35);
+    }
+    
+    [data-testid="stMetric"] label { 
+        color: rgba(255,255,255,0.9) !important; 
+        font-size: 0.9rem !important; 
+        font-weight: 500 !important;
+        letter-spacing: 0.5px;
+    }
+    
+    [data-testid="stMetric"] [data-testid="stMetricValue"] { 
+        color: white !important; 
+        font-size: 2.5rem !important; 
+        font-weight: 700 !important;
+        letter-spacing: -1px;
+    }
+    
     div[data-testid="stSidebar"] { 
-        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-        backdrop-filter: blur(10px);
+        background: linear-gradient(180deg, #2d3436 0%, #1e272e 100%);
+        box-shadow: 5px 0 20px rgba(0,0,0,0.1);
     }
-    div[data-testid="stSidebar"] * { color: white !important; }
-    .main { background: #ffffff; }
-    hr { border: 1px solid #e0e0e0 !important; }
-    h1, h2, h3 { color: #1a1a2e; }
+    
+    div[data-testid="stSidebar"] * { 
+        color: white !important; 
+        font-weight: 500;
+    }
+    
+    main {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    }
+    
+    hr { 
+        border: 1px solid rgba(0,0,0,0.1) !important;
+        margin: 2rem 0 !important;
+    }
+    
+    h1 { 
+        color: #1a1a2e; 
+        font-size: 2.2rem !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.5px;
+    }
+    
+    h2, h3 { 
+        color: #2d3436; 
+        font-weight: 600 !important;
+        letter-spacing: -0.3px;
+    }
+    
+    h3 { font-size: 1.4rem !important; margin-top: 2rem !important; }
+    
+    [data-testid="stSelectbox"], [data-testid="stMultiSelect"], [data-testid="stRadio"] {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 2px solid #e0e0e0 !important;
+        background: white !important;
+        transition: all 0.3s ease;
+    }
+    
+    [data-testid="stSelectbox"]:focus, [data-testid="stMultiSelect"]:focus {
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+    }
+    
     .chart-container {
         background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        border: 1px solid #f0f0f0;
-        margin-bottom: 2rem;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        border: 1px solid rgba(255,255,255,0.5);
+        margin-bottom: 2.5rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    .stButton > button {
+        border-radius: 10px !important;
+        padding: 10px 24px !important;
+        font-weight: 600 !important;
+        border: 0 !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        box-shadow: 0 4px 15px rgba(102,126,234,0.25) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(102,126,234,0.35) !important;
+    }
+    
+    .stExpander {
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 12px !important;
+        background: white;
+    }
+    
+    .stDataFrame {
+        border-radius: 12px !important;
+        border: 1px solid #e0e0e0 !important;
+        overflow: hidden;
+    }
+    
+    div[data-testid="stWarning"], div[data-testid="stSuccess"], div[data-testid="stInfo"] {
+        border-radius: 12px !important;
+        padding: 15px 18px !important;
+        font-weight: 500 !important;
     }
 </style>
 """, unsafe_allow_html=True)
