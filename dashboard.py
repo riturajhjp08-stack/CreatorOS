@@ -11,171 +11,234 @@ st.set_page_config(
     layout="wide",
 )
 
-# --- Home description ---
+# --- Theme Toggle ---
+if 'theme' not in st.session_state:
+    st.session_state.theme = 'light'
+
+# --- Home description & CSS (Canva-inspired with Light & Dark themes) ---
 st.markdown("""
 <div style="
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
 text-align: center;
-padding: 4rem 2rem;
-border-radius: 20px;
-margin-bottom: 3rem;
-box-shadow: 0 15px 40px rgba(102,126,234,0.25);
+padding: 3rem 2rem;
+border-radius: 24px;
+margin-bottom: 2rem;
+box-shadow: 0 20px 50px rgba(124, 58, 237, 0.25);
 ">
-  <h1 style="margin: 0; color: white; font-size: 3rem; font-weight: 700; letter-spacing: -1px;">📊 Business Insights</h1>
-  <p style="margin: 1rem 0 0 0; color: rgba(255,255,255,0.95); font-size: 1.2rem; font-weight: 400;">Analyze, visualize, and understand your data instantly</p>
+  <h1 style="margin: 0; color: white; font-size: 2.8rem; font-weight: 800; letter-spacing: -1px;">📊 Insights Dashboard</h1>
+  <p style="margin: 0.8rem 0 0 0; color: rgba(255,255,255,0.95); font-size: 1.1rem; font-weight: 400;">Visualize patterns. Make better decisions.</p>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("---")
-
-st.markdown("""
-<div style="text-align: center; padding: 2.5rem; color: #495057; background: white; border-radius: 16px; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-  <p style="font-size: 1.1rem; margin: 0; font-weight: 500;">👈 <strong>Start by uploading your data or exploring the sample dataset in the sidebar</strong></p>
-</div>
-""", unsafe_allow_html=True)
-
-# --- Custom CSS (Canva-inspired) ---
-st.markdown("""
+# Light Theme CSS
+light_theme_css = """
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
     
-    * { 
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    :root {
+        --primary: #7c3aed;
+        --secondary: #ec4899;
+        --bg-main: #ffffff;
+        --bg-secondary: #f9fafb;
+        --text-primary: #111827;
+        --text-secondary: #6b7280;
+        --border: #e5e7eb;
+        --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
     
-    body { 
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        min-height: 100vh;
+    * {
+        font-family: 'Poppins', -apple-system, sans-serif;
     }
     
-    .block-container { 
-        padding-top: 2rem; 
-        padding-bottom: 2rem; 
-        padding-left: 2.5rem;
-        padding-right: 2.5rem;
+    body {
+        background: var(--bg-secondary) !important;
+    }
+    
+    .block-container {
+        padding: 2rem 3rem !important;
     }
     
     [data-testid="stMetric"] {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 25px 30px;
-        border-radius: 16px;
-        color: white;
-        box-shadow: 0 10px 30px rgba(102,126,234,0.25);
-        border: none;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%) !important;
+        padding: 24px 28px !important;
+        border-radius: 16px !important;
+        color: white !important;
+        box-shadow: var(--card-shadow) !important;
+        border: none !important;
     }
     
-    [data-testid="stMetric"]:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(102,126,234,0.35);
-    }
-    
-    [data-testid="stMetric"] label { 
-        color: rgba(255,255,255,0.9) !important; 
-        font-size: 0.9rem !important; 
-        font-weight: 500 !important;
-        letter-spacing: 0.5px;
-    }
-    
-    [data-testid="stMetric"] [data-testid="stMetricValue"] { 
-        color: white !important; 
-        font-size: 2.5rem !important; 
-        font-weight: 700 !important;
-        letter-spacing: -1px;
-    }
-    
-    div[data-testid="stSidebar"] { 
-        background: linear-gradient(180deg, #2d3436 0%, #1e272e 100%);
-        box-shadow: 5px 0 20px rgba(0,0,0,0.1);
-    }
-    
-    div[data-testid="stSidebar"] * { 
-        color: white !important; 
-        font-weight: 500;
-    }
-    
-    main {
-        background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
-    }
-    
-    hr { 
-        border: 1px solid rgba(0,0,0,0.1) !important;
-        margin: 2rem 0 !important;
-    }
-    
-    h1 { 
-        color: #1a1a2e; 
-        font-size: 2.2rem !important;
-        font-weight: 700 !important;
-        letter-spacing: -0.5px;
-    }
-    
-    h2, h3 { 
-        color: #2d3436; 
+    [data-testid="stMetric"] label {
+        color: rgba(255,255,255,0.95) !important;
+        font-size: 0.85rem !important;
         font-weight: 600 !important;
-        letter-spacing: -0.3px;
     }
     
-    h3 { font-size: 1.4rem !important; margin-top: 2rem !important; }
+    [data-testid="stMetric"] [data-testid="stMetricValue"] {
+        color: white !important;
+        font-size: 2.2rem !important;
+        font-weight: 800 !important;
+    }
     
-    [data-testid="stSelectbox"], [data-testid="stMultiSelect"], [data-testid="stRadio"] {
-        padding: 10px 12px;
-        border-radius: 10px;
-        border: 2px solid #e0e0e0 !important;
+    div[data-testid="stSidebar"] {
         background: white !important;
-        transition: all 0.3s ease;
+        border-right: 1px solid var(--border) !important;
     }
     
-    [data-testid="stSelectbox"]:focus, [data-testid="stMultiSelect"]:focus {
-        border-color: #667eea !important;
-        box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+    div[data-testid="stSidebar"] * {
+        color: var(--text-primary) !important;
     }
     
-    .chart-container {
-        background: white;
-        border-radius: 16px;
-        padding: 2rem;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-        border: 1px solid rgba(255,255,255,0.5);
-        margin-bottom: 2.5rem;
-        backdrop-filter: blur(10px);
+    h1, h2, h3 {
+        color: var(--text-primary) !important;
+        font-weight: 700 !important;
+    }
+    
+    h3 {
+        font-size: 1.3rem !important;
+        margin-top: 1.5rem !important;
+    }
+    
+    [data-testid="stSelectbox"], [data-testid="stMultiSelect"], [data-testid="stRadio"],
+    [data-testid="stSlider"], [data-testid="stTextArea"] {
+        padding: 12px 14px !important;
+        border-radius: 12px !important;
+        border: 2px solid var(--border) !important;
+        background: var(--bg-main) !important;
     }
     
     .stButton > button {
-        border-radius: 10px !important;
-        padding: 10px 24px !important;
-        font-weight: 600 !important;
-        border: 0 !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%) !important;
         color: white !important;
-        box-shadow: 0 4px 15px rgba(102,126,234,0.25) !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .stButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(102,126,234,0.35) !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 12px 28px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.25) !important;
     }
     
     .stExpander {
-        border: 1px solid #e0e0e0 !important;
+        border: 2px solid var(--border) !important;
         border-radius: 12px !important;
-        background: white;
+        background: var(--bg-main) !important;
     }
     
     .stDataFrame {
+        border: 1px solid var(--border) !important;
         border-radius: 12px !important;
-        border: 1px solid #e0e0e0 !important;
-        overflow: hidden;
-    }
-    
-    div[data-testid="stWarning"], div[data-testid="stSuccess"], div[data-testid="stInfo"] {
-        border-radius: 12px !important;
-        padding: 15px 18px !important;
-        font-weight: 500 !important;
     }
 </style>
-""", unsafe_allow_html=True)
+"""
+
+# Dark Theme CSS
+dark_theme_css = """
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+    
+    :root {
+        --primary: #a78bfa;
+        --secondary: #f472b6;
+        --bg-main: #1f2937;
+        --bg-secondary: #111827;
+        --text-primary: #f9fafb;
+        --text-secondary: #d1d5db;
+        --border: #374151;
+        --card-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    * {
+        font-family: 'Poppins', -apple-system, sans-serif;
+    }
+    
+    body {
+        background: var(--bg-secondary) !important;
+    }
+    
+    .block-container {
+        padding: 2rem 3rem !important;
+    }
+    
+    [data-testid="stMetric"] {
+        background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%) !important;
+        padding: 24px 28px !important;
+        border-radius: 16px !important;
+        color: white !important;
+        box-shadow: var(--card-shadow) !important;
+        border: none !important;
+    }
+    
+    [data-testid="stMetric"] label {
+        color: rgba(255,255,255,0.95) !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+    }
+    
+    [data-testid="stMetric"] [data-testid="stMetricValue"] {
+        color: white !important;
+        font-size: 2.2rem !important;
+        font-weight: 800 !important;
+    }
+    
+    div[data-testid="stSidebar"] {
+        background: var(--bg-main) !important;
+        border-right: 1px solid var(--border) !important;
+    }
+    
+    div[data-testid="stSidebar"] * {
+        color: var(--text-primary) !important;
+    }
+    
+    main {
+        background: var(--bg-secondary) !important;
+    }
+    
+    h1, h2, h3 {
+        color: var(--text-primary) !important;
+        font-weight: 700 !important;
+    }
+    
+    h3 {
+        font-size: 1.3rem !important;
+        margin-top: 1.5rem !important;
+    }
+    
+    [data-testid="stSelectbox"], [data-testid="stMultiSelect"], [data-testid="stRadio"],
+    [data-testid="stSlider"], [data-testid="stTextArea"] {
+        padding: 12px 14px !important;
+        border-radius: 12px !important;
+        border: 2px solid var(--border) !important;
+        background: var(--bg-main) !important;
+        color: var(--text-primary) !important;
+    }
+    
+    .stButton > button {
+        background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 12px 28px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.25) !important;
+    }
+    
+    .stExpander {
+        border: 2px solid var(--border) !important;
+        border-radius: 12px !important;
+        background: var(--bg-main) !important;
+    }
+    
+    .stDataFrame {
+        border: 1px solid var(--border) !important;
+        border-radius: 12px !important;
+        background: var(--bg-main) !important;
+    }
+</style>
+"""
+
+# Apply selected theme
+if st.session_state.theme == 'light':
+    st.markdown(light_theme_css, unsafe_allow_html=True)
+else:
+    st.markdown(dark_theme_css, unsafe_allow_html=True)
 
 # --- Load Data ---
 @st.cache_data
@@ -262,8 +325,20 @@ with st.sidebar:
             """
         )
     st.markdown("---")
-
-    if generic_mode:
+    
+    # Theme Toggle
+    st.markdown("#### 🎨 Theme")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("☀️ Light", use_container_width=True):
+            st.session_state.theme = 'light'
+            st.rerun()
+    with col2:
+        if st.button("🌙 Dark", use_container_width=True):
+            st.session_state.theme = 'dark'
+            st.rerun()
+    
+    st.markdown("---")
         st.markdown("## 🔧 Generic filters")
         # allow the user to pick a column to filter on and values for that column
         filter_col = st.selectbox("Pick a column to filter (optional)", options=[""] + df.columns.tolist())
