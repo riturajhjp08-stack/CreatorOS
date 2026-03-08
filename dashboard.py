@@ -339,6 +339,8 @@ with st.sidebar:
             st.rerun()
     
     st.markdown("---")
+    
+    if generic_mode:
         st.markdown("## 🔧 Generic filters")
         # allow the user to pick a column to filter on and values for that column
         filter_col = st.selectbox("Pick a column to filter (optional)", options=[""] + df.columns.tolist())
