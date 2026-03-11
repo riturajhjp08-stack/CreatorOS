@@ -1,0 +1,18 @@
+[Unit]
+Description=CreatorOS Celery Beat
+After=network.target redis.service
+
+[Service]
+Type=simple
+User=rituraj
+WorkingDirectory=/Users/rituraj/Downloads/Ritu-proj/backend
+Environment="PATH=/Users/rituraj/Downloads/Ritu-proj/backend/venv/bin"
+EnvironmentFile=/Users/rituraj/Downloads/Ritu-proj/backend/.env
+ExecStart=/Users/rituraj/Downloads/Ritu-proj/backend/venv/bin/celery -A tasks beat --loglevel=info
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

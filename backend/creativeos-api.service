@@ -1,0 +1,28 @@
+[Unit]
+Description=CreativeOS API Server
+After=network.target
+
+[Service]
+Type=simple
+User=rituraj
+WorkingDirectory=/Users/rituraj/Downloads/Ritu-proj/backend
+Environment="PATH=/Users/rituraj/Downloads/Ritu-proj/backend/venv/bin"
+Environment="FLASK_ENV=production"
+EnvironmentFile=/Users/rituraj/Downloads/Ritu-proj/backend/.env
+
+ExecStart=/Users/rituraj/Downloads/Ritu-proj/backend/venv/bin/gunicorn \
+    --config gunicorn_config.py \
+    --workers 4 \
+    --worker-class sync \
+    --bind 127.0.0.1:5000 \
+    --timeout 120 \
+    --graceful-timeout 30 \
+    wsgi:app
+
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

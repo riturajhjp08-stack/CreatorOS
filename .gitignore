@@ -1,0 +1,21 @@
+.DS_Store
+*.log
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+dist/
+
+# Local environment files
+.env
+.env.local
+backend/.env
+backend/.env.local
+
+# Runtime artifacts
+*.db
+backend/instance/
+backend/uploads/
+backend/logs/
+backend/venv/
