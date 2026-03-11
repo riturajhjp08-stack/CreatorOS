@@ -1,0 +1,17 @@
+.git
+.github
+.venv
+backend/.env
+backend/.env.local
+backend/venv
+backend/logs
+backend/uploads
+backend/instance
+backend/*.db
+backend/server.log
+backend/server_log.txt
+backend/backend_logs.txt
+backend/backend_logs_2.txt
+instance
+Dockerfile
+Procfile
