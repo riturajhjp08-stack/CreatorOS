@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from backend.config import config, validate_production_config
 from backend.extensions import limiter
-from models import db
+from backend.models import db
 from sqlalchemy import inspect, text
 import os
 from dotenv import load_dotenv
