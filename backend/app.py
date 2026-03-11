@@ -3,7 +3,7 @@ import uuid
 from flask import Flask, request, g, has_request_context
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from config import config, validate_production_config
+from backend.config import config, validate_production_config
 from extensions import limiter
 from models import db
 from sqlalchemy import inspect, text
