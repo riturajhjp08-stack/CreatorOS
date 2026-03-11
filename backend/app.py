@@ -3,14 +3,14 @@ import uuid
 from flask import Flask, request, g, has_request_context
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from backend.config import config, validate_production_config
-from backend.extensions import limiter
-from backend.models import db
+from config import config, validate_production_config
+from extensions import limiter
+from models import db
 from sqlalchemy import inspect, text
 import os
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
-from backend.utils.auth_security import extract_access_token_from_request, is_session_active
+from utils.auth_security import extract_access_token_from_request, is_session_active
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
