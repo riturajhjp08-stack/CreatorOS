@@ -10,7 +10,7 @@ from sqlalchemy import inspect, text
 import os
 from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
-from utils.auth_security import extract_access_token_from_request, is_session_active
+from backend.utils.auth_security import extract_access_token_from_request, is_session_active
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 
