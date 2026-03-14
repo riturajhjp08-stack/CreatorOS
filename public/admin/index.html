@@ -51,9 +51,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .auth-card{background:var(--s1);border:1px solid var(--b2);border-radius:20px;padding:40px;
   width:100%;max-width:440px;position:relative;z-index:1;box-shadow:0 40px 100px rgba(0,0,0,.6);}
 .auth-logo{display:flex;align-items:center;gap:12px;margin-bottom:32px;}
-.auth-logo-mark{width:44px;height:44px;background:var(--lime);border-radius:12px;display:flex;align-items:center;
+.auth-logo-mark{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;
   justify-content:center;font-family:var(--font-head);font-weight:800;font-size:20px;color:#000;
-  box-shadow:0 4px 20px rgba(184,255,0,.35);}
+  background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
+  box-shadow:0 10px 26px rgba(0,0,0,.35);}
 .auth-logo-text{font-family:var(--font-head);font-size:22px;font-weight:700;}
 .auth-logo-text span{color:var(--lime);}
 .auth-tagline{font-size:11px;color:var(--t3);font-family:var(--font-mono);letter-spacing:2px;text-transform:uppercase;margin-top:1px;}
@@ -110,9 +111,10 @@ select.field option{background:var(--s2);}
 /* ── SIDEBAR ── */
 .sidebar{width:var(--sidebar);background:var(--s1);border-right:1px solid var(--b1);
   display:flex;flex-direction:column;align-items:center;padding:14px 0 12px;gap:4px;z-index:200;flex-shrink:0;}
-.logo-mark{width:38px;height:38px;background:var(--lime);border-radius:10px;display:flex;align-items:center;
+.logo-mark{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;
   justify-content:center;margin-bottom:14px;cursor:pointer;flex-shrink:0;
-  box-shadow:0 4px 20px rgba(184,255,0,.3);}
+  background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
+  box-shadow:0 10px 26px rgba(0,0,0,.35);}
 .logo-mark span{font-family:var(--font-head);font-weight:800;font-size:16px;color:#000;}
 .nav-item{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;
   cursor:pointer;color:var(--t3);font-size:15px;transition:all .15s;border:1px solid transparent;position:relative;}

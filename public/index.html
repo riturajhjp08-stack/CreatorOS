@@ -41,9 +41,10 @@ section{position:relative;z-index:2;}
   border-bottom:1px solid var(--b1);}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px;}
 .brand{display:flex;align-items:center;gap:12px;}
-.logo-mark{width:44px;height:44px;border-radius:12px;background:var(--lime);
+.logo-mark{width:44px;height:44px;border-radius:12px;
+  background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
   color:#000;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);
-  font-weight:800;font-size:20px;box-shadow:0 4px 20px rgba(184,255,0,.35);} /* matches upgrade logo */
+  font-weight:800;font-size:20px;box-shadow:0 10px 26px rgba(0,0,0,.35);} /* matches premium upgrade logo */
 .logo-text{font-family:var(--font-head);font-size:18px;font-weight:700;line-height:1.1;}
 .logo-text span{color:var(--lime);}
 .logo-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
@@ -65,6 +66,9 @@ section{position:relative;z-index:2;}
 .tilt-tag{display:inline-block;transform:rotate(-2deg);font-style:italic;font-family:var(--font-head);
   background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);
   padding:4px 10px;border-radius:10px;box-shadow:var(--clay-inset);margin-bottom:12px;}
+.tilt-word{display:inline-block;transform:rotate(-2deg);font-style:italic;font-family:var(--font-head);
+  background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);
+  padding:0 6px;border-radius:8px;box-shadow:var(--clay-inset);}
 .hero h1{font-family:var(--font-head);font-size:clamp(32px,4.6vw,56px);line-height:1.06;margin:10px 0 14px;}
 .hero h1 em{font-style:italic;color:var(--lime);}
 .hero p{color:var(--t2);max-width:560px;font-size:15px;}
@@ -185,7 +189,7 @@ section{position:relative;z-index:2;}
       <div>
         <div class="tilt-tag">CreatorOS Command Center</div>
         <div class="eyebrow">Built for modern creators</div>
-        <h1>Run your creator business from <em>one</em> smart dashboard</h1>
+        <h1>Run your creator business from <span class="tilt-word">one</span> smart dashboard</h1>
         <p>CreatorOS unifies analytics, content planning, and growth insights so you always know what to post, where to post, and why it works.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="/app/">Start Free</a>
