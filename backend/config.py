@@ -30,9 +30,13 @@ class Config:
     DEBUG = False
     TESTING = False
 
+    SERVERLESS_MODE = _get_bool("SERVERLESS_MODE", False)
     SECRET_KEY = os.environ.get("SECRET_KEY") or "dev-secret-key-change-in-production"
     ADMIN_SECRET_CODE = os.environ.get("ADMIN_SECRET_CODE", "SuperSecret123!")  # Added for admin panel access
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or "sqlite:///creatorOS.db"
+    SQLALCHEMY_DATABASE_URI = (
+        os.environ.get("DATABASE_URL")
+        or ("sqlite:////tmp/creatoros.db" if SERVERLESS_MODE else "sqlite:///creatorOS.db")
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY") or "dev-jwt-secret-key-change-in-production"
@@ -158,6 +162,8 @@ class ProductionConfig(Config):
 def validate_production_config(app):
     """Fail fast if required auth settings are missing in production."""
     if app.config.get("ENV_NAME") != "production":
+        return
+    if app.config.get("SERVERLESS_MODE"):
         return
 
     missing = []

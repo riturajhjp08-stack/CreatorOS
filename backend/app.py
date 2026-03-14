@@ -157,9 +157,10 @@ def create_app(config_name=None):
     
     # Create database tables
     with app.app_context():
-        if app.config.get("ENV_NAME") != "production" and app.config.get("DB_AUTO_CREATE", True):
-            db.create_all()
-            _run_sqlite_compat_migrations()
+        if app.config.get("DB_AUTO_CREATE", True):
+            if app.config.get("ENV_NAME") != "production" or app.config.get("SERVERLESS_MODE"):
+                db.create_all()
+                _run_sqlite_compat_migrations()
     
     # Register blueprints
     from routes.auth import auth_bp
