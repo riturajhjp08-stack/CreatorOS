@@ -168,22 +168,18 @@ section{position:relative;z-index:2;}
 .reveal{opacity:0;transform:translateY(16px);} 
 
 /* Intro overlay */
-#landing{opacity:0;transform:translateY(10px);}
-.intro{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+#landing{opacity:1;transform:none;}
+.intro{display:none;position:fixed;inset:0;z-index:50;align-items:center;justify-content:center;
   background:var(--bg);background-image:
     radial-gradient(circle at 18% -10%, rgba(124,92,252,0.22), transparent 55%),
     radial-gradient(circle at 90% 12%, rgba(184,255,0,0.12), transparent 45%);
 }
+.intro-active #landing{opacity:0;transform:translateY(10px);}
+.intro-active .intro{display:flex;}
 .intro-card{width:min(520px,92vw);background:var(--bg2);border:1px solid var(--line);border-radius:20px;
-  padding:24px;display:grid;gap:16px;box-shadow:0 24px 60px rgba(0,0,0,.45);}
-.intro-title{font-family:var(--font-head);font-size:22px;}
-.intro-sub{color:var(--t2);font-size:13px;}
-.intro-preview{background:var(--bg3);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:10px;}
-.intro-row{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);font-family:var(--font-mono);}
-.intro-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.intro-metric{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:10px;padding:10px;}
-.intro-metric .val{font-family:var(--font-head);font-size:14px;}
-.intro-metric .lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
+  padding:26px;display:grid;gap:14px;box-shadow:0 24px 60px rgba(0,0,0,.45);justify-items:center;text-align:center;}
+.intro-title{font-family:var(--font-head);font-size:20px;}
+.intro-sub{color:var(--t2);font-size:12px;}
 
 @media(max-width:980px){
   .hero-wrap{grid-template-columns:1fr;}
@@ -203,23 +199,11 @@ section{position:relative;z-index:2;}
 <body>
   <div class="intro" id="app-intro">
     <div class="intro-card">
-      <div class="brand">
-        <div class="logo-mark">C</div>
-        <div>
-          <div class="logo-text">Creator<span>OS</span></div>
-          <div class="logo-tag">AI-Powered Creator Studio</div>
-        </div>
-      </div>
+      <div class="logo-mark">C</div>
+      <div class="logo-text">Creator<span>OS</span></div>
+      <div class="logo-tag">AI-Powered Creator Studio</div>
       <div class="intro-title">Opening your command center</div>
-      <div class="intro-sub">Syncing live performance across Instagram, YouTube, X, and LinkedIn.</div>
-      <div class="intro-preview">
-        <div class="intro-row"><span>Realtime Sync</span><span>00:00:02</span></div>
-        <div class="intro-metrics">
-          <div class="intro-metric"><div class="val">+18%</div><div class="lbl">Engagement</div></div>
-          <div class="intro-metric"><div class="val">1.4M</div><div class="lbl">Views</div></div>
-          <div class="intro-metric"><div class="val">32</div><div class="lbl">Goals</div></div>
-        </div>
-      </div>
+      <div class="intro-sub">Loading your live creator workspace</div>
     </div>
   </div>
 
@@ -452,16 +436,21 @@ section{position:relative;z-index:2;}
   const intro = document.getElementById('app-intro');
   const landing = document.getElementById('landing');
 
-  const introTl = gsap.timeline({defaults:{ease:'power2.out'}});
-  introTl
-    .from('.intro-card', {opacity:0, y:20, duration:0.6})
-    .to('.intro-card', {opacity:1, duration:0.2})
-    .to(intro, {yPercent:-100, duration:0.9, delay:0.6, ease:'power2.inOut'})
-    .to(landing, {opacity:1, y:0, duration:0.6}, '-=0.4')
-    .add(() => {
-      intro.remove();
-      runLandingAnimations();
-    });
+  if (intro && landing) {
+    document.body.classList.add('intro-active');
+    const introTl = gsap.timeline({defaults:{ease:'power2.out'}});
+    introTl
+      .from('.intro-card', {opacity:0, y:16, duration:0.5})
+      .to(intro, {yPercent:-100, duration:0.8, delay:0.4, ease:'power2.inOut'})
+      .to(landing, {opacity:1, y:0, duration:0.5}, '-=0.35')
+      .add(() => {
+        document.body.classList.remove('intro-active');
+        intro.remove();
+        runLandingAnimations();
+      });
+  } else {
+    runLandingAnimations();
+  }
 </script>
 </body>
 </html>
