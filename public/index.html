@@ -41,12 +41,12 @@ section{position:relative;z-index:2;}
   border-bottom:1px solid var(--b1);}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px;}
 .brand{display:flex;align-items:center;gap:12px;}
-.logo{width:44px;height:44px;border-radius:12px;background:var(--lime);
+.logo-mark{width:44px;height:44px;border-radius:12px;background:var(--lime);
   color:#000;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);
-  font-weight:800;font-size:20px;box-shadow:0 4px 20px rgba(184,255,0,.35);}
-.brand-title{font-family:var(--font-head);font-size:18px;font-weight:700;}
-.brand-title span{color:var(--lime);}
-.brand-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
+  font-weight:800;font-size:20px;box-shadow:0 4px 20px rgba(184,255,0,.35);} /* matches upgrade logo */
+.logo-text{font-family:var(--font-head);font-size:18px;font-weight:700;line-height:1.1;}
+.logo-text span{color:var(--lime);}
+.logo-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
 .nav-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
 .nav-links a{color:var(--t2);text-decoration:none;font-size:11px;font-family:var(--font-mono);letter-spacing:1.4px;text-transform:uppercase;}
 .nav-links a:hover{color:var(--t1);}
@@ -60,10 +60,14 @@ section{position:relative;z-index:2;}
 
 /* Hero */
 .hero{padding:78px 0 40px;}
-.hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;}
+.hero-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;}
 .eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--lime);}
-.hero h1{font-family:var(--font-head);font-size:clamp(32px,4.5vw,54px);line-height:1.06;margin:10px 0 14px;}
-.hero p{color:var(--t2);max-width:520px;font-size:15px;}
+.tilt-tag{display:inline-block;transform:rotate(-2deg);font-style:italic;font-family:var(--font-head);
+  background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);
+  padding:4px 10px;border-radius:10px;box-shadow:var(--clay-inset);margin-bottom:12px;}
+.hero h1{font-family:var(--font-head);font-size:clamp(32px,4.6vw,56px);line-height:1.06;margin:10px 0 14px;}
+.hero h1 em{font-style:italic;color:var(--lime);}
+.hero p{color:var(--t2);max-width:560px;font-size:15px;}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
 .hero-proof{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;}
 .proof{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:14px;padding:10px 14px;
@@ -96,7 +100,7 @@ section{position:relative;z-index:2;}
 .sub{color:var(--t2);max-width:680px;}
 
 /* Integrations */
-.integrations{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px;}
+.integrations{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px;}
 .int-card{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:14px;
   box-shadow:var(--clay-shadow-soft);display:flex;align-items:center;gap:10px;justify-content:center;}
 .int-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
@@ -119,12 +123,13 @@ section{position:relative;z-index:2;}
 .flow h3{font-family:var(--font-head);font-size:14px;margin-top:8px;}
 .flow p{color:var(--t2);font-size:13px;}
 
-/* Testimonials */
-.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.quote{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:18px;box-shadow:var(--clay-shadow);}
-.quote p{color:var(--t2);font-size:13px;}
-.quote .name{margin-top:12px;font-family:var(--font-head);font-size:13px;}
-.quote .role{font-size:11px;color:var(--t3);}
+/* Promise */
+.promise{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:center;}
+.promise-card{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:18px;padding:20px;box-shadow:var(--clay-shadow);}
+.promise-card h3{font-family:var(--font-head);font-size:18px;margin-bottom:8px;}
+.promise-list{display:grid;gap:10px;margin-top:12px;}
+.promise-item{background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);border-radius:12px;padding:10px;box-shadow:var(--clay-inset);}
+.promise-item strong{font-family:var(--font-head);}
 
 /* CTA */
 .cta{padding:56px 0;}
@@ -140,14 +145,13 @@ section{position:relative;z-index:2;}
 
 @media(max-width:980px){
   .hero-wrap{grid-template-columns:1fr;}
-  .integrations{grid-template-columns:repeat(3,1fr);} 
+  .integrations{grid-template-columns:repeat(2,1fr);} 
   .features{grid-template-columns:repeat(2,1fr);} 
   .workflows{grid-template-columns:1fr;} 
-  .testimonials{grid-template-columns:1fr;} 
+  .promise{grid-template-columns:1fr;} 
 }
 @media(max-width:640px){
   .nav-links{display:none;}
-  .integrations{grid-template-columns:repeat(2,1fr);} 
   .features{grid-template-columns:1fr;} 
   .hero-proof{gap:10px;}
 }
@@ -157,17 +161,17 @@ section{position:relative;z-index:2;}
   <header class="nav">
     <div class="container nav-inner">
       <div class="brand">
-        <div class="logo">C</div>
+        <div class="logo-mark">C</div>
         <div>
-          <div class="brand-title">Creator<span>OS</span></div>
-          <div class="brand-sub">AI-Powered Creator Studio</div>
+          <div class="logo-text">Creator<span>OS</span></div>
+          <div class="logo-tag">AI-Powered Creator Studio</div>
         </div>
       </div>
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#integrations">Integrations</a>
-        <a href="#workflows">Workflows</a>
-        <a href="#testimonials">Creators</a>
+        <a href="#workflows">Workflow</a>
+        <a href="#promise">Why CreatorOS</a>
       </div>
       <div style="display:flex;gap:10px;align-items:center;">
         <a class="btn btn-ghost" href="/app/">Open App</a>
@@ -179,8 +183,9 @@ section{position:relative;z-index:2;}
   <section class="hero">
     <div class="container hero-wrap">
       <div>
-        <div class="eyebrow">Creator Command Center</div>
-        <h1>Run your creator business from one smart dashboard</h1>
+        <div class="tilt-tag">CreatorOS Command Center</div>
+        <div class="eyebrow">Built for modern creators</div>
+        <h1>Run your creator business from <em>one</em> smart dashboard</h1>
         <p>CreatorOS unifies analytics, content planning, and growth insights so you always know what to post, where to post, and why it works.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="/app/">Start Free</a>
@@ -189,7 +194,7 @@ section{position:relative;z-index:2;}
         <div class="hero-proof">
           <div class="proof"><div class="val">12k+</div><div class="lbl">Creators</div></div>
           <div class="proof"><div class="val">3.2M</div><div class="lbl">Posts Tracked</div></div>
-          <div class="proof"><div class="val">5+</div><div class="lbl">Platforms</div></div>
+          <div class="proof"><div class="val">4</div><div class="lbl">Platforms</div></div>
         </div>
       </div>
       <div class="dashboard-stack">
@@ -250,12 +255,6 @@ section{position:relative;z-index:2;}
           </div>
           <div>LinkedIn</div>
         </div>
-        <div class="int-card">
-          <div class="int-icon" style="background:#0f0f0f;">
-            <img alt="TikTok" src="https://cdn.simpleicons.org/tiktok/ffffff" />
-          </div>
-          <div>TikTok</div>
-        </div>
       </div>
     </div>
   </section>
@@ -291,8 +290,8 @@ section{position:relative;z-index:2;}
 
   <section class="section" id="workflows">
     <div class="container">
-      <div class="section-title"><div class="label">Workflows</div><div class="rule"></div></div>
-      <div class="h2">A simple system that keeps you consistent</div>
+      <div class="section-title"><div class="label">Workflow</div><div class="rule"></div></div>
+      <div class="h2">A system that keeps you consistent</div>
       <div class="workflows">
         <div class="flow"><div class="num">01</div><h3>Connect your platforms</h3><p>Authorize once and pull every signal into CreatorOS.</p></div>
         <div class="flow"><div class="num">02</div><h3>Review the command center</h3><p>See exactly what is growing and what needs attention.</p></div>
@@ -301,25 +300,24 @@ section{position:relative;z-index:2;}
     </div>
   </section>
 
-  <section class="section" id="testimonials">
-    <div class="container">
-      <div class="section-title"><div class="label">Creators</div><div class="rule"></div></div>
-      <div class="h2">Why creators switch to CreatorOS</div>
-      <div class="testimonials">
-        <div class="quote">
-          <p>“I finally see everything across Instagram, YouTube, and X in one view. It saves me hours every week.”</p>
-          <div class="name">Maya L.</div>
-          <div class="role">Lifestyle Creator</div>
+  <section class="section" id="promise">
+    <div class="container promise">
+      <div class="promise-card">
+        <div class="section-title"><div class="label">Why CreatorOS</div><div class="rule"></div></div>
+        <h3>Less guessing, more momentum</h3>
+        <p class="sub">You get the clarity of a full analytics team, plus a creative assistant that keeps your brand consistent.</p>
+        <div class="promise-list">
+          <div class="promise-item"><strong>Unified signals</strong> — see all platforms in one scorecard.</div>
+          <div class="promise-item"><strong>Actionable insights</strong> — daily recommendations, not just charts.</div>
+          <div class="promise-item"><strong>Creator rhythm</strong> — stay consistent with planned content windows.</div>
         </div>
-        <div class="quote">
-          <p>“The AI insights feel like having a strategist on the team. My retention jumped in two weeks.”</p>
-          <div class="name">Chris P.</div>
-          <div class="role">Tech Educator</div>
-        </div>
-        <div class="quote">
-          <p>“CreatorOS makes it obvious what to post next and where to focus. No more guesswork.”</p>
-          <div class="name">Riya S.</div>
-          <div class="role">Creator Studio</div>
+      </div>
+      <div class="promise-card">
+        <h3 class="tilt-tag">CreatorOS in action</h3>
+        <div class="mini-row">
+          <div class="mini"><div class="val">+2.4x</div><div class="lbl">Retention</div></div>
+          <div class="mini"><div class="val">-40%</div><div class="lbl">Time Spent</div></div>
+          <div class="mini"><div class="val">+18</div><div class="lbl">New Ideas</div></div>
         </div>
       </div>
     </div>
@@ -341,10 +339,10 @@ section{position:relative;z-index:2;}
   <footer class="footer">
     <div class="container row">
       <div class="brand">
-        <div class="logo">C</div>
+        <div class="logo-mark">C</div>
         <div>
-          <div class="brand-title">Creator<span>OS</span></div>
-          <div class="brand-sub">Unified Creator Studio</div>
+          <div class="logo-text">Creator<span>OS</span></div>
+          <div class="logo-tag">Unified Creator Studio</div>
         </div>
       </div>
       <div>
