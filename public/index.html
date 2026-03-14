@@ -133,12 +133,17 @@ section{position:relative;z-index:2;}
 .h2{font-family:var(--font-head);font-size:26px;font-weight:700;margin-bottom:12px;} 
 .sub{color:var(--t2);max-width:680px;} 
 
-/* Integrations */
-.integrations{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px;} 
-.int-card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;align-items:center;gap:10px;justify-content:center;} 
-.int-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-  background:var(--bg3);border:1px solid var(--line);} 
-.int-icon img{width:22px;height:22px;} 
+/* Platform marquee */
+.marquee{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--bg2);}
+.marquee::before,.marquee::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--bg2),rgba(17,20,33,0));}
+.marquee::after{right:0;background:linear-gradient(270deg,var(--bg2),rgba(17,20,33,0));}
+.track{display:flex;gap:12px;align-items:center;white-space:nowrap;animation:marquee 18s linear infinite;padding:14px 0;}
+.track:hover{animation-play-state:paused;}
+.logo-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);
+  background:var(--bg3);font-size:12px;}
+.logo-pill img{width:18px;height:18px;}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
 /* Feature mural */
 .features{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;} 
@@ -216,9 +221,9 @@ section{position:relative;z-index:2;}
       </div>
       <div class="nav-links">
         <a href="#features">Features</a>
-        <a href="#integrations">Integrations</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#stats">Live Stats</a>
         <a href="#workflow">Workflow</a>
-        <a href="#cta">Get Started</a>
       </div>
       <div style="display:flex;gap:10px;align-items:center;">
         <a class="btn btn-ghost" href="/app/">Open App</a>
@@ -231,12 +236,12 @@ section{position:relative;z-index:2;}
     <div class="container hero-wrap">
       <div>
         <div class="tilt-tag">CreatorOS Command Center</div>
-        <div class="kicker">Built for modern creators</div>
-        <h1 class="reveal">Run your creator business from <em>one</em> smart dashboard</h1>
-        <p class="reveal">CreatorOS unifies analytics, content planning, and growth insights so you always know what to post, where to post, and why it works.</p>
+        <div class="kicker">See everything. Ship faster.</div>
+        <h1 class="reveal">Manage content, analytics, and growth in <em>one</em> creator cockpit</h1>
+        <p class="reveal">CreatorOS pulls every platform into a single live workspace so you can track performance, plan content, and scale with clarity.</p>
         <div class="hero-actions reveal">
           <a class="btn btn-primary" href="/app/">Start Free</a>
-          <a class="btn btn-ghost" href="#integrations">See Integrations</a>
+          <a class="btn btn-ghost" href="#platforms">Watch the Platform Flow</a>
         </div>
         <div class="hero-proof reveal">
           <div class="proof"><div class="val stat-count" data-target="12000">0</div><div class="lbl">Creators</div></div>
@@ -246,8 +251,8 @@ section{position:relative;z-index:2;}
       </div>
       <div class="signal reveal">
         <div class="signal-head">
-          <div class="signal-title">Unified Performance</div>
-          <div class="pill">Live</div>
+          <div class="signal-title">Live Command Board</div>
+          <div class="pill">Realtime</div>
         </div>
         <div class="chart">
           <div class="bar" style="height:85%"></div>
@@ -265,35 +270,21 @@ section{position:relative;z-index:2;}
     </div>
   </section>
 
-  <section class="section" id="integrations">
+  <section class="section" id="platforms">
     <div class="container">
-      <div class="section-title"><div class="label">Integrations</div><div class="rule"></div></div>
-      <div class="h2 reveal">Real platform data, synced instantly</div>
-      <div class="sub reveal">Connect your social profiles and CreatorOS normalizes everything into one workspace.</div>
-      <div class="integrations reveal">
-        <div class="int-card">
-          <div class="int-icon" style="background:linear-gradient(135deg,#f9ce34,#ee2a7b,#6228d7);">
-            <img alt="Instagram" src="https://cdn.simpleicons.org/instagram/ffffff" />
-          </div>
-          <div>Instagram</div>
-        </div>
-        <div class="int-card">
-          <div class="int-icon" style="background:#ff0000;">
-            <img alt="YouTube" src="https://cdn.simpleicons.org/youtube/ffffff" />
-          </div>
-          <div>YouTube</div>
-        </div>
-        <div class="int-card">
-          <div class="int-icon" style="background:#0a0a0a;">
-            <img alt="X" src="https://cdn.simpleicons.org/x/ffffff" />
-          </div>
-          <div>X</div>
-        </div>
-        <div class="int-card">
-          <div class="int-icon" style="background:#0a66c2;">
-            <img alt="LinkedIn" src="https://cdn.simpleicons.org/linkedin/ffffff" />
-          </div>
-          <div>LinkedIn</div>
+      <div class="section-title"><div class="label">Platform Pulse</div><div class="rule"></div></div>
+      <div class="h2 reveal">Platforms stay in motion, your data stays in sync</div>
+      <div class="sub reveal">A constant stream of signals across Instagram, YouTube, X, and LinkedIn — unified inside CreatorOS.</div>
+      <div class="marquee reveal">
+        <div class="track">
+          <div class="logo-pill"><img alt="Instagram" src="https://cdn.simpleicons.org/instagram/ffffff" />Instagram</div>
+          <div class="logo-pill"><img alt="YouTube" src="https://cdn.simpleicons.org/youtube/ffffff" />YouTube</div>
+          <div class="logo-pill"><img alt="X" src="https://cdn.simpleicons.org/x/ffffff" />X</div>
+          <div class="logo-pill"><img alt="LinkedIn" src="https://cdn.simpleicons.org/linkedin/ffffff" />LinkedIn</div>
+          <div class="logo-pill"><img alt="Instagram" src="https://cdn.simpleicons.org/instagram/ffffff" />Instagram</div>
+          <div class="logo-pill"><img alt="YouTube" src="https://cdn.simpleicons.org/youtube/ffffff" />YouTube</div>
+          <div class="logo-pill"><img alt="X" src="https://cdn.simpleicons.org/x/ffffff" />X</div>
+          <div class="logo-pill"><img alt="LinkedIn" src="https://cdn.simpleicons.org/linkedin/ffffff" />LinkedIn</div>
         </div>
       </div>
     </div>
@@ -302,12 +293,12 @@ section{position:relative;z-index:2;}
   <section class="section" id="features">
     <div class="container">
       <div class="section-title"><div class="label">Feature Mural</div><div class="rule"></div></div>
-      <div class="h2 reveal">Designed to keep creators in motion</div>
+      <div class="h2 reveal">This is what CreatorOS does for you</div>
       <div class="features">
         <div class="feature wide reveal">
           <div class="icon-badge">UA</div>
           <h3>Unified Social Dashboard</h3>
-          <p>Track growth, content, and platform performance from one command surface.</p>
+          <p>One place to track growth, content, and platform performance.</p>
         </div>
         <div class="feature reveal">
           <div class="icon-badge">AI</div>
@@ -386,7 +377,7 @@ section{position:relative;z-index:2;}
       </div>
       <div>
         <a href="#features">Features</a>
-        <a href="#integrations">Integrations</a>
+        <a href="#platforms">Platforms</a>
         <a href="/app/">Login</a>
       </div>
       <div>© CreatorOS</div>
