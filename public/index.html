@@ -25,30 +25,30 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
 body{background:
-  radial-gradient(circle at 18% -10%, rgba(124,92,252,0.18), transparent 55%),
-  radial-gradient(circle at 90% 12%, rgba(184,255,0,0.12), transparent 45%),
-  radial-gradient(circle at 30% 90%, rgba(34,211,238,0.08), transparent 55%),
+  radial-gradient(circle at 18% -10%, rgba(124,92,252,0.22), transparent 55%),
+  radial-gradient(circle at 90% 12%, rgba(184,255,0,0.14), transparent 45%),
+  radial-gradient(circle at 30% 90%, rgba(34,211,238,0.1), transparent 55%),
   var(--bg);
   color:var(--t1);font-family:var(--font-body);font-size:14px;line-height:1.6;min-height:100vh;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.12;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");}
 img,svg{display:block;}
 section{position:relative;z-index:2;}
-.container{width:min(1100px,92vw);margin:0 auto;}
+.container{width:min(1120px,92vw);margin:0 auto;}
 
 /* Nav */
-.nav{position:sticky;top:0;z-index:10;background:rgba(15,17,26,.7);backdrop-filter:blur(16px);
+.nav{position:sticky;top:0;z-index:10;background:rgba(15,17,26,.72);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--b1);}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px;}
 .brand{display:flex;align-items:center;gap:12px;}
-.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(145deg,#d9ff5a,#a8e900);
-  color:#0a0c12;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);
-  font-weight:800;box-shadow:var(--clay-shadow-soft);}
+.logo{width:44px;height:44px;border-radius:12px;background:var(--lime);
+  color:#000;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);
+  font-weight:800;font-size:20px;box-shadow:0 4px 20px rgba(184,255,0,.35);}
 .brand-title{font-family:var(--font-head);font-size:18px;font-weight:700;}
 .brand-title span{color:var(--lime);}
 .brand-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
 .nav-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
-.nav-links a{color:var(--t2);text-decoration:none;font-size:12px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;}
+.nav-links a{color:var(--t2);text-decoration:none;font-size:11px;font-family:var(--font-mono);letter-spacing:1.4px;text-transform:uppercase;}
 .nav-links a:hover{color:var(--t1);}
 
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;font-family:var(--font-head);
@@ -59,34 +59,36 @@ section{position:relative;z-index:2;}
 .btn:active{transform:translateY(1px);box-shadow:var(--clay-inset);}
 
 /* Hero */
-.hero{padding:72px 0 40px;}
-.hero-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;}
+.hero{padding:78px 0 40px;}
+.hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;}
 .eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--lime);}
-.hero h1{font-family:var(--font-head);font-size:clamp(30px,4vw,52px);line-height:1.08;margin:10px 0 14px;}
+.hero h1{font-family:var(--font-head);font-size:clamp(32px,4.5vw,54px);line-height:1.06;margin:10px 0 14px;}
 .hero p{color:var(--t2);max-width:520px;font-size:15px;}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
+.hero-proof{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;}
+.proof{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:14px;padding:10px 14px;
+  box-shadow:var(--clay-shadow-soft);min-width:150px;}
+.proof .val{font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--t1);}
+.proof .lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
 
-.preview{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);
-  border-radius:22px;box-shadow:var(--clay-shadow);padding:18px;position:relative;overflow:hidden;}
-.preview::after{content:'';position:absolute;top:-80px;right:-40px;width:220px;height:220px;
-  background:radial-gradient(circle,rgba(184,255,0,.1),transparent 70%);}
-.preview-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.preview-title{font-family:var(--font-head);font-size:14px;font-weight:700;}
-.pill{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);
-  padding:4px 10px;border-radius:999px;background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);
-  box-shadow:var(--clay-inset);}
-.chart{height:140px;border-radius:16px;background:var(--s2);background-image:var(--clay-press);
+.dashboard-stack{display:grid;gap:14px;}
+.panel{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);
+  border-radius:20px;box-shadow:var(--clay-shadow);padding:18px;position:relative;overflow:hidden;}
+.panel::after{content:'';position:absolute;top:-70px;right:-40px;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(184,255,0,.12),transparent 70%);}
+.panel h3{font-family:var(--font-head);font-size:14px;margin-bottom:10px;}
+.chart{height:130px;border-radius:16px;background:var(--s2);background-image:var(--clay-press);
   border:1px solid var(--b1);box-shadow:var(--clay-inset);display:flex;align-items:flex-end;gap:8px;padding:12px;}
 .bar{flex:1;border-radius:8px 8px 6px 6px;background:linear-gradient(180deg,var(--lime),rgba(184,255,0,.2));}
 .bar.p{background:linear-gradient(180deg,var(--purple),rgba(139,92,246,.2));}
 .bar.c{background:linear-gradient(180deg,var(--cyan),rgba(34,211,238,.2));}
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
-.metric{background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);border-radius:12px;padding:10px;box-shadow:var(--clay-inset);}
-.metric .val{font-family:var(--font-head);font-weight:700;color:var(--t1);}
-.metric .lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
+.mini-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+.mini{background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);border-radius:12px;padding:10px;box-shadow:var(--clay-inset);}
+.mini .val{font-family:var(--font-head);font-weight:700;}
+.mini .lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
 
 /* Section shells */
-.section{padding:48px 0;}
+.section{padding:52px 0;}
 .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
 .section-title .rule{height:1px;flex:1;background:var(--b1);}
 .section-title .label{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--t3);}
@@ -95,10 +97,11 @@ section{position:relative;z-index:2;}
 
 /* Integrations */
 .integrations{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px;}
-.int-card{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:14px;padding:14px;
+.int-card{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:14px;
   box-shadow:var(--clay-shadow-soft);display:flex;align-items:center;gap:10px;justify-content:center;}
-.int-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-head);font-weight:700;color:#0a0c12;}
+.int-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);box-shadow:var(--clay-inset);}
+.int-icon img{width:22px;height:22px;}
 
 /* Features */
 .features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
@@ -109,12 +112,19 @@ section{position:relative;z-index:2;}
   border:1px solid var(--b1);box-shadow:var(--clay-inset);display:flex;align-items:center;justify-content:center;
   font-family:var(--font-head);font-weight:700;color:var(--lime);}
 
-/* Steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.step{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:18px;box-shadow:var(--clay-shadow);}
-.step .num{font-family:var(--font-head);font-size:24px;color:var(--lime);}
-.step h3{font-family:var(--font-head);font-size:14px;margin-top:8px;}
-.step p{color:var(--t2);font-size:13px;}
+/* Workflows */
+.workflows{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.flow{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:18px;box-shadow:var(--clay-shadow);}
+.flow .num{font-family:var(--font-head);font-size:22px;color:var(--lime);}
+.flow h3{font-family:var(--font-head);font-size:14px;margin-top:8px;}
+.flow p{color:var(--t2);font-size:13px;}
+
+/* Testimonials */
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.quote{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:18px;box-shadow:var(--clay-shadow);}
+.quote p{color:var(--t2);font-size:13px;}
+.quote .name{margin-top:12px;font-family:var(--font-head);font-size:13px;}
+.quote .role{font-size:11px;color:var(--t3);}
 
 /* CTA */
 .cta{padding:56px 0;}
@@ -132,12 +142,14 @@ section{position:relative;z-index:2;}
   .hero-wrap{grid-template-columns:1fr;}
   .integrations{grid-template-columns:repeat(3,1fr);} 
   .features{grid-template-columns:repeat(2,1fr);} 
-  .steps{grid-template-columns:1fr;} 
+  .workflows{grid-template-columns:1fr;} 
+  .testimonials{grid-template-columns:1fr;} 
 }
 @media(max-width:640px){
   .nav-links{display:none;}
   .integrations{grid-template-columns:repeat(2,1fr);} 
   .features{grid-template-columns:1fr;} 
+  .hero-proof{gap:10px;}
 }
 </style>
 </head>
@@ -154,11 +166,11 @@ section{position:relative;z-index:2;}
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#integrations">Integrations</a>
-        <a href="#preview">Preview</a>
-        <a href="/app/">Login</a>
+        <a href="#workflows">Workflows</a>
+        <a href="#testimonials">Creators</a>
       </div>
       <div style="display:flex;gap:10px;align-items:center;">
-        <a class="btn btn-ghost" href="/app/">Login</a>
+        <a class="btn btn-ghost" href="/app/">Open App</a>
         <a class="btn btn-primary" href="/app/">Get Started</a>
       </div>
     </div>
@@ -168,29 +180,41 @@ section{position:relative;z-index:2;}
     <div class="container hero-wrap">
       <div>
         <div class="eyebrow">Creator Command Center</div>
-        <h1>Manage all your creator platforms in one dashboard</h1>
-        <p>CreatorOS helps creators track analytics, manage content, and grow across all platforms with a single, powerful command center.</p>
+        <h1>Run your creator business from one smart dashboard</h1>
+        <p>CreatorOS unifies analytics, content planning, and growth insights so you always know what to post, where to post, and why it works.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="/app/">Get Started</a>
-          <a class="btn btn-ghost" href="#preview">View Dashboard</a>
+          <a class="btn btn-primary" href="/app/">Start Free</a>
+          <a class="btn btn-ghost" href="#integrations">See Integrations</a>
+        </div>
+        <div class="hero-proof">
+          <div class="proof"><div class="val">12k+</div><div class="lbl">Creators</div></div>
+          <div class="proof"><div class="val">3.2M</div><div class="lbl">Posts Tracked</div></div>
+          <div class="proof"><div class="val">5+</div><div class="lbl">Platforms</div></div>
         </div>
       </div>
-      <div class="preview" id="preview">
-        <div class="preview-top">
-          <div class="preview-title">Unified Analytics</div>
-          <div class="pill">Live</div>
+      <div class="dashboard-stack">
+        <div class="panel">
+          <h3>Unified Performance</h3>
+          <div class="chart">
+            <div class="bar" style="height:85%"></div>
+            <div class="bar p" style="height:60%"></div>
+            <div class="bar c" style="height:72%"></div>
+            <div class="bar" style="height:45%"></div>
+            <div class="bar p" style="height:68%"></div>
+          </div>
+          <div class="mini-row">
+            <div class="mini"><div class="val">+18%</div><div class="lbl">Engagement</div></div>
+            <div class="mini"><div class="val">1.4M</div><div class="lbl">Views</div></div>
+            <div class="mini"><div class="val">32</div><div class="lbl">Goals</div></div>
+          </div>
         </div>
-        <div class="chart">
-          <div class="bar" style="height:85%"></div>
-          <div class="bar p" style="height:60%"></div>
-          <div class="bar c" style="height:72%"></div>
-          <div class="bar" style="height:45%"></div>
-          <div class="bar p" style="height:68%"></div>
-        </div>
-        <div class="metrics">
-          <div class="metric"><div class="val">12.4k</div><div class="lbl">Creators</div></div>
-          <div class="metric"><div class="val">3.1M</div><div class="lbl">Posts</div></div>
-          <div class="metric"><div class="val">5+</div><div class="lbl">Platforms</div></div>
+        <div class="panel">
+          <h3>AI Content Focus</h3>
+          <div class="mini-row">
+            <div class="mini"><div class="val">Hook Lab</div><div class="lbl">Daily Ideas</div></div>
+            <div class="mini"><div class="val">Best Time</div><div class="lbl">Post Windows</div></div>
+            <div class="mini"><div class="val">Style Map</div><div class="lbl">Format Mix</div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -199,14 +223,39 @@ section{position:relative;z-index:2;}
   <section class="section" id="integrations">
     <div class="container">
       <div class="section-title"><div class="label">Integrations</div><div class="rule"></div></div>
-      <div class="h2">All your creator data in one place</div>
-      <div class="sub">Connect the platforms that matter and see everything in a single, consistent workspace.</div>
+      <div class="h2">Real platform data, synced instantly</div>
+      <div class="sub">Connect your social profiles and CreatorOS normalizes everything into one workspace.</div>
       <div class="integrations">
-        <div class="int-card"><div class="int-icon" style="background:#f43f5e;">IG</div><div>Instagram</div></div>
-        <div class="int-card"><div class="int-icon" style="background:#ff0000;">YT</div><div>YouTube</div></div>
-        <div class="int-card"><div class="int-icon" style="background:#111111;color:#fff;">X</div><div>Twitter/X</div></div>
-        <div class="int-card"><div class="int-icon" style="background:#0a66c2;">in</div><div>LinkedIn</div></div>
-        <div class="int-card"><div class="int-icon" style="background:#2dd4bf;">TT</div><div>TikTok</div></div>
+        <div class="int-card">
+          <div class="int-icon" style="background:linear-gradient(135deg,#f9ce34,#ee2a7b,#6228d7);">
+            <img alt="Instagram" src="https://cdn.simpleicons.org/instagram/ffffff" />
+          </div>
+          <div>Instagram</div>
+        </div>
+        <div class="int-card">
+          <div class="int-icon" style="background:#ff0000;">
+            <img alt="YouTube" src="https://cdn.simpleicons.org/youtube/ffffff" />
+          </div>
+          <div>YouTube</div>
+        </div>
+        <div class="int-card">
+          <div class="int-icon" style="background:#0a0a0a;">
+            <img alt="X" src="https://cdn.simpleicons.org/x/ffffff" />
+          </div>
+          <div>X</div>
+        </div>
+        <div class="int-card">
+          <div class="int-icon" style="background:#0a66c2;">
+            <img alt="LinkedIn" src="https://cdn.simpleicons.org/linkedin/ffffff" />
+          </div>
+          <div>LinkedIn</div>
+        </div>
+        <div class="int-card">
+          <div class="int-icon" style="background:#0f0f0f;">
+            <img alt="TikTok" src="https://cdn.simpleicons.org/tiktok/ffffff" />
+          </div>
+          <div>TikTok</div>
+        </div>
       </div>
     </div>
   </section>
@@ -214,7 +263,7 @@ section{position:relative;z-index:2;}
   <section class="section" id="features">
     <div class="container">
       <div class="section-title"><div class="label">Features</div><div class="rule"></div></div>
-      <div class="h2">Built for serious creators</div>
+      <div class="h2">Everything you need to grow, in one place</div>
       <div class="features">
         <div class="feature">
           <div class="icon-badge">UA</div>
@@ -224,29 +273,54 @@ section{position:relative;z-index:2;}
         <div class="feature">
           <div class="icon-badge">AI</div>
           <h3>AI Content Insights</h3>
-          <p>Get actionable recommendations on hooks, trends, and scheduling.</p>
+          <p>Get recommendations on hooks, pacing, and publishing strategy.</p>
         </div>
         <div class="feature">
           <div class="icon-badge">GT</div>
           <h3>Growth Tracking</h3>
-          <p>See what is working and double down with measurable goals.</p>
+          <p>Monitor progress against goals and understand what drives momentum.</p>
         </div>
         <div class="feature">
           <div class="icon-badge">MP</div>
           <h3>Multi-Platform Analytics</h3>
-          <p>Compare performance across channels with consistent reporting.</p>
+          <p>Compare platforms with normalized reporting and trend snapshots.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="how">
+  <section class="section" id="workflows">
     <div class="container">
-      <div class="section-title"><div class="label">How It Works</div><div class="rule"></div></div>
-      <div class="steps">
-        <div class="step"><div class="num">01</div><h3>Connect your platforms</h3><p>Securely link Instagram, YouTube, TikTok, X, and more.</p></div>
-        <div class="step"><div class="num">02</div><h3>Track analytics</h3><p>All metrics, insights, and reports in one dashboard.</p></div>
-        <div class="step"><div class="num">03</div><h3>Grow faster</h3><p>Use AI insights to optimize and scale your creator brand.</p></div>
+      <div class="section-title"><div class="label">Workflows</div><div class="rule"></div></div>
+      <div class="h2">A simple system that keeps you consistent</div>
+      <div class="workflows">
+        <div class="flow"><div class="num">01</div><h3>Connect your platforms</h3><p>Authorize once and pull every signal into CreatorOS.</p></div>
+        <div class="flow"><div class="num">02</div><h3>Review the command center</h3><p>See exactly what is growing and what needs attention.</p></div>
+        <div class="flow"><div class="num">03</div><h3>Act on AI insights</h3><p>Use recommendations to plan, publish, and grow faster.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-title"><div class="label">Creators</div><div class="rule"></div></div>
+      <div class="h2">Why creators switch to CreatorOS</div>
+      <div class="testimonials">
+        <div class="quote">
+          <p>“I finally see everything across Instagram, YouTube, and X in one view. It saves me hours every week.”</p>
+          <div class="name">Maya L.</div>
+          <div class="role">Lifestyle Creator</div>
+        </div>
+        <div class="quote">
+          <p>“The AI insights feel like having a strategist on the team. My retention jumped in two weeks.”</p>
+          <div class="name">Chris P.</div>
+          <div class="role">Tech Educator</div>
+        </div>
+        <div class="quote">
+          <p>“CreatorOS makes it obvious what to post next and where to focus. No more guesswork.”</p>
+          <div class="name">Riya S.</div>
+          <div class="role">Creator Studio</div>
+        </div>
       </div>
     </div>
   </section>
@@ -254,8 +328,8 @@ section{position:relative;z-index:2;}
   <section class="cta">
     <div class="container">
       <div class="cta-card">
-        <h2>Start growing your creator brand today</h2>
-        <p>Join creators using CreatorOS to run their content like a business.</p>
+        <h2>Turn your creator data into growth</h2>
+        <p>Join creators using CreatorOS to operate like a modern media team.</p>
         <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
           <a class="btn btn-primary" href="/app/">Get Started Free</a>
           <a class="btn btn-ghost" href="/app/">Open Dashboard</a>
