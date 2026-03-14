@@ -8,13 +8,14 @@
 <meta name="theme-color" content="#0f111a">
 <title>CreatorOS — Unified Creator Command Center</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <style>
 :root{
   --bg:#0f111a; --s1:#151a2b; --s2:#1c2236; --s3:#242b44;
   --b1:rgba(255,255,255,.06); --b2:rgba(255,255,255,.14);
   --lime:#b8ff00; --purple:#8b5cf6; --cyan:#22d3ee; --orange:#f97316;
   --t1:#f4f6ff; --t2:#aab2c9; --t3:#6f7894;
-  --r:16px;
   --font-head:'Syne',sans-serif; --font-body:'Inter',sans-serif; --font-mono:'JetBrains Mono',monospace;
   --clay-shadow: 16px 16px 34px rgba(6,8,18,0.65), -10px -10px 22px rgba(255,255,255,0.04);
   --clay-shadow-soft: 8px 8px 18px rgba(6,8,18,0.55), -6px -6px 14px rgba(255,255,255,0.03);
@@ -36,6 +37,12 @@ img,svg{display:block;}
 section{position:relative;z-index:2;}
 .container{width:min(1120px,92vw);margin:0 auto;}
 
+/* floating orbs */
+.orb{position:fixed;inset:auto;filter:blur(0);opacity:.55;z-index:0;border-radius:999px;mix-blend-mode:screen;}
+.orb.one{width:220px;height:220px;left:-60px;top:120px;background:radial-gradient(circle,#7c5cfc22,transparent 65%);}
+.orb.two{width:280px;height:280px;right:-80px;top:30px;background:radial-gradient(circle,#b8ff0024,transparent 65%);}
+.orb.three{width:240px;height:240px;right:10%;bottom:-80px;background:radial-gradient(circle,#22d3ee1c,transparent 65%);}
+
 /* Nav */
 .nav{position:sticky;top:0;z-index:10;background:rgba(15,17,26,.72);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--b1);}
@@ -44,7 +51,7 @@ section{position:relative;z-index:2;}
 .logo-mark{width:44px;height:44px;border-radius:12px;
   background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
   color:#000;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);
-  font-weight:800;font-size:20px;box-shadow:0 10px 26px rgba(0,0,0,.35);} /* matches premium upgrade logo */
+  font-weight:800;font-size:20px;box-shadow:0 10px 26px rgba(0,0,0,.35);}
 .logo-text{font-family:var(--font-head);font-size:18px;font-weight:700;line-height:1.1;}
 .logo-text span{color:var(--lime);}
 .logo-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
@@ -60,16 +67,13 @@ section{position:relative;z-index:2;}
 .btn:active{transform:translateY(1px);box-shadow:var(--clay-inset);}
 
 /* Hero */
-.hero{padding:78px 0 40px;}
-.hero-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;}
-.eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--lime);}
+.hero{padding:82px 0 40px;}
+.hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;}
+.kicker{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--lime);}
 .tilt-tag{display:inline-block;transform:rotate(-2deg);font-style:italic;font-family:var(--font-head);
   background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);
   padding:4px 10px;border-radius:10px;box-shadow:var(--clay-inset);margin-bottom:12px;}
-.tilt-word{display:inline-block;transform:rotate(-2deg);font-style:italic;font-family:var(--font-head);
-  background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);
-  padding:0 6px;border-radius:8px;box-shadow:var(--clay-inset);}
-.hero h1{font-family:var(--font-head);font-size:clamp(32px,4.6vw,56px);line-height:1.06;margin:10px 0 14px;}
+.hero h1{font-family:var(--font-head);font-size:clamp(34px,4.8vw,58px);line-height:1.05;margin:10px 0 14px;}
 .hero h1 em{font-style:italic;color:var(--lime);}
 .hero p{color:var(--t2);max-width:560px;font-size:15px;}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
@@ -96,7 +100,7 @@ section{position:relative;z-index:2;}
 .mini .lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);}
 
 /* Section shells */
-.section{padding:52px 0;}
+.section{padding:56px 0;}
 .section-title{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
 .section-title .rule{height:1px;flex:1;background:var(--b1);}
 .section-title .label{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--t3);}
@@ -113,12 +117,19 @@ section{position:relative;z-index:2;}
 
 /* Features */
 .features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-.feature{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:18px;box-shadow:var(--clay-shadow);}
+.feature{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:18px;box-shadow:var(--clay-shadow);transition:transform .2s ease, box-shadow .2s ease;}
+.feature:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.35);} 
 .feature h3{font-family:var(--font-head);font-size:14px;margin:12px 0 6px;}
 .feature p{color:var(--t2);font-size:13px;}
 .icon-badge{width:40px;height:40px;border-radius:12px;background:var(--s2);background-image:var(--clay-press);
   border:1px solid var(--b1);box-shadow:var(--clay-inset);display:flex;align-items:center;justify-content:center;
   font-family:var(--font-head);font-weight:700;color:var(--lime);}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.stat{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:16px;padding:16px;box-shadow:var(--clay-shadow);}
+.stat .num{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--t1);}
+.stat .lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-top:6px;}
 
 /* Workflows */
 .workflows{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
@@ -126,14 +137,6 @@ section{position:relative;z-index:2;}
 .flow .num{font-family:var(--font-head);font-size:22px;color:var(--lime);}
 .flow h3{font-family:var(--font-head);font-size:14px;margin-top:8px;}
 .flow p{color:var(--t2);font-size:13px;}
-
-/* Promise */
-.promise{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:center;}
-.promise-card{background:var(--s1);background-image:var(--clay-raise);border:1px solid var(--b1);border-radius:18px;padding:20px;box-shadow:var(--clay-shadow);}
-.promise-card h3{font-family:var(--font-head);font-size:18px;margin-bottom:8px;}
-.promise-list{display:grid;gap:10px;margin-top:12px;}
-.promise-item{background:var(--s2);background-image:var(--clay-press);border:1px solid var(--b1);border-radius:12px;padding:10px;box-shadow:var(--clay-inset);}
-.promise-item strong{font-family:var(--font-head);}
 
 /* CTA */
 .cta{padding:56px 0;}
@@ -147,21 +150,29 @@ section{position:relative;z-index:2;}
 .footer .row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
 .footer a{color:var(--t3);text-decoration:none;margin-right:12px;}
 
+/* reveal */
+.reveal{opacity:0;transform:translateY(18px);}
+
 @media(max-width:980px){
   .hero-wrap{grid-template-columns:1fr;}
   .integrations{grid-template-columns:repeat(2,1fr);} 
   .features{grid-template-columns:repeat(2,1fr);} 
   .workflows{grid-template-columns:1fr;} 
-  .promise{grid-template-columns:1fr;} 
+  .stats{grid-template-columns:repeat(2,1fr);} 
 }
 @media(max-width:640px){
   .nav-links{display:none;}
   .features{grid-template-columns:1fr;} 
   .hero-proof{gap:10px;}
+  .stats{grid-template-columns:1fr;} 
 }
 </style>
 </head>
 <body>
+  <div class="orb one" aria-hidden="true"></div>
+  <div class="orb two" aria-hidden="true"></div>
+  <div class="orb three" aria-hidden="true"></div>
+
   <header class="nav">
     <div class="container nav-inner">
       <div class="brand">
@@ -174,8 +185,8 @@ section{position:relative;z-index:2;}
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#integrations">Integrations</a>
-        <a href="#workflows">Workflow</a>
-        <a href="#promise">Why CreatorOS</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#cta">Get Started</a>
       </div>
       <div style="display:flex;gap:10px;align-items:center;">
         <a class="btn btn-ghost" href="/app/">Open App</a>
@@ -188,21 +199,21 @@ section{position:relative;z-index:2;}
     <div class="container hero-wrap">
       <div>
         <div class="tilt-tag">CreatorOS Command Center</div>
-        <div class="eyebrow">Built for modern creators</div>
-        <h1>Run your creator business from <span class="tilt-word">one</span> smart dashboard</h1>
-        <p>CreatorOS unifies analytics, content planning, and growth insights so you always know what to post, where to post, and why it works.</p>
-        <div class="hero-actions">
+        <div class="kicker">Built for modern creators</div>
+        <h1 class="reveal">Run your creator business from <em>one</em> smart dashboard</h1>
+        <p class="reveal">CreatorOS unifies analytics, content planning, and growth insights so you always know what to post, where to post, and why it works.</p>
+        <div class="hero-actions reveal">
           <a class="btn btn-primary" href="/app/">Start Free</a>
           <a class="btn btn-ghost" href="#integrations">See Integrations</a>
         </div>
-        <div class="hero-proof">
-          <div class="proof"><div class="val">12k+</div><div class="lbl">Creators</div></div>
-          <div class="proof"><div class="val">3.2M</div><div class="lbl">Posts Tracked</div></div>
-          <div class="proof"><div class="val">4</div><div class="lbl">Platforms</div></div>
+        <div class="hero-proof reveal">
+          <div class="proof"><div class="val stat-count" data-target="12000">0</div><div class="lbl">Creators</div></div>
+          <div class="proof"><div class="val stat-count" data-target="3200000">0</div><div class="lbl">Posts Tracked</div></div>
+          <div class="proof"><div class="val stat-count" data-target="4">0</div><div class="lbl">Platforms</div></div>
         </div>
       </div>
       <div class="dashboard-stack">
-        <div class="panel">
+        <div class="panel reveal">
           <h3>Unified Performance</h3>
           <div class="chart">
             <div class="bar" style="height:85%"></div>
@@ -217,7 +228,7 @@ section{position:relative;z-index:2;}
             <div class="mini"><div class="val">32</div><div class="lbl">Goals</div></div>
           </div>
         </div>
-        <div class="panel">
+        <div class="panel reveal">
           <h3>AI Content Focus</h3>
           <div class="mini-row">
             <div class="mini"><div class="val">Hook Lab</div><div class="lbl">Daily Ideas</div></div>
@@ -232,9 +243,9 @@ section{position:relative;z-index:2;}
   <section class="section" id="integrations">
     <div class="container">
       <div class="section-title"><div class="label">Integrations</div><div class="rule"></div></div>
-      <div class="h2">Real platform data, synced instantly</div>
-      <div class="sub">Connect your social profiles and CreatorOS normalizes everything into one workspace.</div>
-      <div class="integrations">
+      <div class="h2 reveal">Real platform data, synced instantly</div>
+      <div class="sub reveal">Connect your social profiles and CreatorOS normalizes everything into one workspace.</div>
+      <div class="integrations reveal">
         <div class="int-card">
           <div class="int-icon" style="background:linear-gradient(135deg,#f9ce34,#ee2a7b,#6228d7);">
             <img alt="Instagram" src="https://cdn.simpleicons.org/instagram/ffffff" />
@@ -266,24 +277,24 @@ section{position:relative;z-index:2;}
   <section class="section" id="features">
     <div class="container">
       <div class="section-title"><div class="label">Features</div><div class="rule"></div></div>
-      <div class="h2">Everything you need to grow, in one place</div>
+      <div class="h2 reveal">Everything you need to grow, in one place</div>
       <div class="features">
-        <div class="feature">
+        <div class="feature reveal">
           <div class="icon-badge">UA</div>
           <h3>Unified Social Dashboard</h3>
           <p>Track growth, content, and platform performance from one command surface.</p>
         </div>
-        <div class="feature">
+        <div class="feature reveal">
           <div class="icon-badge">AI</div>
           <h3>AI Content Insights</h3>
           <p>Get recommendations on hooks, pacing, and publishing strategy.</p>
         </div>
-        <div class="feature">
+        <div class="feature reveal">
           <div class="icon-badge">GT</div>
           <h3>Growth Tracking</h3>
           <p>Monitor progress against goals and understand what drives momentum.</p>
         </div>
-        <div class="feature">
+        <div class="feature reveal">
           <div class="icon-badge">MP</div>
           <h3>Multi-Platform Analytics</h3>
           <p>Compare platforms with normalized reporting and trend snapshots.</p>
@@ -292,44 +303,33 @@ section{position:relative;z-index:2;}
     </div>
   </section>
 
-  <section class="section" id="workflows">
+  <section class="section" id="stats">
+    <div class="container">
+      <div class="section-title"><div class="label">Live Stats</div><div class="rule"></div></div>
+      <div class="stats">
+        <div class="stat reveal"><div class="num stat-count" data-target="12000">0</div><div class="lbl">Creators using CreatorOS</div></div>
+        <div class="stat reveal"><div class="num stat-count" data-target="3200000">0</div><div class="lbl">Posts tracked</div></div>
+        <div class="stat reveal"><div class="num stat-count" data-target="80">0</div><div class="lbl">Reports generated (K)</div></div>
+        <div class="stat reveal"><div class="num stat-count" data-target="5">0</div><div class="lbl">Platforms connected</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="workflow">
     <div class="container">
       <div class="section-title"><div class="label">Workflow</div><div class="rule"></div></div>
-      <div class="h2">A system that keeps you consistent</div>
+      <div class="h2 reveal">A system that keeps you consistent</div>
       <div class="workflows">
-        <div class="flow"><div class="num">01</div><h3>Connect your platforms</h3><p>Authorize once and pull every signal into CreatorOS.</p></div>
-        <div class="flow"><div class="num">02</div><h3>Review the command center</h3><p>See exactly what is growing and what needs attention.</p></div>
-        <div class="flow"><div class="num">03</div><h3>Act on AI insights</h3><p>Use recommendations to plan, publish, and grow faster.</p></div>
+        <div class="flow reveal"><div class="num">01</div><h3>Connect your platforms</h3><p>Authorize once and pull every signal into CreatorOS.</p></div>
+        <div class="flow reveal"><div class="num">02</div><h3>Review the command center</h3><p>See exactly what is growing and what needs attention.</p></div>
+        <div class="flow reveal"><div class="num">03</div><h3>Act on AI insights</h3><p>Use recommendations to plan, publish, and grow faster.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="promise">
-    <div class="container promise">
-      <div class="promise-card">
-        <div class="section-title"><div class="label">Why CreatorOS</div><div class="rule"></div></div>
-        <h3>Less guessing, more momentum</h3>
-        <p class="sub">You get the clarity of a full analytics team, plus a creative assistant that keeps your brand consistent.</p>
-        <div class="promise-list">
-          <div class="promise-item"><strong>Unified signals</strong> — see all platforms in one scorecard.</div>
-          <div class="promise-item"><strong>Actionable insights</strong> — daily recommendations, not just charts.</div>
-          <div class="promise-item"><strong>Creator rhythm</strong> — stay consistent with planned content windows.</div>
-        </div>
-      </div>
-      <div class="promise-card">
-        <h3 class="tilt-tag">CreatorOS in action</h3>
-        <div class="mini-row">
-          <div class="mini"><div class="val">+2.4x</div><div class="lbl">Retention</div></div>
-          <div class="mini"><div class="val">-40%</div><div class="lbl">Time Spent</div></div>
-          <div class="mini"><div class="val">+18</div><div class="lbl">New Ideas</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta">
+  <section class="cta" id="cta">
     <div class="container">
-      <div class="cta-card">
+      <div class="cta-card reveal">
         <h2>Turn your creator data into growth</h2>
         <p>Join creators using CreatorOS to operate like a modern media team.</p>
         <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
@@ -357,5 +357,56 @@ section{position:relative;z-index:2;}
       <div>© CreatorOS</div>
     </div>
   </footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to('.orb.one', {x: 40, y: -20, duration: 8, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  gsap.to('.orb.two', {x: -30, y: 30, duration: 10, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  gsap.to('.orb.three', {x: 20, y: -25, duration: 9, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+
+  gsap.from('.hero .reveal', {
+    opacity: 0,
+    y: 20,
+    duration: 0.8,
+    stagger: 0.12,
+    ease: 'power2.out'
+  });
+
+  gsap.utils.toArray('.reveal').forEach((el) => {
+    if (el.closest('.hero')) return;
+    gsap.fromTo(el, {opacity:0, y: 16}, {
+      opacity:1, y:0, duration:0.7, ease:'power2.out',
+      scrollTrigger:{trigger: el, start:'top 85%'}
+    });
+  });
+
+  const countUp = (el) => {
+    const target = Number(el.dataset.target || 0);
+    const obj = {val: 0};
+    const isLarge = target >= 1000;
+    gsap.to(obj, {
+      val: target,
+      duration: 1.2,
+      ease: 'power1.out',
+      onUpdate: () => {
+        const v = Math.round(obj.val);
+        if (el.closest('#stats')) {
+          if (el.textContent.includes('K')) return;
+          if (v >= 1000) {
+            el.textContent = v >= 1000000 ? (v/1000000).toFixed(1) + 'M' : (v/1000).toFixed(1) + 'K';
+            return;
+          }
+        }
+        el.textContent = isLarge ? v.toLocaleString() : v;
+      }
+    });
+  };
+
+  ScrollTrigger.batch('.stat-count', {
+    start: 'top 85%',
+    onEnter: (batch) => batch.forEach(countUp)
+  });
+</script>
 </body>
 </html>
