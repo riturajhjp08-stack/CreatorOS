@@ -495,82 +495,141 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .btn-xs{padding:6px 10px;font-size:11px;border-radius:8px;}
 
 /* ── COMMUNITY ── */
-.community-shell{display:flex;flex-direction:column;gap:16px;}
-.community-hero{background:linear-gradient(135deg,rgba(184,255,0,.08),rgba(59,130,246,.12),rgba(139,92,246,.12));
-  border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;overflow:hidden;}
-.community-hero::after{content:'';position:absolute;right:-120px;top:-120px;width:260px;height:260px;border-radius:50%;
-  background:radial-gradient(circle,rgba(184,255,0,.16) 0%,transparent 70%);}
-.community-hero h2{font-family:var(--font-head);font-size:22px;}
-.community-hero p{font-size:12px;color:var(--t2);max-width:420px;}
-.community-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--t3);text-transform:uppercase;margin-bottom:6px;}
+.community-shell{display:flex;flex-direction:column;gap:18px;position:relative;}
+.community-shell::before{content:'';position:absolute;inset:-12px;border-radius:22px;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(160px 160px at 8% 0%, rgba(255,94,178,.25), transparent 60%),
+    radial-gradient(180px 180px at 92% 8%, rgba(255,206,79,.18), transparent 60%),
+    radial-gradient(220px 220px at 50% 100%, rgba(98,40,215,.2), transparent 60%);
+  opacity:.7;}
+.community-shell > *{position:relative;z-index:1;}
+
+.community-hero{background:linear-gradient(120deg, rgba(255,84,160,.25), rgba(255,214,88,.18), rgba(98,40,215,.22));
+  border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:18px;position:relative;overflow:hidden;
+  box-shadow:0 18px 34px rgba(0,0,0,.35);}
+.community-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%, rgba(255,255,255,.12), transparent 55%);
+  opacity:.8;pointer-events:none;}
+.community-hero-main{display:flex;gap:16px;align-items:center;}
+.community-avatar-ring{width:76px;height:76px;border-radius:50%;padding:3px;background:conic-gradient(from 120deg,#f9ce34,#ee2a7b,#6228d7,#f9ce34);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 12px 26px rgba(0,0,0,.4);}
+.community-avatar{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+  border:1px solid rgba(255,255,255,.2);}
+.community-avatar img{width:100%;height:100%;object-fit:cover;display:none;}
+.community-avatar span{font-family:var(--font-head);font-size:24px;color:#fff;}
+.community-avatar.has-img img{display:block;}
+.community-avatar.has-img span{display:none;}
+.community-hero h2{font-family:var(--font-head);font-size:24px;margin-bottom:4px;color:#fff;}
+.community-hero p{font-size:12px;color:rgba(255,255,255,.85);max-width:420px;}
+.community-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:6px;}
+.community-hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.community-tag{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);color:#fff;padding:4px 10px;border-radius:999px;font-size:10px;letter-spacing:.5px;}
 .community-hero-actions{display:flex;gap:8px;flex-wrap:wrap;}
-.community-tabs{display:flex;gap:8px;flex-wrap:wrap;}
-.community-tab-btn{background:var(--s2);border:1px solid var(--b1);border-radius:999px;padding:8px 14px;font-size:12px;color:var(--t2);cursor:pointer;transition:all .15s;}
-.community-tab-btn.active{background:var(--lime-d);border-color:rgba(184,255,0,.35);color:var(--lime);}
+.community-hero-actions .btn{border-radius:999px;}
+.community-hero-actions .btn-ghost{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);color:#fff;}
+.community-hero-actions .btn-lime{background:linear-gradient(120deg,#f9ce34,#ee2a7b);border:none;color:#111;}
+
+.community-stories{display:flex;gap:14px;flex-wrap:wrap;padding:6px 4px;}
+.community-story{background:transparent;border:none;color:var(--t2);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;
+  transition:transform .15s,color .15s;}
+.community-story-ring{width:54px;height:54px;border-radius:50%;padding:3px;background:conic-gradient(from 120deg,#f9ce34,#ee2a7b,#6228d7,#f9ce34);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(0,0,0,.35);}
+.community-story-ring span{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.community-story:hover{transform:translateY(-2px);color:var(--t1);}
+.community-story-label{font-size:10px;letter-spacing:.4px;}
+.community-story.active .community-story-ring{box-shadow:0 0 0 2px rgba(255,214,88,.3),0 10px 22px rgba(0,0,0,.4);}
+
+.community-tabs{display:flex;gap:8px;flex-wrap:wrap;padding:6px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);border-radius:999px;}
+.community-tab-btn{background:transparent;border:1px solid transparent;border-radius:999px;padding:8px 16px;font-size:12px;color:var(--t2);cursor:pointer;transition:all .15s;}
+.community-tab-btn:hover{color:var(--t1);background:rgba(255,255,255,.06);}
+.community-tab-btn.active{background:linear-gradient(120deg,#f9ce34,#ee2a7b,#6228d7);color:#101010;border-color:transparent;box-shadow:0 8px 18px rgba(0,0,0,.35);}
+
 .community-section{display:none;animation:fadeUp .25s ease;}
 .community-section.active{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-.community-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;}
-.community-card{background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:18px;box-shadow:var(--clay-shadow-soft);position:relative;overflow:hidden;}
-.community-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s;
-  background:linear-gradient(120deg,rgba(255,255,255,.04),transparent);}
-.community-card:hover::before{opacity:1;}
+.community-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;}
+.community-card{
+  background:
+    linear-gradient(var(--s1), var(--s1)) padding-box,
+    linear-gradient(120deg, rgba(249,206,52,.45), rgba(238,42,123,.35), rgba(98,40,215,.45)) border-box;
+  border:1px solid transparent;border-radius:18px;padding:18px;box-shadow:0 18px 36px rgba(0,0,0,.35);position:relative;overflow:hidden;
+  transition:transform .2s, box-shadow .2s;}
+.community-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 10% 0%, rgba(255,255,255,.08), transparent 55%);
+  opacity:.6;pointer-events:none;}
+.community-card:hover{transform:translateY(-3px);}
 .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
-.card-head h4{font-family:var(--font-head);font-size:14px;margin-bottom:4px;}
+.card-head h4{font-family:var(--font-head);font-size:15px;margin-bottom:4px;}
 .card-head .body{font-size:12px;color:var(--t2);}
-.pill{background:var(--s2);border:1px solid var(--b1);border-radius:999px;padding:4px 10px;font-size:10px;color:var(--t2);font-family:var(--font-mono);}
+.pill{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 10px;font-size:10px;color:#fff;font-family:var(--font-mono);}
 .search-controls{display:grid;gap:10px;margin-bottom:10px;}
+.search-controls .field{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);}
 .chip-row{display:flex;gap:8px;flex-wrap:wrap;}
-.chip{border:1px solid var(--b1);background:var(--s2);border-radius:999px;padding:6px 10px;font-size:11px;color:var(--t2);cursor:pointer;transition:all .15s;}
-.chip.active{border-color:rgba(184,255,0,.35);color:var(--lime);background:var(--lime-d);}
+.chip{border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);border-radius:999px;padding:6px 10px;font-size:11px;color:var(--t2);cursor:pointer;transition:all .15s;}
+.chip.active{border-color:rgba(249,206,52,.6);color:#111;background:linear-gradient(120deg,#f9ce34,#ee2a7b);}
 .user-results{display:flex;flex-direction:column;gap:10px;min-height:120px;}
-.user-card{display:flex;gap:12px;align-items:flex-start;background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:12px;transition:transform .15s, box-shadow .15s;}
-.user-card:hover{transform:translateY(-2px);box-shadow:0 12px 22px rgba(0,0,0,.25);}
-.user-avatar{width:46px;height:46px;border-radius:14px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-head);color:var(--t1);overflow:hidden;}
-.user-avatar img{width:100%;height:100%;object-fit:cover;}
+.user-card{display:flex;gap:12px;align-items:center;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px;
+  transition:transform .15s, box-shadow .15s;}
+.user-card:hover{transform:translateY(-2px);box-shadow:0 16px 30px rgba(0,0,0,.35);}
+.user-avatar{width:48px;height:48px;border-radius:50%;padding:2px;background:conic-gradient(from 120deg,#f9ce34,#ee2a7b,#6228d7,#f9ce34);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.user-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--s2);display:block;}
+.user-avatar span{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-family:var(--font-head);color:#fff;}
 .user-meta{flex:1;min-width:0;}
 .user-meta h5{font-size:13px;font-weight:600;}
 .user-meta .handle{font-size:11px;color:var(--t3);}
 .user-meta .niche{font-size:11px;color:var(--t2);}
 .user-meta .reach{font-size:10px;color:var(--t3);margin-top:4px;}
 .user-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
-.user-actions .btn{padding:6px 10px;font-size:11px;border-radius:8px;}
+.user-actions .btn{padding:6px 10px;font-size:11px;border-radius:999px;}
+.user-actions .btn-ghost{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.14);color:#fff;}
+.user-actions .btn-lime{background:linear-gradient(120deg,#f9ce34,#ee2a7b);border:none;color:#111;}
 .leaderboard-controls{display:flex;gap:8px;align-items:center;}
 .leaderboard-controls label{font-size:11px;color:var(--t3);}
+.leaderboard-controls .field{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);}
 .leaderboard-list{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow:auto;}
-.leaderboard-row{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:10px 12px;transition:transform .15s;}
-.leaderboard-row:hover{transform:translateY(-2px);}
+.leaderboard-row{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:10px 12px;transition:transform .15s, box-shadow .15s;}
+.leaderboard-row:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(0,0,0,.35);}
+.leaderboard-row:nth-child(1){background:linear-gradient(120deg,rgba(249,206,52,.25),rgba(238,42,123,.18));}
+.leaderboard-row:nth-child(2){background:linear-gradient(120deg,rgba(98,40,215,.18),rgba(238,42,123,.12));}
+.leaderboard-row:nth-child(3){background:linear-gradient(120deg,rgba(255,214,88,.18),rgba(98,40,215,.15));}
 .lb-rank{font-family:var(--font-mono);font-size:11px;color:var(--t3);}
 .lb-name{font-size:12px;font-weight:600;}
 .lb-meta{font-size:10px;color:var(--t3);}
-.lb-score{font-family:var(--font-head);font-size:14px;color:var(--lime);}
+.lb-score{font-family:var(--font-head);font-size:14px;color:#fff;}
 .community-tips .tip-grid{display:grid;gap:10px;}
-.tip-card{background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px;}
+.tip-card{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;}
 .tip-card strong{font-size:12px;}
 .tip-card span{font-size:11px;color:var(--t2);}
 .chat-panel{margin-top:14px;}
-.chat-layout{display:grid;grid-template-columns:240px 1fr;gap:14px;}
-.chat-sidebar{background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;}
-.chat-section h5{font-size:12px;margin-bottom:6px;color:var(--t2);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;}
-.chat-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:all .12s;}
-.chat-item:hover{background:var(--s3);border-color:var(--b1);}
-.chat-item.active{background:var(--lime-d);border-color:rgba(184,255,0,.25);}
-.chat-item .avatar{width:32px;height:32px;border-radius:10px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.chat-layout{display:grid;grid-template-columns:260px 1fr;gap:14px;}
+.chat-sidebar{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.35));border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:12px;}
+.chat-section h5{font-size:11px;margin-bottom:6px;color:var(--t2);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;}
+.chat-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:all .12s;}
+.chat-item:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);}
+.chat-item.active{background:linear-gradient(120deg,rgba(249,206,52,.7),rgba(238,42,123,.7));border-color:rgba(255,255,255,.15);color:#111;}
+.chat-item.active .name{color:#111;}
+.chat-item.active .status{color:rgba(0,0,0,.65);}
+.chat-item .avatar{width:32px;height:32px;border-radius:10px;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
 .chat-item .name{font-size:12px;font-weight:600;}
 .chat-item .status{font-size:10px;color:var(--t3);}
 .chat-main{display:flex;flex-direction:column;gap:10px;}
 .chat-header{font-size:13px;font-weight:600;}
-.chat-messages{flex:1;min-height:320px;max-height:380px;overflow:auto;background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;}
-.msg{max-width:72%;padding:8px 10px;border-radius:12px;background:var(--s3);font-size:12px;}
-.msg.me{align-self:flex-end;background:var(--lime-d);border:1px solid rgba(184,255,0,.25);}
+.chat-messages{flex:1;min-height:320px;max-height:380px;overflow:auto;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;}
+.msg{max-width:72%;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.06);font-size:12px;border:1px solid rgba(255,255,255,.06);}
+.msg.me{align-self:flex-end;background:linear-gradient(120deg,rgba(249,206,52,.9),rgba(238,42,123,.9));color:#101010;border:none;}
 .msg .meta{font-size:9px;color:var(--t3);margin-top:4px;}
 .chat-typing{font-size:11px;color:var(--t3);min-height:16px;}
 .chat-input-row{display:flex;gap:8px;align-items:center;}
-.chat-input-row .field{flex:1;}
-.chat-input-row button{white-space:nowrap;}
+.chat-input-row .field{flex:1;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);}
+.chat-input-row button{white-space:nowrap;border-radius:999px;}
+.chat-input-row .btn-ghost{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);color:#fff;}
+.chat-input-row .btn-lime{background:linear-gradient(120deg,#f9ce34,#ee2a7b);border:none;color:#111;}
 #chat-file{display:none;}
 .chat-attachments{display:flex;gap:8px;flex-wrap:wrap;}
-.attach-pill{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:6px 8px;font-size:10px;display:flex;align-items:center;gap:6px;}
+.attach-pill{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:6px 8px;font-size:10px;display:flex;align-items:center;gap:6px;}
 .attach-pill span{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* ── ADMIN ── */
@@ -661,6 +720,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   .ig-profile-top-actions{align-items:flex-start;}
   .ig-settings-grid{grid-template-columns:1fr;}
   .community-hero{flex-direction:column;align-items:flex-start;}
+  .community-hero-main{flex-direction:column;align-items:flex-start;}
   .community-grid{grid-template-columns:1fr;}
   .chat-layout{grid-template-columns:1fr;}
   .plat-grid{grid-template-columns:repeat(2,1fr);}
@@ -1005,10 +1065,8 @@ body::after{
 <nav class="sidebar">
   <div class="logo-mark"><span>C</span></div>
   <div class="nav-item active" onclick="tab('dashboard')" id="nav-dashboard"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span class="tip">Dashboard</span></div>
-  <div class="nav-item" onclick="tab('chat')" id="nav-chat"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="tip">AI Chat</span></div>
   <div class="nav-item" onclick="tab('writer')" id="nav-writer"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span class="tip">AI Writer</span></div>
   <div class="nav-item" onclick="tab('publish')" id="nav-publish"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span class="tip">Upload & Publish</span></div>
-  <div class="nav-item" onclick="tab('ideas')" id="nav-ideas"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="tip">Idea Board</span></div>
   <div class="nav-item" onclick="tab('analytics')" id="nav-analytics"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="tip">Analytics</span></div>
   <div class="nav-item" onclick="tab('community')" id="nav-community"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M7 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 3-3.87"/></svg><span class="tip">Community</span></div>
   <div class="nav-item" onclick="tab('trends')" id="nav-trends"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg><span class="tip">Trend Radar</span></div>
@@ -1110,25 +1168,6 @@ body::after{
       <div class="tool-card" onclick="tab('publish')"><div class="t-icon" style="background:var(--blu-d)"><svg width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><h3>Upload & Publish</h3><p class="body">Upload content, AI caption, trending hashtags, publish or schedule — all in one.</p><span class="ttag">Multi-Platform</span></div>
       <div class="tool-card" onclick="tab('trends')"><div class="t-icon" style="background:var(--lime-d)"><svg width="18" height="18" fill="none" stroke="var(--lime)" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><h3>Trend Radar</h3><p class="body">Know what's exploding before your competitors even see it — AI-powered.</p><span class="ttag">Real-time</span><span class="ttag">AI-detected</span></div>
       <div class="tool-card" onclick="tab('repurpose')"><div class="t-icon" style="background:var(--pur-d)"><svg width="18" height="18" fill="none" stroke="var(--purple)" stroke-width="2" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div><h3>Content Multiplier</h3><p class="body">One script transformed into 10+ platform-native formats instantly.</p><span class="ttag">Auto-Format</span><span class="ttag">Multi-Platform</span></div>
-    </div>
-  </div>
-
-  <!-- ════ AI CHAT ════ -->
-  <div class="content" id="tab-chat" style="height: 100%; display: none; flex-direction: column;">
-    <div style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:14px; padding-bottom: 20px;" id="chat-messages">
-      <div style="text-align:center; padding: 40px 20px; color: var(--t2);">
-        <h2 style="font-size:24px; color:var(--t1); margin-bottom:8px">CreatorOS AI Assistant</h2>
-        <p>Ask me to write scripts, generate ideas, analyze trends, or help with any creator task!</p>
-      </div>
-    </div>
-    <div style="margin-top:auto; position:relative; display:flex; flex-direction:column;">
-      <div style="display:flex; gap:8px;">
-        <input type="text" id="chat-input" class="field" style="flex:1; border-radius:24px; padding:12px 20px; background:var(--s2)" placeholder="Type your message to the AI..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-        <button class="btn btn-lime" style="border-radius:24px; padding:0 20px" id="chat-send-btn" onclick="sendChatMessage()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
-      </div>
-      <p style="font-size:10px; color:var(--t3); text-align:center; margin-top:8px">AI can make mistakes. Verify important information.</p>
     </div>
   </div>
 
@@ -1317,21 +1356,6 @@ body::after{
     </div>
   </div>
 
-  <!-- ════ IDEAS ════ -->
-  <div class="content" id="tab-ideas">
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <div class="sh" style="flex:1;margin-bottom:0"><h2>Idea Board</h2><p class="body">Kanban content pipeline</p></div>
-      <button class="btn btn-ghost btn-sm" onclick="genIdeas()">&#10024; AI Generate</button>
-      <button class="btn btn-lime btn-sm" onclick="addIdea('col-ideas','cnt-ideas')">+ Add</button>
-    </div>
-    <div class="kanban">
-      <div class="kol"><div class="kol-head"><h4>Ideas</h4><span class="kcnt" id="cnt-ideas">0</span></div><div class="kitems" id="col-ideas"></div><button class="kadd" onclick="addIdea('col-ideas','cnt-ideas')">+ Add Idea</button></div>
-      <div class="kol"><div class="kol-head"><h4>Writing</h4><span class="kcnt" id="cnt-writing">0</span></div><div class="kitems" id="col-writing"></div><button class="kadd" onclick="addIdea('col-writing','cnt-writing')">+ Add</button></div>
-      <div class="kol"><div class="kol-head"><h4>Editing</h4><span class="kcnt" id="cnt-editing">0</span></div><div class="kitems" id="col-editing"></div><button class="kadd" onclick="addIdea('col-editing','cnt-editing')">+ Add</button></div>
-      <div class="kol"><div class="kol-head"><h4>Published</h4><span class="kcnt" id="cnt-published">0</span></div><div class="kitems" id="col-published"></div><button class="kadd" onclick="addIdea('col-published','cnt-published')">+ Add</button></div>
-    </div>
-  </div>
-
   <!-- ════ ANALYTICS ════ -->
   <div class="content" id="tab-analytics">
     <div class="sh"><h2>Analytics</h2><p class="body">Performance across all platforms</p></div>
@@ -1354,16 +1378,52 @@ body::after{
   <div class="content" id="tab-community">
     <div class="community-shell">
       <div class="community-hero">
-        <div>
-          <div class="community-eyebrow">Creator Network</div>
-          <h2>Community HQ</h2>
-          <p>Search creators, climb the leaderboard, and chat in real time.</p>
+        <div class="community-hero-main">
+          <div class="community-avatar-ring">
+            <div class="community-avatar" id="community-avatar">
+              <img id="community-avatar-img" alt="Profile">
+              <span id="community-avatar-fallback">C</span>
+            </div>
+          </div>
+          <div class="community-hero-text">
+            <div class="community-eyebrow">Creator Network</div>
+            <h2>Community HQ</h2>
+            <p>Search creators, climb the leaderboard, and chat in real time.</p>
+            <div class="community-hero-tags">
+              <span class="community-tag">Live search</span>
+              <span class="community-tag">Creator collabs</span>
+              <span class="community-tag">Real-time chat</span>
+            </div>
+          </div>
         </div>
         <div class="community-hero-actions">
           <button class="btn btn-ghost btn-sm" onclick="switchCommunityTab('discover')">Discover</button>
           <button class="btn btn-ghost btn-sm" onclick="switchCommunityTab('leaderboard')">Leaderboard</button>
           <button class="btn btn-lime btn-sm" onclick="switchCommunityTab('messages')">Messages</button>
         </div>
+      </div>
+
+      <div class="community-stories">
+        <button class="community-story active" data-tab="discover" data-primary="1" type="button" onclick="switchCommunityTab('discover')">
+          <div class="community-story-ring"><span>🔍</span></div>
+          <div class="community-story-label">Discover</div>
+        </button>
+        <button class="community-story" data-tab="leaderboard" data-primary="1" type="button" onclick="switchCommunityTab('leaderboard')">
+          <div class="community-story-ring"><span>🏆</span></div>
+          <div class="community-story-label">Top Creators</div>
+        </button>
+        <button class="community-story" data-tab="messages" data-primary="1" type="button" onclick="switchCommunityTab('messages')">
+          <div class="community-story-ring"><span>💬</span></div>
+          <div class="community-story-label">Messages</div>
+        </button>
+        <button class="community-story" data-tab="messages" data-primary="0" type="button" onclick="switchCommunityTab('messages')">
+          <div class="community-story-ring"><span>🤝</span></div>
+          <div class="community-story-label">Requests</div>
+        </button>
+        <button class="community-story" data-tab="discover" data-primary="0" type="button" onclick="switchCommunityTab('discover')">
+          <div class="community-story-ring"><span>✨</span></div>
+          <div class="community-story-label">Trending</div>
+        </button>
       </div>
 
       <div class="community-tabs">
@@ -1911,6 +1971,7 @@ body::after{
               <label>Default Platform</label>
               <select class="field">
                 <option>YouTube</option>
+                <option>TikTok</option>
                 <option>Instagram</option>
                 <option>Twitter</option>
                 <option>LinkedIn</option>
@@ -2033,6 +2094,12 @@ body::after{
         <h4 style="font-family:var(--font-head);font-size:14px;font-weight:600;margin-bottom:4px">Instagram</h4>
         <p style="font-size:12px;color:var(--t2);margin-bottom:10px">Posts, reels & insights</p>
         <button class="btn btn-lime btn-sm" style="width:100%" onclick="connectPlatform('instagram')">Connect Account</button>
+      </div>
+      <div class="plat-card" style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px;text-align:center">
+        <div style="font-size:32px;margin-bottom:8px">🎵</div>
+        <h4 style="font-family:var(--font-head);font-size:14px;font-weight:600;margin-bottom:4px">TikTok</h4>
+        <p style="font-size:12px;color:var(--t2);margin-bottom:10px">Short-form videos & insights</p>
+        <button class="btn btn-lime btn-sm" style="width:100%" onclick="connectPlatform('tiktok')">Connect Account</button>
       </div>
       <div class="plat-card" style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px;text-align:center">
         <div style="font-size:32px;margin-bottom:8px">𝕏</div>
@@ -3567,7 +3634,6 @@ function tab(name) {
     dashboard: 'Dashboard — CreatorOS',
     writer: 'AI Content Studio',
     publish: 'Upload & Publish',
-    ideas: 'Idea Board',
     analytics: 'Analytics',
     community: 'Community',
     trends: 'Trend Radar',
@@ -3746,6 +3812,10 @@ function switchCommunityTab(tab) {
   });
   document.querySelectorAll('.community-tab-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+  document.querySelectorAll('.community-story').forEach(story => {
+    const isPrimary = story.dataset.primary === '1';
+    story.classList.toggle('active', isPrimary && story.dataset.tab === tab);
   });
   const section = document.getElementById(`community-${tab}`);
   if (section) section.classList.add('active');
@@ -4759,100 +4829,6 @@ async function aiGenerate(task, prompt, extra = {}) {
   return data;
 }
 
-let chatHistory = [];
-
-async function sendChatMessage() {
-  const inputEl = document.getElementById('chat-input');
-  const prompt = inputEl.value.trim();
-  if (!prompt) return;
-  
-  if (!isAuthenticated) {
-    alert('Please sign in first.');
-    return;
-  }
-
-  const chatMessages = document.getElementById('chat-messages');
-  
-  const msgDiv = document.createElement('div');
-  msgDiv.style.alignSelf = 'flex-end';
-  msgDiv.style.background = 'var(--lime)';
-  msgDiv.style.color = '#000';
-  msgDiv.style.padding = '12px 16px';
-  msgDiv.style.borderRadius = '16px 16px 0 16px';
-  msgDiv.style.maxWidth = '80%';
-  msgDiv.textContent = prompt;
-  chatMessages.appendChild(msgDiv);
-  
-  inputEl.value = '';
-  const sendBtn = document.getElementById('chat-send-btn');
-  sendBtn.disabled = true;
-  
-  const aiMsgDiv = document.createElement('div');
-  aiMsgDiv.style.alignSelf = 'flex-start';
-  aiMsgDiv.style.background = 'var(--s2)';
-  aiMsgDiv.style.padding = '12px 16px';
-  aiMsgDiv.style.borderRadius = '16px 16px 16px 0';
-  aiMsgDiv.style.maxWidth = '80%';
-  aiMsgDiv.style.whiteSpace = 'pre-wrap';
-  aiMsgDiv.style.lineHeight = '1.5';
-  aiMsgDiv.textContent = '...';
-  chatMessages.appendChild(aiMsgDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  
-  try {
-    const response = await fetch(`${API_URL}/ai/chat`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ prompt, history: chatHistory })
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || 'Failed to connect to AI');
-    }
-    
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder("utf-8");
-    let aiText = "";
-    aiMsgDiv.textContent = "";
-    
-    while(true) {
-      const {done, value} = await reader.read();
-      if (done) break;
-      const chunk = decoder.decode(value);
-      const lines = chunk.split('\n');
-      for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          const dataStr = line.substring(6);
-          if (dataStr === '[DONE]') break;
-          try {
-            const data = JSON.parse(dataStr);
-            if (data.error) {
-              aiMsgDiv.textContent += '\nError: ' + data.error;
-            } else if (data.text) {
-              aiText += data.text;
-              aiMsgDiv.textContent = aiText;
-              chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-          } catch(e) {}
-        }
-      }
-    }
-    
-    chatHistory.push({role: "user", content: prompt});
-    chatHistory.push({role: "model", content: aiText});
-    
-  } catch (error) {
-    aiMsgDiv.textContent = "Error: " + error.message;
-  } finally {
-    sendBtn.disabled = false;
-    inputEl.focus();
-  }
-}
-
 async function sendMsg() {
   const inputEl = document.getElementById('user-input');
   const input = inputEl.value.trim();
@@ -5258,10 +5234,14 @@ function syncAvatarUI(avatarUrl) {
   const navAvatar = document.getElementById('nav-user-avatar');
   const navAvatarImg = document.getElementById('nav-user-avatar-img');
   const navAvatarFallback = document.getElementById('nav-user-avatar-fallback');
+  const communityAvatar = document.getElementById('community-avatar');
+  const communityAvatarImg = document.getElementById('community-avatar-img');
+  const communityAvatarFallback = document.getElementById('community-avatar-fallback');
 
   if (avatarFallback) avatarFallback.textContent = fallbackLetter;
   if (previewFallback) previewFallback.textContent = fallbackLetter;
   if (navAvatarFallback) navAvatarFallback.textContent = fallbackLetter;
+  if (communityAvatarFallback) communityAvatarFallback.textContent = fallbackLetter;
 
   const hasUrl = Boolean(avatarUrl);
   if (avatar && avatarImg) {
@@ -5289,6 +5269,15 @@ function syncAvatarUI(avatarUrl) {
     } else {
       navAvatarImg.removeAttribute('src');
       navAvatar.classList.remove('has-img');
+    }
+  }
+  if (communityAvatar && communityAvatarImg) {
+    if (hasUrl) {
+      communityAvatarImg.src = avatarUrl;
+      communityAvatar.classList.add('has-img');
+    } else {
+      communityAvatarImg.removeAttribute('src');
+      communityAvatar.classList.remove('has-img');
     }
   }
 }
