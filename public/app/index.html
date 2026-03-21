@@ -494,163 +494,253 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .field.compact{padding:8px 10px;font-size:12px;}
 .btn-xs{padding:6px 10px;font-size:11px;border-radius:8px;}
 
-/* ── COMMUNITY ── */
-.community-shell{display:flex;flex-direction:column;gap:18px;position:relative;}
-.community-shell::before{content:'';position:absolute;inset:-14px;border-radius:24px;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(180px 180px at 6% -6%, rgba(184,255,0,.22), transparent 60%),
-    radial-gradient(220px 220px at 95% 10%, rgba(139,92,246,.24), transparent 60%),
-    radial-gradient(260px 260px at 50% 100%, rgba(59,130,246,.22), transparent 60%);
-  opacity:.7;}
-.community-shell > *{position:relative;z-index:1;}
+/* ── COMMUNITY V2 ── */
+.community-v2{
+  --c-bg:var(--bg);
+  --c-bg2:var(--s1);
+  --c-bg3:var(--s2);
+  --c-bg4:var(--s3);
+  --c-lime:var(--lime);
+  --c-lime-d:rgba(184,255,0,.08);
+  --c-lime-b:rgba(184,255,0,.18);
+  --c-violet:var(--purple);
+  --c-cyan:#22d3ee;
+  --c-pink:#f43f85;
+  --c-amber:var(--gold);
+  --c-t1:var(--t1);
+  --c-t2:var(--t2);
+  --c-t3:var(--t3);
+  --c-border:rgba(255,255,255,.06);
+  --c-border2:rgba(255,255,255,.12);
+  --c-r:10px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  min-height:100%;
+  font-family:var(--font-body);
+  color:var(--t1);
+}
+.community-v2 .c-topnav{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:rgba(7,7,14,.92);
+  backdrop-filter:blur(16px);
+  border:1px solid var(--c-border);
+  border-radius:14px;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.community-v2 .c-brand{display:flex;align-items:center;gap:12px;}
+.community-v2 .c-logo{
+  width:34px;height:34px;border-radius:9px;
+  background:conic-gradient(from 120deg,var(--c-lime),var(--c-violet),var(--c-cyan),var(--c-lime));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-weight:800;color:#0b0b12;
+}
+.community-v2 .c-title{font-family:var(--font-head);font-weight:800;font-size:16px;letter-spacing:-.2px;}
+.community-v2 .c-subtitle{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--c-t3);font-family:var(--font-mono);}
+.community-v2 .c-tabs{
+  display:flex;gap:4px;background:var(--c-bg2);
+  border:1px solid var(--c-border);border-radius:var(--c-r);padding:4px;
+}
+.community-v2 .c-tab{
+  padding:6px 16px;border-radius:8px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--c-t2);background:transparent;border:none;cursor:pointer;transition:all .18s;
+  font-family:var(--font-mono);
+}
+.community-v2 .c-tab.active{
+  background:var(--c-lime);color:#0b0b12;
+  font-family:var(--font-head);font-weight:700;
+}
+.community-v2 .c-tab:hover:not(.active){color:var(--c-t1);background:rgba(255,255,255,.04);}
+.community-v2 .c-actions{display:flex;align-items:center;gap:10px;}
+.community-v2 .c-pill{
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;background:var(--c-bg2);
+  border:1px solid var(--c-border);color:var(--c-t2);
+  font-family:var(--font-mono);
+}
+.community-v2 .c-pill-live{color:var(--c-lime);border-color:var(--c-lime-b);background:var(--c-lime-d);}
+.community-v2 .c-pill-soft{color:var(--c-t2);}
+.community-v2 .c-avatar{
+  width:34px;height:34px;border-radius:50%;padding:2px;
+  background:conic-gradient(from 120deg,var(--c-lime),var(--c-violet),var(--c-cyan),var(--c-lime));
+  display:flex;align-items:center;justify-content:center;
+}
+.community-v2 .c-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:none;}
+.community-v2 .c-avatar span{width:100%;height:100%;border-radius:50%;background:var(--c-bg3);display:flex;align-items:center;justify-content:center;font-weight:700;}
+.community-v2 .c-avatar.has-img img{display:block;}
+.community-v2 .c-avatar.has-img span{display:none;}
 
-.community-hero{background:linear-gradient(135deg, rgba(184,255,0,.08), rgba(139,92,246,.16), rgba(59,130,246,.18));
-  border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:20px;display:flex;align-items:center;justify-content:space-between;gap:18px;position:relative;overflow:hidden;
-  box-shadow:0 18px 34px rgba(0,0,0,.35);}
-.community-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 85% 15%, rgba(255,255,255,.12), transparent 55%);
-  opacity:.7;pointer-events:none;}
-.community-hero-main{display:flex;gap:16px;align-items:center;}
-.community-avatar-ring{width:74px;height:74px;border-radius:50%;padding:3px;background:conic-gradient(from 120deg,var(--lime),var(--purple),var(--blue),var(--lime));
-  display:flex;align-items:center;justify-content:center;box-shadow:0 12px 24px rgba(0,0,0,.4);}
-.community-avatar{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
-  border:1px solid rgba(255,255,255,.2);}
-.community-avatar img{width:100%;height:100%;object-fit:cover;display:none;}
-.community-avatar span{font-family:var(--font-head);font-size:24px;color:#fff;}
-.community-avatar.has-img img{display:block;}
-.community-avatar.has-img span{display:none;}
-.community-hero h2{font-family:var(--font-head);font-size:24px;margin-bottom:4px;color:#fff;}
-.community-hero p{font-size:12px;color:rgba(255,255,255,.82);max-width:420px;}
-.community-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:6px;}
-.community-hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
-.community-tag{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);color:#fff;padding:4px 10px;border-radius:999px;font-size:10px;letter-spacing:.5px;}
-.community-hero-actions{display:flex;gap:8px;flex-wrap:wrap;}
-.community-hero-actions .btn{border-radius:999px;}
-.community-hero-actions .btn-ghost{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);color:#fff;}
-.community-hero-actions .btn-lime{background:linear-gradient(120deg, var(--lime), var(--purple));border:none;color:#101010;}
+.community-v2 .c-page{display:none;animation:fadeUp .2s ease;}
+.community-v2 .c-page.active{display:block;}
+.community-v2 .c-net-bar{display:flex;gap:10px;flex-wrap:wrap;}
+.community-v2 .c-search{position:relative;flex:1;min-width:220px;}
+.community-v2 .c-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--c-t3);}
+.community-v2 .c-input{
+  width:100%;padding:10px 12px 10px 36px;border-radius:var(--c-r);
+  background:var(--c-bg2);border:1px solid var(--c-border);
+  color:var(--c-t1);font-family:var(--font-body);font-size:12px;outline:none;
+}
+.community-v2 .c-input:focus{border-color:var(--c-lime-b);}
+.community-v2 .c-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.community-v2 .c-filter{
+  padding:7px 14px;border-radius:20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  border:1px solid var(--c-border);background:var(--c-bg2);color:var(--c-t2);cursor:pointer;transition:all .15s;
+  font-family:var(--font-head);font-weight:600;
+}
+.community-v2 .c-filter:hover{border-color:var(--c-border2);color:var(--c-t1);}
+.community-v2 .c-filter.active{background:var(--c-lime-d);border-color:var(--c-lime-b);color:var(--c-lime);}
 
-.community-stories{display:flex;gap:14px;flex-wrap:wrap;padding:6px 4px;}
-.community-story{background:transparent;border:none;color:var(--t2);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;
-  transition:transform .15s,color .15s;}
-.community-story-ring{width:54px;height:54px;border-radius:50%;padding:3px;background:conic-gradient(from 120deg,var(--lime),var(--purple),var(--blue),var(--lime));
-  display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(0,0,0,.35);}
-.community-story-ring span{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:18px;}
-.community-story:hover{transform:translateY(-2px);color:var(--t1);}
-.community-story-label{font-size:10px;letter-spacing:.4px;}
-.community-story.active .community-story-ring{box-shadow:0 0 0 2px rgba(184,255,0,.25),0 10px 22px rgba(0,0,0,.4);}
+.community-v2 .c-net-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:16px;margin-top:18px;}
+.community-v2 .c-panel{
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:18px;
+  box-shadow:0 18px 36px rgba(0,0,0,.35);position:relative;
+}
+.community-v2 .c-panel-wide{min-height:520px;}
+.community-v2 .c-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.community-v2 .c-panel-title{font-family:var(--font-head);font-size:15px;font-weight:700;}
+.community-v2 .c-panel-sub{font-size:11px;color:var(--c-t2);}
+.community-v2 .c-results{display:flex;flex-direction:column;gap:12px;min-height:240px;}
+.community-v2 .c-full{width:100%;margin-top:12px;}
+.community-v2 .c-divider{height:1px;background:var(--c-border);margin:16px 0;}
 
-.community-tabs{display:flex;gap:8px;flex-wrap:wrap;padding:6px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08);border-radius:999px;}
-.community-tab-btn{background:transparent;border:1px solid transparent;border-radius:999px;padding:8px 16px;font-size:12px;color:var(--t2);cursor:pointer;transition:all .15s;}
-.community-tab-btn:hover{color:var(--t1);background:rgba(255,255,255,.06);}
-.community-tab-btn.active{background:linear-gradient(120deg,var(--lime),var(--purple));color:#101010;border-color:transparent;box-shadow:0 8px 18px rgba(0,0,0,.35);}
+.community-v2 .c-spotlight{display:flex;flex-direction:column;gap:12px;}
+.community-v2 .c-spotlight-card{
+  background:var(--c-bg3);border:1px solid var(--c-border);border-radius:10px;padding:14px;
+  display:grid;gap:8px;
+}
+.community-v2 .c-spotlight-row{display:flex;align-items:center;gap:10px;}
+.community-v2 .c-spotlight-avatar{
+  width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--c-violet),var(--c-pink));
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;
+}
+.community-v2 .c-spotlight-avatar img,
+.community-v2 .c-spotlight-avatar span{
+  width:100%;height:100%;border-radius:10px;display:flex;align-items:center;justify-content:center;object-fit:cover;
+  background:var(--c-bg2);color:#fff;
+}
+.community-v2 .c-spotlight-name{font-family:var(--font-head);font-weight:700;}
+.community-v2 .c-spotlight-handle{font-size:10px;color:var(--c-t3);}
+.community-v2 .c-spotlight-meta{font-size:11px;color:var(--c-t2);}
+.community-v2 .c-spotlight-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.community-v2 .c-spotlight-empty{font-size:11px;color:var(--c-t2);}
 
-.community-section{display:none;animation:fadeUp .25s ease;}
-.community-section.active{display:block;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-.community-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;}
-.community-card{
-  background:
-    linear-gradient(var(--s1), var(--s1)) padding-box,
-    linear-gradient(120deg, rgba(184,255,0,.35), rgba(139,92,246,.35), rgba(59,130,246,.35)) border-box;
-  border:1px solid transparent;border-radius:18px;padding:18px;box-shadow:0 18px 36px rgba(0,0,0,.35);position:relative;overflow:hidden;
-  transition:transform .2s, box-shadow .2s;}
-.community-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 12% 0%, rgba(255,255,255,.08), transparent 55%);
-  opacity:.6;pointer-events:none;}
-.community-card:hover{transform:translateY(-3px);}
-.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
-.card-head h4{font-family:var(--font-head);font-size:15px;margin-bottom:4px;}
-.card-head .body{font-size:12px;color:var(--t2);}
-.pill{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 10px;font-size:10px;color:#fff;font-family:var(--font-mono);}
-.search-controls{display:grid;gap:10px;margin-bottom:10px;}
-.search-controls .field{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);}
-.chip-row{display:flex;gap:8px;flex-wrap:wrap;}
-.chip{border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);border-radius:999px;padding:6px 10px;font-size:11px;color:var(--t2);cursor:pointer;transition:all .15s;}
-.chip.active{border-color:rgba(184,255,0,.6);color:#101010;background:linear-gradient(120deg,var(--lime),var(--purple));}
-.user-results{display:flex;flex-direction:column;gap:10px;min-height:120px;}
-.user-card{display:flex;gap:12px;align-items:center;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px;
-  transition:transform .15s, box-shadow .15s;}
-.user-card:hover{transform:translateY(-2px);box-shadow:0 16px 30px rgba(0,0,0,.35);}
-.user-avatar{width:48px;height:48px;border-radius:50%;padding:2px;background:conic-gradient(from 120deg,var(--lime),var(--purple),var(--blue),var(--lime));
-  display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.user-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--s2);display:block;}
-.user-avatar span{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-family:var(--font-head);color:#fff;}
-.user-meta{flex:1;min-width:0;}
-.user-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.user-top .btn{padding:5px 10px;font-size:10px;border-radius:999px;white-space:nowrap;}
-.user-meta h5{font-size:13px;font-weight:600;}
-.user-meta .handle{font-size:11px;color:var(--t3);}
-.user-meta .niche{font-size:11px;color:var(--t2);}
-.user-meta .reach{font-size:10px;color:var(--t3);margin-top:4px;}
-.user-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
-.user-actions .btn{padding:6px 10px;font-size:11px;border-radius:999px;}
-.user-actions .btn-ghost{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.14);color:#fff;}
-.user-actions .btn-lime{background:linear-gradient(120deg,var(--lime),var(--purple));border:none;color:#101010;}
-.leaderboard-controls{display:flex;gap:8px;align-items:center;}
-.leaderboard-controls label{font-size:11px;color:var(--t3);}
-.leaderboard-controls .field{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);}
-.leaderboard-list{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow:auto;}
-.leaderboard-row{display:grid;grid-template-columns:38px 44px 1fr auto;gap:10px;align-items:center;background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:10px 12px;transition:transform .15s, box-shadow .15s;}
-.leaderboard-row:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(0,0,0,.35);}
-.leaderboard-row:nth-child(1){background:linear-gradient(120deg,rgba(184,255,0,.18),rgba(139,92,246,.14));}
-.leaderboard-row:nth-child(2){background:linear-gradient(120deg,rgba(59,130,246,.16),rgba(139,92,246,.12));}
-.leaderboard-row:nth-child(3){background:linear-gradient(120deg,rgba(184,255,0,.14),rgba(59,130,246,.12));}
-.lb-rank{font-family:var(--font-mono);font-size:11px;color:var(--t3);}
-.lb-name{font-size:12px;font-weight:600;}
-.lb-meta{font-size:10px;color:var(--t3);}
-.lb-score{font-family:var(--font-head);font-size:14px;color:#fff;}
-.lb-avatar{width:36px;height:36px;border-radius:50%;padding:2px;background:conic-gradient(from 120deg,var(--lime),var(--purple),var(--blue),var(--lime));
-  display:flex;align-items:center;justify-content:center;}
-.lb-avatar span{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
-.community-tips .tip-grid{display:grid;gap:10px;}
-.tip-card{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;}
-.tip-card strong{font-size:12px;}
-.tip-card span{font-size:11px;color:var(--t2);}
-.chat-panel{margin-top:14px;}
-.chat-layout{display:grid;grid-template-columns:260px 1fr;gap:14px;}
-.dm-layout{min-height:520px;}
-.chat-sidebar{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.35));border:1px solid rgba(255,255,255,.1);
-  border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:12px;}
-.dm-search{display:flex;gap:8px;}
-.dm-search .field{flex:1;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);}
-.dm-search .btn{border-radius:999px;}
-.chat-section h5{font-size:11px;margin-bottom:6px;color:var(--t2);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;}
-.chat-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:all .12s;}
-.chat-item:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);}
-.chat-item.active{background:linear-gradient(120deg,rgba(184,255,0,.75),rgba(139,92,246,.75));border-color:rgba(255,255,255,.15);color:#111;}
-.chat-item.active .name{color:#111;}
-.chat-item.active .status{color:rgba(0,0,0,.65);}
-.chat-item .avatar{width:32px;height:32px;border-radius:10px;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
-.chat-item .name{font-size:12px;font-weight:600;}
-.chat-item .status{font-size:10px;color:var(--t3);}
-.chat-main{display:flex;flex-direction:column;gap:10px;}
-.dm-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;background:rgba(0,0,0,.35);}
-.dm-user{display:flex;align-items:center;gap:10px;}
-.dm-avatar{width:38px;height:38px;border-radius:50%;padding:2px;background:conic-gradient(from 120deg,var(--lime),var(--purple),var(--blue),var(--lime));
-  display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-head);color:#fff;}
-.dm-avatar span{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;}
-.dm-meta{display:flex;flex-direction:column;gap:2px;}
-.dm-name{font-size:12px;font-weight:600;}
-.dm-status{font-size:10px;color:var(--t3);}
-.dm-actions{display:flex;gap:6px;}
-.dm-icon{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);color:var(--t1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;}
-.dm-icon:hover{background:rgba(255,255,255,.08);}
-.chat-messages{flex:1;min-height:320px;max-height:380px;overflow:auto;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);
-  border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;}
-.msg{max-width:72%;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.06);font-size:12px;border:1px solid rgba(255,255,255,.06);}
-.msg.me{align-self:flex-end;background:linear-gradient(120deg,rgba(184,255,0,.9),rgba(139,92,246,.9));color:#101010;border:none;}
-.msg .meta{font-size:9px;color:var(--t3);margin-top:4px;}
-.chat-typing{font-size:11px;color:var(--t3);min-height:16px;}
-.chat-input-row{display:flex;gap:8px;align-items:center;}
-.chat-input-row .field{flex:1;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);}
-.chat-input-row button{white-space:nowrap;border-radius:999px;}
-.chat-input-row .btn-ghost{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);color:#fff;}
-.chat-input-row .btn-lime{background:linear-gradient(120deg,var(--lime),var(--purple));border:none;color:#101010;}
-#chat-file{display:none;}
-.chat-attachments{display:flex;gap:8px;flex-wrap:wrap;}
-.attach-pill{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:6px 8px;font-size:10px;display:flex;align-items:center;gap:6px;}
-.attach-pill span{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.community-v2 .c-tip-grid{display:grid;gap:10px;}
+.community-v2 .c-tip{background:var(--c-bg3);border:1px solid var(--c-border);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;}
+.community-v2 .c-tip strong{font-size:12px;}
+.community-v2 .c-tip span{font-size:11px;color:var(--c-t2);}
+
+.community-v2 .c-select-wrap{display:flex;align-items:center;gap:8px;}
+.community-v2 .c-select-wrap label{font-size:10px;color:var(--c-t3);letter-spacing:1px;text-transform:uppercase;}
+.community-v2 .c-select-wrap .field{background:var(--c-bg3);border:1px solid var(--c-border);}
+
+.community-v2 .user-card{
+  display:flex;gap:12px;align-items:center;background:var(--c-bg3);border:1px solid var(--c-border);
+  border-radius:10px;padding:12px;transition:transform .15s, box-shadow .15s;
+}
+.community-v2 .user-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.35);}
+.community-v2 .user-avatar{
+  width:46px;height:46px;border-radius:10px;overflow:hidden;
+  background:linear-gradient(135deg,var(--c-violet),var(--c-pink));
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;
+}
+.community-v2 .user-avatar img{width:100%;height:100%;object-fit:cover;}
+.community-v2 .user-avatar span{color:#fff;}
+.community-v2 .user-meta{flex:1;min-width:0;}
+.community-v2 .user-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.community-v2 .user-top .btn{padding:5px 10px;font-size:10px;border-radius:999px;}
+.community-v2 .user-meta h5{font-size:13px;font-weight:600;}
+.community-v2 .user-meta .handle{font-size:11px;color:var(--c-t3);}
+.community-v2 .user-meta .niche{font-size:11px;color:var(--c-t2);}
+.community-v2 .user-meta .reach{font-size:10px;color:var(--c-t3);margin-top:4px;}
+.community-v2 .user-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.community-v2 .user-actions .btn-ghost{background:transparent;border:1px solid var(--c-border2);color:var(--c-t1);}
+
+.community-v2 .leaderboard-list{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow:auto;}
+.community-v2 .leaderboard-row{display:grid;grid-template-columns:32px 40px 1fr auto;gap:10px;align-items:center;
+  background:var(--c-bg3);border:1px solid var(--c-border);border-radius:10px;padding:10px 12px;}
+.community-v2 .leaderboard-row:hover{border-color:var(--c-border2);}
+.community-v2 .lb-rank{font-family:var(--font-mono);font-size:10px;color:var(--c-t3);}
+.community-v2 .lb-avatar{
+  width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--c-lime),var(--c-cyan));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#0b0b12;
+}
+.community-v2 .lb-name{font-size:12px;font-weight:600;}
+.community-v2 .lb-meta{font-size:10px;color:var(--c-t3);}
+.community-v2 .lb-score{font-family:var(--font-head);font-size:13px;color:var(--c-lime);}
+
+.community-v2 .c-msg-layout{display:grid;grid-template-columns:320px 1fr;gap:16px;min-height:600px;}
+.community-v2 .c-msg-left{
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px;overflow:auto;
+}
+.community-v2 .c-msg-head{display:flex;flex-direction:column;gap:10px;}
+.community-v2 .c-msg-title{font-family:var(--font-head);font-weight:800;font-size:16px;}
+.community-v2 .c-msg-search{position:relative;}
+.community-v2 .c-msg-search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:12px;height:12px;color:var(--c-t3);}
+.community-v2 .c-msg-search input{
+  width:100%;padding:8px 10px 8px 30px;border-radius:var(--c-r);background:var(--c-bg3);border:1px solid var(--c-border);color:var(--c-t1);
+  font-family:var(--font-body);font-size:11px;
+}
+.community-v2 .c-msg-section-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--c-t3);margin-bottom:6px;font-family:var(--font-mono);}
+.community-v2 .c-msg-section{display:flex;flex-direction:column;gap:8px;}
+.community-v2 #friend-requests,
+.community-v2 #friends-list{display:flex;flex-direction:column;gap:8px;}
+.community-v2 .chat-item{
+  display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:all .15s;
+  background:var(--c-bg3);
+}
+.community-v2 .chat-item:hover{border-color:var(--c-border2);}
+.community-v2 .chat-item.active{background:var(--c-lime-d);border-color:var(--c-lime-b);}
+.community-v2 .chat-item .avatar{
+  width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--c-violet),var(--c-pink));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;
+}
+.community-v2 .chat-item .name{font-size:12px;font-weight:600;}
+.community-v2 .chat-item .status{font-size:10px;color:var(--c-t3);}
+
+.community-v2 .c-msg-right{
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;
+}
+.community-v2 .c-chat-head{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg3);
+}
+.community-v2 .c-chat-avatar{
+  width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--c-lime),var(--c-cyan));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:#0b0b12;
+}
+.community-v2 .c-chat-avatar span{display:block;}
+.community-v2 .c-chat-meta{display:flex;flex-direction:column;gap:2px;flex:1;}
+.community-v2 .c-chat-name{font-size:12px;font-weight:700;}
+.community-v2 .c-chat-sub{font-size:10px;color:var(--c-t3);}
+.community-v2 .c-chat-actions{display:flex;gap:6px;}
+.community-v2 .c-icon-btn{
+  width:30px;height:30px;border-radius:8px;border:1px solid var(--c-border);background:var(--c-bg2);color:var(--c-t2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;
+}
+.community-v2 .c-icon-btn:hover{border-color:var(--c-border2);color:var(--c-t1);}
+.community-v2 .c-icon-btn svg{width:13px;height:13px;}
+.community-v2 .c-chat-body{
+  flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg3);
+}
+.community-v2 .msg{max-width:72%;padding:8px 10px;border-radius:10px;background:var(--c-bg2);border:1px solid var(--c-border);font-size:12px;}
+.community-v2 .msg.me{align-self:flex-end;background:var(--c-lime-d);border-color:var(--c-lime-b);}
+.community-v2 .msg .meta{font-size:9px;color:var(--c-t3);margin-top:4px;}
+.community-v2 .c-chat-typing{font-size:10px;color:var(--c-t3);min-height:16px;padding-left:4px;}
+.community-v2 .c-chat-compose{display:flex;gap:8px;align-items:center;}
+.community-v2 .c-chat-compose .field{flex:1;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:8px;padding:8px 10px;}
+.community-v2 .c-chat-compose .btn-ghost{background:transparent;border:1px solid var(--c-border2);}
+.community-v2 .c-chat-attachments{display:flex;gap:8px;flex-wrap:wrap;}
+.community-v2 .attach-pill{background:var(--c-bg3);border:1px solid var(--c-border);border-radius:8px;padding:6px 8px;font-size:10px;display:flex;align-items:center;gap:6px;}
+
+@media(max-width:1000px){
+  .community-v2 .c-net-grid{grid-template-columns:1fr;}
+  .community-v2 .c-msg-layout{grid-template-columns:1fr;}
+}
 
 /* ── ADMIN ── */
 .admin-header{background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(139,92,246,.08));border:1px solid rgba(249,115,22,.15);border-radius:14px;padding:22px;flex-shrink:0;}
@@ -739,10 +829,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   .ig-profile-top{flex-direction:column;}
   .ig-profile-top-actions{align-items:flex-start;}
   .ig-settings-grid{grid-template-columns:1fr;}
-  .community-hero{flex-direction:column;align-items:flex-start;}
-  .community-hero-main{flex-direction:column;align-items:flex-start;}
-  .community-grid{grid-template-columns:1fr;}
-  .chat-layout{grid-template-columns:1fr;}
   .plat-grid{grid-template-columns:repeat(2,1fr);}
   .credit-packages{grid-template-columns:1fr;}
 }
@@ -1396,121 +1482,107 @@ body::after{
 
   <!-- ════ COMMUNITY ════ -->
   <div class="content" id="tab-community">
-    <div class="community-shell">
-      <div class="community-hero">
-        <div class="community-hero-main">
-          <div class="community-avatar-ring">
-            <div class="community-avatar" id="community-avatar">
-              <img id="community-avatar-img" alt="Profile">
-              <span id="community-avatar-fallback">C</span>
-            </div>
-          </div>
-          <div class="community-hero-text">
-            <div class="community-eyebrow">Creator Network</div>
-            <h2>Community HQ</h2>
-            <p>Search creators, climb the leaderboard, and chat in real time.</p>
-            <div class="community-hero-tags">
-              <span class="community-tag">Live search</span>
-              <span class="community-tag">Creator collabs</span>
-              <span class="community-tag">Real-time chat</span>
-            </div>
+    <div class="community-v2">
+      <div class="c-topnav">
+        <div class="c-brand">
+          <div class="c-logo">C</div>
+          <div>
+            <div class="c-title">Community</div>
+            <div class="c-subtitle">Creator Network</div>
           </div>
         </div>
-        <div class="community-hero-actions">
-          <button class="btn btn-ghost btn-sm" onclick="switchCommunityTab('discover')">Discover</button>
-          <button class="btn btn-ghost btn-sm" onclick="switchCommunityTab('leaderboard')">Leaderboard</button>
-          <button class="btn btn-lime btn-sm" onclick="switchCommunityTab('messages')">Messages</button>
+        <div class="c-tabs">
+          <button class="c-tab active" data-tab="network" onclick="switchCommunityTab('network')">Network</button>
+          <button class="c-tab" data-tab="leaderboard" onclick="switchCommunityTab('leaderboard')">Leaderboard</button>
+          <button class="c-tab" data-tab="messages" onclick="switchCommunityTab('messages')">Messages</button>
+        </div>
+        <div class="c-actions">
+          <div class="c-pill c-pill-live" id="presence-pill">Online</div>
+          <div class="c-avatar" id="community-avatar">
+            <img id="community-avatar-img" alt="Profile">
+            <span id="community-avatar-fallback">C</span>
+          </div>
         </div>
       </div>
 
-      <div class="community-stories">
-        <button class="community-story active" data-tab="discover" data-primary="1" type="button" onclick="switchCommunityTab('discover')">
-          <div class="community-story-ring"><span>🔍</span></div>
-          <div class="community-story-label">Discover</div>
-        </button>
-        <button class="community-story" data-tab="leaderboard" data-primary="1" type="button" onclick="switchCommunityTab('leaderboard')">
-          <div class="community-story-ring"><span>🏆</span></div>
-          <div class="community-story-label">Top Creators</div>
-        </button>
-        <button class="community-story" data-tab="messages" data-primary="1" type="button" onclick="switchCommunityTab('messages')">
-          <div class="community-story-ring"><span>💬</span></div>
-          <div class="community-story-label">Messages</div>
-        </button>
-        <button class="community-story" data-tab="messages" data-primary="0" type="button" onclick="switchCommunityTab('messages')">
-          <div class="community-story-ring"><span>🤝</span></div>
-          <div class="community-story-label">Requests</div>
-        </button>
-        <button class="community-story" data-tab="discover" data-primary="0" type="button" onclick="switchCommunityTab('discover')">
-          <div class="community-story-ring"><span>✨</span></div>
-          <div class="community-story-label">Trending</div>
-        </button>
-      </div>
-
-      <div class="community-tabs">
-        <button class="community-tab-btn active" data-tab="discover" onclick="switchCommunityTab('discover')">Discover</button>
-        <button class="community-tab-btn" data-tab="leaderboard" onclick="switchCommunityTab('leaderboard')">Top Creators</button>
-        <button class="community-tab-btn" data-tab="messages" onclick="switchCommunityTab('messages')">Messages</button>
-      </div>
-
-      <div class="community-section active" id="community-discover">
-        <div class="community-grid">
-          <div class="community-card">
-            <div class="card-head">
-              <div>
-                <h4>Creator Search</h4>
-                <p class="body">Search by username, niche, and platform</p>
-              </div>
-              <span class="pill">Live</span>
-            </div>
-            <div class="search-controls">
-              <input type="text" class="field" id="user-search-input" placeholder="Search @username" oninput="queueUserSearch()">
-              <input type="text" class="field" id="user-search-category" placeholder="Filter by niche (e.g. Tech)" oninput="queueUserSearch()">
-              <div class="chip-row" id="user-search-platforms">
-                <button class="chip" data-platform="youtube" onclick="togglePlatformFilter(this)">YouTube</button>
-                <button class="chip" data-platform="instagram" onclick="togglePlatformFilter(this)">Instagram</button>
-                <button class="chip" data-platform="twitter" onclick="togglePlatformFilter(this)">Twitter</button>
-                <button class="chip" data-platform="tiktok" onclick="togglePlatformFilter(this)">TikTok</button>
-                <button class="chip" data-platform="linkedin" onclick="togglePlatformFilter(this)">LinkedIn</button>
-              </div>
-            </div>
-            <div class="user-results" id="user-search-results"></div>
-            <button class="btn btn-ghost btn-sm" id="user-search-more" onclick="loadMoreUsers()" style="width:100%;margin-top:10px">Load more</button>
+      <div class="c-page active" id="community-network">
+        <div class="c-net-bar">
+          <div class="c-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="c-input" id="user-search-input" placeholder="Search creators by name or @handle" oninput="queueUserSearch()">
           </div>
-          <div class="community-card community-tips">
-            <div class="card-head">
+          <div class="c-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2.5 7-6-4-6 4 2.5-7L2 9h7z"/></svg>
+            <input class="c-input" id="user-search-category" placeholder="Filter by niche (e.g. Tech)" oninput="queueUserSearch()">
+          </div>
+        </div>
+        <div class="c-filter-row" id="user-search-platforms">
+          <button class="c-filter" data-platform="youtube" onclick="togglePlatformFilter(this)">YouTube</button>
+          <button class="c-filter" data-platform="instagram" onclick="togglePlatformFilter(this)">Instagram</button>
+          <button class="c-filter" data-platform="twitter" onclick="togglePlatformFilter(this)">Twitter</button>
+          <button class="c-filter" data-platform="tiktok" onclick="togglePlatformFilter(this)">TikTok</button>
+          <button class="c-filter" data-platform="linkedin" onclick="togglePlatformFilter(this)">LinkedIn</button>
+        </div>
+
+        <div class="c-net-grid">
+          <div class="c-panel c-panel-wide">
+            <div class="c-panel-head">
               <div>
-                <h4>Networking Tips</h4>
-                <p class="body">Grow faster with intent</p>
+                <div class="c-panel-title">Creator Search</div>
+                <div class="c-panel-sub">Live results powered by your database</div>
               </div>
-              <span class="pill">Playbook</span>
+              <span class="c-pill">Live</span>
             </div>
-            <div class="tip-grid">
-              <div class="tip-card">
+            <div class="c-results" id="user-search-results"></div>
+            <button class="btn btn-ghost btn-sm c-full" id="user-search-more" onclick="loadMoreUsers()">Load more</button>
+          </div>
+
+          <div class="c-panel">
+            <div class="c-panel-head">
+              <div>
+                <div class="c-panel-title">Spotlight</div>
+                <div class="c-panel-sub">Featured creator from your search</div>
+              </div>
+              <span class="c-pill c-pill-soft">Auto</span>
+            </div>
+            <div class="c-spotlight" id="community-spotlight">
+              <div class="c-spotlight-empty">Search creators to reveal the spotlight.</div>
+            </div>
+
+            <div class="c-divider"></div>
+            <div class="c-panel-head">
+              <div>
+                <div class="c-panel-title">Growth Tips</div>
+                <div class="c-panel-sub">Community playbook</div>
+              </div>
+            </div>
+            <div class="c-tip-grid">
+              <div class="c-tip">
                 <strong>Connect daily</strong>
                 <span>Send 5–10 requests to creators in your niche.</span>
               </div>
-              <div class="tip-card">
+              <div class="c-tip">
                 <strong>Lead with value</strong>
                 <span>Open with feedback or a collab idea.</span>
               </div>
-              <div class="tip-card">
+              <div class="c-tip">
                 <strong>Track momentum</strong>
                 <span>Follow creators who are trending up.</span>
               </div>
             </div>
-            <button class="btn btn-lime btn-sm" onclick="switchCommunityTab('leaderboard')" style="width:100%;margin-top:12px">View Top Creators</button>
+            <button class="btn btn-lime btn-sm c-full" onclick="switchCommunityTab('leaderboard')">View Top Creators</button>
           </div>
         </div>
       </div>
 
-      <div class="community-section" id="community-leaderboard">
-        <div class="community-card">
-          <div class="card-head">
+      <div class="c-page" id="community-leaderboard">
+        <div class="c-panel">
+          <div class="c-panel-head">
             <div>
-              <h4>Top Creators</h4>
-              <p class="body">Ranked by reach across platforms</p>
+              <div class="c-panel-title">Top Creators</div>
+              <div class="c-panel-sub">Ranked by reach across platforms</div>
             </div>
-            <div class="leaderboard-controls">
+            <div class="c-select-wrap">
               <label for="leaderboard-sort">Sort by</label>
               <select class="field" id="leaderboard-sort" onchange="loadLeaderboard(true)">
                 <option value="total">Total Reach</option>
@@ -1523,66 +1595,53 @@ body::after{
             </div>
           </div>
           <div class="leaderboard-list" id="leaderboard-list"></div>
-          <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard(true)" style="width:100%;margin-top:10px">Refresh leaderboard</button>
+          <button class="btn btn-ghost btn-sm c-full" onclick="loadLeaderboard(true)">Refresh leaderboard</button>
         </div>
       </div>
 
-      <div class="community-section" id="community-messages">
-        <div class="community-card chat-panel">
-          <div class="card-head">
-            <div>
-              <h4>Messages</h4>
-              <p class="body">Chat after connections are accepted</p>
+      <div class="c-page" id="community-messages">
+        <div class="c-msg-layout">
+          <div class="c-msg-left">
+            <div class="c-msg-head">
+              <div class="c-msg-title">Messages</div>
+              <div class="c-msg-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input placeholder="Search messages">
+              </div>
             </div>
-            <div class="pill" id="presence-pill">Online</div>
+            <div class="c-msg-section">
+              <div class="c-msg-section-title">Friend Requests</div>
+              <div id="friend-requests"></div>
+            </div>
+            <div class="c-msg-section">
+              <div class="c-msg-section-title">Friends</div>
+              <div id="friends-list"></div>
+            </div>
           </div>
-          <div class="chat-layout dm-layout">
-            <div class="chat-sidebar dm-sidebar">
-              <div class="dm-search">
-                <input type="text" class="field" placeholder="Search messages">
-                <button class="btn btn-ghost btn-xs" type="button">New</button>
+
+          <div class="c-msg-right">
+            <div class="c-chat-head">
+              <div class="c-chat-avatar" id="chat-avatar"><span>C</span></div>
+              <div class="c-chat-meta">
+                <div class="c-chat-name" id="chat-header">Select a friend to start chatting</div>
+                <div class="c-chat-sub" id="chat-status">Start a new conversation</div>
               </div>
-              <div class="chat-section">
-                <h5>Friend Requests</h5>
-                <div id="friend-requests"></div>
-              </div>
-              <div class="chat-section">
-                <h5>Friends</h5>
-                <div id="friends-list"></div>
+              <div class="c-chat-actions">
+                <button class="c-icon-btn" type="button" title="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+                <button class="c-icon-btn" type="button" title="Pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></button>
+                <button class="c-icon-btn" type="button" title="Details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
               </div>
             </div>
-            <div class="chat-main dm-main">
-              <div class="dm-header">
-                <div class="dm-user">
-                  <div class="dm-avatar" id="dm-avatar"><span>C</span></div>
-                  <div class="dm-meta">
-                    <div class="dm-name" id="chat-header">Select a friend to start chatting</div>
-                    <div class="dm-status" id="dm-status">Start a new conversation</div>
-                  </div>
-                </div>
-                <div class="dm-actions">
-                  <button class="dm-icon" type="button" title="Audio call">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.57 2.6a2 2 0 0 1-.45 2.11L8.1 9.9a16 16 0 0 0 6 6l1.47-1.47a2 2 0 0 1 2.11-.45c.83.25 1.7.45 2.6.57A2 2 0 0 1 22 16.92z"/></svg>
-                  </button>
-                  <button class="dm-icon" type="button" title="Video call">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                  </button>
-                  <button class="dm-icon" type="button" title="Details">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                  </button>
-                </div>
-              </div>
-              <div class="chat-messages" id="chat-messages"></div>
-              <div class="chat-typing" id="chat-typing"></div>
-              <div class="chat-input-row dm-compose">
-                <input type="file" id="chat-file" accept="image/*,application/pdf" onchange="uploadChatAttachment(this.files)">
-                <button class="btn btn-ghost btn-xs" type="button" onclick="triggerChatFile()">Attach</button>
-                <button class="btn btn-ghost btn-xs" type="button" onclick="insertEmoji('✨')">Emoji</button>
-                <input type="text" class="field" id="chat-input" placeholder="Write a message..." oninput="handleTyping()">
-                <button class="btn btn-lime btn-xs" type="button" onclick="sendChatMessage()">Send</button>
-              </div>
-              <div class="chat-attachments" id="chat-attachments"></div>
+            <div class="c-chat-body" id="chat-messages"></div>
+            <div class="c-chat-typing" id="chat-typing"></div>
+            <div class="c-chat-compose">
+              <input type="file" id="chat-file" accept="image/*,application/pdf" onchange="uploadChatAttachment(this.files)">
+              <button class="btn btn-ghost btn-xs" type="button" onclick="triggerChatFile()">Attach</button>
+              <button class="btn btn-ghost btn-xs" type="button" onclick="insertEmoji('✨')">Emoji</button>
+              <input type="text" class="field" id="chat-input" placeholder="Write a message..." oninput="handleTyping()">
+              <button class="btn btn-lime btn-xs" type="button" onclick="sendChatMessage()">Send</button>
             </div>
+            <div class="c-chat-attachments" id="chat-attachments"></div>
           </div>
         </div>
       </div>
@@ -3695,7 +3754,7 @@ function tab(name) {
   }
   if (name === 'community') {
     startCommunityPolling();
-    switchCommunityTab('discover');
+    switchCommunityTab('network');
   } else {
     stopCommunityPolling();
   }
@@ -3850,15 +3909,11 @@ async function markNotificationRead(id) {
 
 // --- COMMUNITY LOGIC --- //
 function switchCommunityTab(tab) {
-  document.querySelectorAll('.community-section').forEach(section => {
+  document.querySelectorAll('.c-page').forEach(section => {
     section.classList.remove('active');
   });
-  document.querySelectorAll('.community-tab-btn').forEach(btn => {
+  document.querySelectorAll('.c-tab').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.tab === tab);
-  });
-  document.querySelectorAll('.community-story').forEach(story => {
-    const isPrimary = story.dataset.primary === '1';
-    story.classList.toggle('active', isPrimary && story.dataset.tab === tab);
   });
   const section = document.getElementById(`community-${tab}`);
   if (section) section.classList.add('active');
@@ -3883,7 +3938,7 @@ function queueUserSearch() {
 function togglePlatformFilter(btn) {
   if (!btn) return;
   btn.classList.toggle('active');
-  const active = Array.from(document.querySelectorAll('#user-search-platforms .chip.active'));
+  const active = Array.from(document.querySelectorAll('#user-search-platforms .c-filter.active'));
   searchState.platforms = active.map(el => el.dataset.platform);
   runUserSearch(true);
 }
@@ -3903,6 +3958,7 @@ async function runUserSearch(reset = false) {
   if (!searchState.query && !searchState.category && searchState.platforms.length === 0) {
     resultsEl.innerHTML = '<div class="notif-empty">Start typing to search creators.</div>';
     moreBtn.style.display = 'none';
+    updateCommunitySpotlight(null);
     return;
   }
 
@@ -3945,7 +4001,11 @@ function renderUserResults(users, reset) {
   if (reset) resultsEl.innerHTML = '';
   if (!users.length && reset) {
     resultsEl.innerHTML = '<div class="notif-empty">No creators found.</div>';
+    updateCommunitySpotlight(null);
     return;
+  }
+  if (reset && users.length) {
+    updateCommunitySpotlight(users[0]);
   }
   users.forEach(user => {
     const reach = user.total_reach ? `${Number(user.total_reach).toLocaleString()} reach` : 'New creator';
@@ -3975,6 +4035,41 @@ function renderUserResults(users, reset) {
       </div>
     `;
   });
+}
+
+function updateCommunitySpotlight(user) {
+  const wrap = document.getElementById('community-spotlight');
+  if (!wrap) return;
+  if (!user) {
+    wrap.innerHTML = '<div class="c-spotlight-empty">Search creators to reveal the spotlight.</div>';
+    return;
+  }
+  const safeName = escapeHtml(user.name || 'Creator');
+  const safeHandle = escapeHtml(user.username ? `@${user.username}` : '@creator');
+  const safeCategory = escapeHtml(user.category || 'Creator');
+  const reach = user.total_reach ? `${Number(user.total_reach).toLocaleString()} reach` : 'New creator';
+  const initial = escapeHtml((user.name || 'C')[0]);
+  const avatar = user.avatar_url
+    ? `<img src="${user.avatar_url}" alt="${safeName}">`
+    : `<span>${initial}</span>`;
+  const followLabel = user.is_following ? 'Following' : 'Follow';
+  wrap.innerHTML = `
+    <div class="c-spotlight-card">
+      <div class="c-spotlight-row">
+        <div class="c-spotlight-avatar">${avatar}</div>
+        <div>
+          <div class="c-spotlight-name">${safeName}</div>
+          <div class="c-spotlight-handle">${safeHandle}</div>
+        </div>
+      </div>
+      <div class="c-spotlight-meta">${safeCategory} · ${reach}</div>
+      <div class="c-spotlight-actions">
+        <button class="btn btn-lime btn-xs" onclick="toggleFollow('${user.id}', ${!user.is_following})">${followLabel}</button>
+        <button class="btn btn-ghost btn-xs" onclick="openCreatorProfile('${user.id}')">View Profile</button>
+        <button class="btn btn-ghost btn-xs" onclick="sendFriendRequest('${user.id}')">Connect</button>
+      </div>
+    </div>
+  `;
 }
 
 function loadMoreUsers() {
@@ -4254,10 +4349,10 @@ async function openChat(userId, name) {
   const safeName = name || 'Creator';
   const header = document.getElementById('chat-header');
   if (header) header.textContent = safeName;
-  const dmAvatar = document.querySelector('#dm-avatar span');
-  if (dmAvatar) dmAvatar.textContent = (safeName || 'C')[0].toUpperCase();
-  const dmStatus = document.getElementById('dm-status');
-  if (dmStatus) dmStatus.textContent = 'Active now';
+  const chatAvatar = document.querySelector('#chat-avatar span');
+  if (chatAvatar) chatAvatar.textContent = (safeName || 'C')[0].toUpperCase();
+  const chatStatus = document.getElementById('chat-status');
+  if (chatStatus) chatStatus.textContent = 'Active now';
   await loadMessages(true);
   await loadFriends();
 }
