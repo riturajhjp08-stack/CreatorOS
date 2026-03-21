@@ -1993,13 +1993,24 @@ function normalizeApiUrl(url) {
   return String(url || '').trim().replace(/\/+$/, '');
 }
 
+function normalizeApiBase(url) {
+  let cleaned = normalizeApiUrl(url);
+  if (!cleaned) return cleaned;
+  if (cleaned.endsWith('/api/api')) {
+    cleaned = cleaned.replace(/\/api\/api$/, '/api');
+  } else if (!cleaned.endsWith('/api')) {
+    cleaned = `${cleaned}/api`;
+  }
+  return cleaned;
+}
+
 function resolveApiUrl() {
   // Optional override:
   // window.__CREATOROS_API_URL__ = 'https://api.example.com/api'
   // localStorage.setItem('creatoros_api_url', 'https://api.example.com/api')
   const explicitUrl = window.__CREATOROS_API_URL__ || localStorage.getItem('creatoros_api_url');
   if (explicitUrl) {
-    return normalizeApiUrl(explicitUrl);
+    return normalizeApiBase(explicitUrl);
   }
   
   if (window.location.protocol === 'file:') {
@@ -2036,9 +2047,10 @@ async function probeApiUrl(apiUrl) {
 async function autoDetectApiUrl() {
   const explicitUrl = window.__CREATOROS_API_URL__ || localStorage.getItem('creatoros_api_url');
   if (explicitUrl) {
-    const cleaned = normalizeApiUrl(explicitUrl);
+    const cleaned = normalizeApiBase(explicitUrl);
     if (await probeApiUrl(cleaned)) {
       API_URL = cleaned;
+      localStorage.setItem('creatoros_api_url', cleaned);
       return;
     }
   }
