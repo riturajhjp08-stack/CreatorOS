@@ -60,6 +60,8 @@ body::after{
 img,svg{display:block;}
 section{position:relative;z-index:2;}
 .container{width:min(1160px,92vw);margin:0 auto;}
+.hero-visual,.studio,.feature,.step,.plan-card,.quote,.ambient{will-change:transform;}
+.hero-visual,.studio,.ambient{transform:translateZ(0);}
 
 /* Ambient motion */
 .ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
@@ -459,7 +461,10 @@ section{position:relative;z-index:2;}
       if (!window.gsap) return;
       if (window.ScrollTrigger) {
         gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
       }
+      gsap.config({ force3D: true });
+      gsap.ticker.lagSmoothing(1000, 16);
 
       const ambient = document.querySelector('.ambient');
       if (ambient && !ambient.querySelector('.starfield')) {
@@ -529,13 +534,20 @@ section{position:relative;z-index:2;}
         const orbQuick = gsap.quickTo('.orbital', 'x', { duration: 0.6, ease: 'power3' });
         const sparkQuick = gsap.quickTo('.sparkfield', 'x', { duration: 0.6, ease: 'power3' });
         const studioQuick = gsap.quickTo('.studio', 'x', { duration: 0.6, ease: 'power3' });
+        let rafId = null;
+        let lastEvent = null;
         window.addEventListener('mousemove', (event) => {
-          const dx = (event.clientX / window.innerWidth - 0.5) * 40;
-          const dy = (event.clientY / window.innerHeight - 0.5) * 20;
-          orbQuick(dx);
-          sparkQuick(-dx * 0.6);
-          studioQuick(dx * 0.3);
-          gsap.to('.hero-visual', { y: dy * 0.6, duration: 0.6, ease: 'power3' });
+          lastEvent = event;
+          if (rafId) return;
+          rafId = requestAnimationFrame(() => {
+            const dx = (lastEvent.clientX / window.innerWidth - 0.5) * 40;
+            const dy = (lastEvent.clientY / window.innerHeight - 0.5) * 20;
+            orbQuick(dx);
+            sparkQuick(-dx * 0.6);
+            studioQuick(dx * 0.3);
+            gsap.to('.hero-visual', { y: dy * 0.6, duration: 0.6, ease: 'power3' });
+            rafId = null;
+          });
         });
 
         document.querySelectorAll('.magnetic').forEach((el) => {
