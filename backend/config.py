@@ -50,6 +50,7 @@ class Config:
     JWT_COOKIE_SAMESITE = os.environ.get("JWT_COOKIE_SAMESITE", "Lax")
     JWT_COOKIE_CSRF_PROTECT = _get_bool("JWT_COOKIE_CSRF_PROTECT", True)
     AUTH_EXPOSE_ACCESS_TOKEN = _get_bool("AUTH_EXPOSE_ACCESS_TOKEN", True)
+    AUTH_SESSION_CHECK = _get_bool("AUTH_SESSION_CHECK", not SERVERLESS_MODE)
 
     # Database engine options
     DB_POOL_SIZE = _get_int("DB_POOL_SIZE", 5)

@@ -206,6 +206,8 @@ def create_app(config_name=None):
     def enforce_session_revocation():
         if request.method == "OPTIONS":
             return None
+        if not app.config.get("AUTH_SESSION_CHECK", True):
+            return None
         path = request.path
         if not path.startswith("/api/"):
             return None

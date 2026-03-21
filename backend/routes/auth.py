@@ -463,9 +463,10 @@ def verify_token():
     """Verify if JWT is valid and session is active"""
     try:
         verify_jwt_in_request()
-        raw_token = extract_access_token_from_request()
-        if not is_session_active(raw_token):
-            return {"valid": False, "error": "Session expired or revoked"}, 401
+        if current_app.config.get("AUTH_SESSION_CHECK", True):
+            raw_token = extract_access_token_from_request()
+            if not is_session_active(raw_token):
+                return {"valid": False, "error": "Session expired or revoked"}, 401
 
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
