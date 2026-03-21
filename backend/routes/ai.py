@@ -3,8 +3,12 @@ from flask_jwt_extended import jwt_required
 import logging
 import re
 import json
-from google import genai
-from google.genai import types
+try:
+    from google import genai
+    from google.genai import types
+except Exception:  # pragma: no cover - optional dependency for serverless builds
+    genai = None
+    types = None
 
 from extensions import limiter
 logger = logging.getLogger(__name__)
@@ -122,7 +126,7 @@ def _fallback_response(task, prompt, platform, tone, mode=None):
 def _call_gemini(messages, temperature=0.7, max_tokens=700):
     api_key = (current_app.config.get("GEMINI_API_KEY") or "").strip()
     enabled = bool(current_app.config.get("AI_ENABLED", True))
-    if not enabled or not api_key:
+    if not enabled or not api_key or not genai or not types:
         return None
 
     try:
