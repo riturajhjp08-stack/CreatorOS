@@ -78,9 +78,9 @@ section{position:relative;z-index:2;}
 .nav{position:sticky;top:0;z-index:10;background:rgba(7,7,14,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);} 
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:16px;} 
 .brand{display:flex;align-items:center;gap:14px;} 
-.logo{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+.logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
   background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
-  color:#000;font-family:var(--font-head);font-weight:700;font-size:18px;box-shadow:0 12px 26px rgba(21,21,21,.18);} 
+  color:#000;font-family:var(--font-head);font-weight:800;font-size:20px;box-shadow:0 10px 26px rgba(0,0,0,.35);} 
 .brand-text{display:flex;flex-direction:column;line-height:1.1;} 
 .brand-text strong{font-family:var(--font-head);font-size:18px;} 
 .brand-text span{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);} 
@@ -171,7 +171,6 @@ section{position:relative;z-index:2;}
 
 /* Animations */
 .reveal{opacity:1;transform:none;} 
-body.gsap-ready .reveal{opacity:0;transform:translateY(16px);} 
 .float{animation:float 6s ease-in-out infinite;} 
 @keyframes rise{to{opacity:1;transform:translateY(0);} } 
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);} } 
@@ -394,7 +393,6 @@ body.gsap-ready .reveal{opacity:0;transform:translateY(16px);}
   <script>
     (function () {
       if (!window.gsap) return;
-      document.body.classList.add('gsap-ready');
       if (window.ScrollTrigger) {
         gsap.registerPlugin(ScrollTrigger);
       }
@@ -410,15 +408,15 @@ body.gsap-ready .reveal{opacity:0;transform:translateY(16px);}
       const revealTargets = gsap.utils.toArray('.reveal').filter((el) => !el.closest('.hero'));
       if (window.ScrollTrigger) {
         revealTargets.forEach((el) => {
-          gsap.to(el, {
+          gsap.from(el, {
             scrollTrigger: { trigger: el, start: 'top 85%' },
-            y: 0,
-            opacity: 1,
+            y: 30,
+            opacity: 0,
             duration: 0.7
           });
         });
       } else {
-        gsap.to(revealTargets, { y: 0, opacity: 1, duration: 0.6, stagger: 0.08 });
+        gsap.from(revealTargets, { y: 30, opacity: 0, duration: 0.6, stagger: 0.08 });
       }
 
       gsap.to('.orbital', { rotation: 360, duration: 46, ease: 'none', repeat: -1 });
