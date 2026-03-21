@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07070e">
 <title>CreatorOS — AI-Powered Creator Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://js.stripe.com/v3/"></script>
 <style>
 /* ═══════════════════════════════════════════
@@ -26,6 +26,7 @@
   --font-head:'Syne',sans-serif;
   --font-body:'Inter',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
+  --font-settings:'Sora',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;}
@@ -126,8 +127,12 @@ select.field option{background:var(--s2);}
 .nav-item:hover .tip{opacity:1;}
 .nav-sep{width:26px;height:1px;background:var(--b1);margin:4px 0;flex-shrink:0;}
 .sidebar-spacer{flex:1;}
-.nav-avatar{width:34px;height:34px;border-radius:50%;overflow:hidden;cursor:pointer;border:2px solid var(--b1);flex-shrink:0;}
-.nav-avatar img{width:100%;height:100%;object-fit:cover;}
+.nav-avatar{width:34px;height:34px;border-radius:50%;overflow:hidden;cursor:pointer;border:2px solid var(--b1);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--s2);}
+.nav-avatar img{width:100%;height:100%;object-fit:cover;display:none;}
+.nav-avatar span{font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--t1);}
+.nav-avatar.has-img img{display:block;}
+.nav-avatar.has-img span{display:none;}
 .nav-avatar-fallback{width:34px;height:34px;border-radius:50%;background:var(--pur-d);border:2px solid rgba(139,92,246,.3);
   display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--purple);cursor:pointer;}
 
@@ -417,16 +422,29 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .rs{font-family:var(--font-mono);font-size:8px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;}
 
 /* ── SETTINGS ── */
-.settings-wrap{display:flex;flex-direction:column;gap:16px;}
-.ig-profile-card{background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:18px;display:grid;grid-template-columns:110px 1fr;gap:16px;}
-.ig-avatar{width:96px;height:96px;border-radius:24px;display:flex;align-items:center;justify-content:center;
-  background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
-  color:#000;font-family:var(--font-head);font-weight:800;font-size:20px;box-shadow:0 12px 28px rgba(0,0,0,.4);}
+.settings-wrap{display:flex;flex-direction:column;gap:20px;}
+#tab-settings{font-family:var(--font-settings);}
+#tab-settings h2,#tab-settings h3,#tab-settings h4{font-family:var(--font-settings);}
+#tab-settings .body,#tab-settings .ig-sub{font-family:var(--font-settings);}
+#tab-settings .field,#tab-settings textarea.field,#tab-settings select.field{font-family:var(--font-settings);}
+#tab-settings .field-grp label{font-family:var(--font-settings);letter-spacing:.8px;}
+.ig-profile-card{background:linear-gradient(135deg,rgba(255,255,255,.02),rgba(184,255,0,.06));border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:22px;display:grid;grid-template-columns:120px 1fr;gap:18px;position:relative;overflow:hidden;}
+.ig-profile-card::after{content:'';position:absolute;inset:-120px auto auto -120px;width:240px;height:240px;
+  background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 70%);pointer-events:none;}
+.ig-avatar-ring{width:108px;height:108px;border-radius:28px;padding:3px;background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
+  box-shadow:0 14px 30px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;}
+.ig-avatar{width:100%;height:100%;border-radius:24px;background:var(--s2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.ig-avatar img{width:100%;height:100%;object-fit:cover;display:none;}
+.ig-avatar span{color:#000;font-family:var(--font-settings);font-weight:700;font-size:22px;}
+.ig-avatar.has-img img{display:block;}
+.ig-avatar.has-img span{display:none;}
 .ig-profile-meta{display:flex;flex-direction:column;gap:10px;}
 .ig-profile-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
-.ig-profile-top h3{font-family:var(--font-head);font-size:18px;margin-bottom:4px;}
-.ig-handle{font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--t2);}
-.ig-category{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-top:2px;}
+.ig-profile-top-actions{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.ig-profile-top h3{font-family:var(--font-settings);font-size:18px;margin-bottom:4px;}
+.ig-handle{font-family:var(--font-settings);font-size:12px;letter-spacing:.5px;color:var(--t2);}
+.ig-category{font-family:var(--font-settings);font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--t3);margin-top:2px;}
 .save-status{font-size:10px;color:var(--lime);font-family:var(--font-mono);letter-spacing:1px;border:1px solid rgba(184,255,0,.3);
   padding:4px 8px;border-radius:999px;display:none;}
 .save-status.show{display:inline-flex;}
@@ -434,12 +452,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .ig-website{font-size:12px;color:var(--lime);}
 .ig-stats{display:flex;gap:10px;flex-wrap:wrap;}
 .ig-stat{background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:8px 12px;min-width:96px;}
-.ig-stat .val{font-family:var(--font-head);font-size:16px;font-weight:700;}
-.ig-stat .lbl{font-size:9px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;font-family:var(--font-mono);}
+.ig-stat .val{font-family:var(--font-settings);font-size:16px;font-weight:700;}
+.ig-stat .lbl{font-size:9px;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;font-family:var(--font-settings);}
 .ig-profile-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
 .ig-settings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
 .ig-card{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:18px;}
-.ig-card h4{font-family:var(--font-head);font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.ig-card h4{font-family:var(--font-settings);font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
 .ig-sub{font-size:12px;color:var(--t3);margin-top:6px;}
 .ig-form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px;}
 .ig-form .field-row.full{grid-column:1/-1;}
@@ -458,6 +476,23 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .tog.on{background:var(--lime);border-color:var(--lime);}
 .tog::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;background:#000;border-radius:50%;transition:transform .18s;}
 .tog.on::after{transform:translateX(12px);}
+
+.ig-highlight-row{display:flex;gap:8px;flex-wrap:wrap;}
+.ig-highlight{background:var(--s2);border:1px solid var(--b1);border-radius:999px;padding:6px 10px;font-size:11px;color:var(--t2);}
+.ig-highlight strong{color:var(--t1);font-weight:600;}
+
+.avatar-editor{display:grid;grid-template-columns:68px 1fr;gap:12px;align-items:center;}
+.avatar-preview{width:64px;height:64px;border-radius:16px;background:var(--s2);border:1px solid var(--b1);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.avatar-preview img{width:100%;height:100%;object-fit:cover;display:none;}
+.avatar-preview span{font-family:var(--font-settings);font-weight:700;color:var(--t2);}
+.avatar-preview.has-img img{display:block;}
+.avatar-preview.has-img span{display:none;}
+.avatar-inputs{display:flex;flex-direction:column;gap:8px;}
+.avatar-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.avatar-actions input[type="file"]{display:none;}
+.field.compact{padding:8px 10px;font-size:12px;}
+.btn-xs{padding:6px 10px;font-size:11px;border-radius:8px;}
 
 /* ── ADMIN ── */
 .admin-header{background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(139,92,246,.08));border:1px solid rgba(249,115,22,.15);border-radius:14px;padding:22px;flex-shrink:0;}
@@ -542,6 +577,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   .kanban{grid-template-columns:repeat(2,1fr);}
   .ana-grid{grid-template-columns:1fr;}
   .ig-profile-card{grid-template-columns:1fr;}
+  .ig-avatar-ring{margin:0 auto;}
+  .ig-profile-top{flex-direction:column;}
+  .ig-profile-top-actions{align-items:flex-start;}
   .ig-settings-grid{grid-template-columns:1fr;}
   .plat-grid{grid-template-columns:repeat(2,1fr);}
   .credit-packages{grid-template-columns:1fr;}
@@ -888,7 +926,10 @@ body::after{
   <div class="nav-item" onclick="openFeedbackModal()" id="nav-feedback"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="tip">Feedback</span></div>
   <div class="nav-item" onclick="tab('settings')" id="nav-settings"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="tip">Settings</span></div>
   <div style="height:8px"></div>
-  <div id="nav-user-avatar" class="nav-avatar-fallback" onclick="tab('settings')"></div>
+  <div id="nav-user-avatar" class="nav-avatar" onclick="tab('settings')">
+    <img id="nav-user-avatar-img" alt="Profile">
+    <span id="nav-user-avatar-fallback">C</span>
+  </div>
 </nav>
 
 <!-- MAIN -->
@@ -1527,7 +1568,12 @@ body::after{
     <div class="sh"><h2>Creator Studio Settings</h2><p class="body">Profile, rewards, and publishing controls</p></div>
     <div class="settings-wrap">
       <div class="ig-profile-card">
-        <div class="ig-avatar" id="setting-avatar">C</div>
+        <div class="ig-avatar-ring">
+          <div class="ig-avatar" id="setting-avatar">
+            <img id="setting-avatar-img" alt="Profile photo">
+            <span id="setting-avatar-fallback">C</span>
+          </div>
+        </div>
         <div class="ig-profile-meta">
           <div class="ig-profile-top">
             <div>
@@ -1535,7 +1581,14 @@ body::after{
               <div class="ig-handle" id="setting-display-handle">@creator</div>
               <div class="ig-category" id="setting-display-category">Creator</div>
             </div>
-            <div class="save-status" id="profile-save-status">Saved</div>
+            <div class="ig-profile-top-actions">
+              <div class="save-status" id="profile-save-status">Saved</div>
+              <div class="ig-profile-actions">
+                <a class="btn btn-ghost btn-sm" href="#settings-profile">Edit Profile</a>
+                <button class="btn btn-ghost btn-sm" onclick="triggerAvatarPicker()">Add Photo</button>
+                <button class="btn btn-lime btn-sm" onclick="tab('publish')">Publish Now</button>
+              </div>
+            </div>
           </div>
           <div class="ig-bio" id="setting-display-bio">Share your creator story and what you publish.</div>
           <a class="ig-website" id="setting-display-website" href="#" target="_blank" rel="noopener noreferrer"></a>
@@ -1544,9 +1597,10 @@ body::after{
             <div class="ig-stat"><div class="val" id="setting-stat-reach">—</div><div class="lbl">Reach</div></div>
             <div class="ig-stat"><div class="val" id="setting-stat-earn">—</div><div class="lbl">Earnings</div></div>
           </div>
-          <div class="ig-profile-actions">
-            <a class="btn btn-ghost btn-sm" href="#settings-profile">Edit Profile</a>
-            <button class="btn btn-lime btn-sm" onclick="tab('publish')">Publish Now</button>
+          <div class="ig-highlight-row">
+            <div class="ig-highlight"><strong>Creator</strong> profile</div>
+            <div class="ig-highlight">Link in bio</div>
+            <div class="ig-highlight">Brand-ready</div>
           </div>
         </div>
       </div>
@@ -1556,6 +1610,24 @@ body::after{
           <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile</h4>
           <div class="ig-sub">Make your creator profile look polished across every platform.</div>
           <div class="ig-form">
+            <div class="field-row full">
+              <label>Profile Photo</label>
+              <div class="avatar-editor">
+                <div class="avatar-preview" id="setting-avatar-preview">
+                  <img id="setting-avatar-preview-img" alt="Profile preview">
+                  <span id="setting-avatar-preview-fallback">C</span>
+                </div>
+                <div class="avatar-inputs">
+                  <div class="avatar-actions">
+                    <input type="file" id="setting-avatar-file" accept="image/*">
+                    <button class="btn btn-ghost btn-xs" type="button" onclick="triggerAvatarPicker()">Upload</button>
+                    <button class="btn btn-ghost btn-xs" type="button" onclick="clearAvatar()">Remove</button>
+                  </div>
+                  <input type="text" class="field compact" id="setting-avatar-url" placeholder="Paste image URL (https://)">
+                  <button class="btn btn-lime btn-xs" type="button" onclick="applyAvatarUrl()">Use URL</button>
+                </div>
+              </div>
+            </div>
             <div class="field-row">
               <label>Display Name</label>
               <input type="text" class="field" id="setting-name" placeholder="Your name">
@@ -2257,7 +2329,9 @@ async function initializeApp() {
   
   // Set user info
   document.getElementById('credit-count').textContent = currentUser.credits || 0;
-  document.getElementById('nav-user-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+  const avatarUrl = getLocalSetting('avatar_url', currentUser.avatar_url || '');
+  const avatarUrlInput = document.getElementById('setting-avatar-url');
+  if (avatarUrlInput) avatarUrlInput.value = avatarUrl;
   document.getElementById('hero-greeting').textContent = `Welcome back, ${currentUser.name}! 🚀 Generate content, analyze trends, and publish — all from one place.`;
   document.getElementById('setting-name').value = currentUser.name;
   document.getElementById('setting-email').value = currentUser.email;
@@ -4254,6 +4328,84 @@ function toggleAdmin() {
   }
 }
 
+function getAvatarUrlValue() {
+  const raw = document.getElementById('setting-avatar-url')?.value || '';
+  return raw.trim();
+}
+
+function syncAvatarUI(avatarUrl) {
+  const name = (document.getElementById('setting-name')?.value || currentUser?.name || 'C').trim();
+  const fallbackLetter = (name || 'C')[0].toUpperCase();
+
+  const avatar = document.getElementById('setting-avatar');
+  const avatarImg = document.getElementById('setting-avatar-img');
+  const avatarFallback = document.getElementById('setting-avatar-fallback');
+  const preview = document.getElementById('setting-avatar-preview');
+  const previewImg = document.getElementById('setting-avatar-preview-img');
+  const previewFallback = document.getElementById('setting-avatar-preview-fallback');
+  const navAvatar = document.getElementById('nav-user-avatar');
+  const navAvatarImg = document.getElementById('nav-user-avatar-img');
+  const navAvatarFallback = document.getElementById('nav-user-avatar-fallback');
+
+  if (avatarFallback) avatarFallback.textContent = fallbackLetter;
+  if (previewFallback) previewFallback.textContent = fallbackLetter;
+  if (navAvatarFallback) navAvatarFallback.textContent = fallbackLetter;
+
+  const hasUrl = Boolean(avatarUrl);
+  if (avatar && avatarImg) {
+    if (hasUrl) {
+      avatarImg.src = avatarUrl;
+      avatar.classList.add('has-img');
+    } else {
+      avatarImg.removeAttribute('src');
+      avatar.classList.remove('has-img');
+    }
+  }
+  if (preview && previewImg) {
+    if (hasUrl) {
+      previewImg.src = avatarUrl;
+      preview.classList.add('has-img');
+    } else {
+      previewImg.removeAttribute('src');
+      preview.classList.remove('has-img');
+    }
+  }
+  if (navAvatar && navAvatarImg) {
+    if (hasUrl) {
+      navAvatarImg.src = avatarUrl;
+      navAvatar.classList.add('has-img');
+    } else {
+      navAvatarImg.removeAttribute('src');
+      navAvatar.classList.remove('has-img');
+    }
+  }
+}
+
+function triggerAvatarPicker() {
+  const fileInput = document.getElementById('setting-avatar-file');
+  if (fileInput) fileInput.click();
+}
+
+function applyAvatarUrl() {
+  const url = getAvatarUrlValue();
+  if (!url) {
+    showToast('Missing URL', 'Paste an image URL to use as your profile photo.', 'error', 3000);
+    return;
+  }
+  setLocalSetting('avatar_url', url);
+  syncAvatarUI(url);
+}
+
+function clearAvatar() {
+  const urlInput = document.getElementById('setting-avatar-url');
+  const fileInput = document.getElementById('setting-avatar-file');
+  if (urlInput) urlInput.value = '';
+  if (fileInput) fileInput.value = '';
+  setLocalSetting('avatar_url', '');
+  if (currentUser) currentUser.avatar_url = '';
+  syncAvatarUI('');
+}
+
 async function saveProfile() {
   try {
     const name = document.getElementById('setting-name').value;
@@ -4263,6 +4415,7 @@ async function saveProfile() {
     const website = document.getElementById('setting-website').value;
     const hashtags = document.getElementById('setting-default-hashtags').value;
     const cta = document.getElementById('setting-default-cta').value;
+    const avatar_url = getAvatarUrlValue() || getLocalSetting('avatar_url', currentUser?.avatar_url || '');
     
     const response = await fetch(`${API_URL}/user/profile`, {
       method: 'PUT',
@@ -4277,7 +4430,8 @@ async function saveProfile() {
         category,
         website,
         default_hashtags: hashtags,
-        default_cta: cta
+        default_cta: cta,
+        avatar_url: avatar_url || null
       })
     });
     
@@ -4289,6 +4443,7 @@ async function saveProfile() {
       setLocalSetting('website', website.trim());
       setLocalSetting('hashtags', hashtags.trim());
       setLocalSetting('cta', cta.trim());
+      setLocalSetting('avatar_url', (avatar_url || '').trim());
       updateSettingsDisplay();
       const status = document.getElementById('profile-save-status');
       if (status) {
@@ -4357,6 +4512,7 @@ function updateSettingsDisplay() {
   const bio = (document.getElementById('setting-bio')?.value || currentUser?.bio || '').trim();
   const website = (document.getElementById('setting-website')?.value || '').trim();
   const category = (document.getElementById('setting-category')?.value || '').trim();
+  const avatarUrl = getAvatarUrlValue() || getLocalSetting('avatar_url', currentUser?.avatar_url || '');
 
   const displayName = document.getElementById('setting-display-name');
   if (displayName) displayName.textContent = name || 'Creator';
@@ -4389,8 +4545,7 @@ function updateSettingsDisplay() {
   const statEarn = document.getElementById('setting-stat-earn');
   if (statEarn) statEarn.textContent = '$0';
 
-  const avatar = document.getElementById('setting-avatar');
-  if (avatar) avatar.textContent = (name || 'C')[0].toUpperCase();
+  syncAvatarUI(avatarUrl);
 
   const categoryText = category ? `${category} Creator` : 'Creator';
   if (statReachEl && categoryText) statReachEl.title = categoryText;
@@ -4402,7 +4557,8 @@ function bindSettingsPreview() {
     'setting-handle',
     'setting-bio',
     'setting-website',
-    'setting-category'
+    'setting-category',
+    'setting-avatar-url'
   ];
   fields.forEach((id) => {
     const el = document.getElementById(id);
@@ -4410,6 +4566,28 @@ function bindSettingsPreview() {
     el.addEventListener('input', updateSettingsDisplay);
     el.dataset.previewBound = 'true';
   });
+
+  const avatarFile = document.getElementById('setting-avatar-file');
+  if (avatarFile && !avatarFile.dataset.previewBound) {
+    avatarFile.addEventListener('change', (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('Invalid file', 'Please select an image file.', 'error', 3000);
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = String(reader.result || '');
+        const urlInput = document.getElementById('setting-avatar-url');
+        if (urlInput) urlInput.value = dataUrl;
+        setLocalSetting('avatar_url', dataUrl);
+        syncAvatarUI(dataUrl);
+      };
+      reader.readAsDataURL(file);
+    });
+    avatarFile.dataset.previewBound = 'true';
+  }
 }
 
 async function disconnectPlatform(platform) {
