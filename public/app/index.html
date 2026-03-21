@@ -417,29 +417,41 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .rs{font-family:var(--font-mono);font-size:8px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;}
 
 /* ── SETTINGS ── */
-.settings-shell{display:grid;grid-template-columns:240px 1fr;gap:16px;align-items:start;}
-.settings-nav{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:16px;position:sticky;top:72px;}
-.settings-nav h3{font-family:var(--font-head);font-size:14px;margin-bottom:10px;}
-.settings-nav a{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;color:var(--t2);
-  text-decoration:none;font-size:11px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;border:1px solid transparent;}
-.settings-nav a:hover{background:var(--s2);color:var(--t1);border-color:var(--b1);}
-.settings-panels{display:flex;flex-direction:column;gap:14px;}
-.setting-card{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:18px;}
-.setting-card h4{font-family:var(--font-head);font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
-.setting-sub{font-size:12px;color:var(--t3);margin-top:6px;}
-.setting-rows{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px;}
-.setting-row.full{grid-column:1/-1;}
-.setting-inline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--b1);}
-.setting-inline:last-child{border-bottom:none;}
-.creator-banner{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,rgba(184,255,0,.08),rgba(139,92,246,.12));
-  border:1px solid rgba(184,255,0,.15);border-radius:14px;padding:16px;}
-.creator-avatar{width:54px;height:54px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+.settings-wrap{display:flex;flex-direction:column;gap:16px;}
+.ig-profile-card{background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:18px;display:grid;grid-template-columns:110px 1fr;gap:16px;}
+.ig-avatar{width:96px;height:96px;border-radius:24px;display:flex;align-items:center;justify-content:center;
   background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
-  color:#000;font-family:var(--font-head);font-weight:800;font-size:18px;box-shadow:0 10px 24px rgba(0,0,0,.35);}
-.creator-meta h5{font-family:var(--font-head);font-size:16px;margin-bottom:4px;}
-.creator-meta span{font-size:12px;color:var(--t2);}
-.creator-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-.creator-pill{padding:4px 10px;border-radius:999px;border:1px solid var(--b1);font-size:10px;color:var(--t2);font-family:var(--font-mono);letter-spacing:1px;}
+  color:#000;font-family:var(--font-head);font-weight:800;font-size:20px;box-shadow:0 12px 28px rgba(0,0,0,.4);}
+.ig-profile-meta{display:flex;flex-direction:column;gap:10px;}
+.ig-profile-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
+.ig-profile-top h3{font-family:var(--font-head);font-size:18px;margin-bottom:4px;}
+.ig-handle{font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--t2);}
+.ig-category{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-top:2px;}
+.save-status{font-size:10px;color:var(--lime);font-family:var(--font-mono);letter-spacing:1px;border:1px solid rgba(184,255,0,.3);
+  padding:4px 8px;border-radius:999px;display:none;}
+.save-status.show{display:inline-flex;}
+.ig-bio{font-size:12px;color:var(--t2);line-height:1.6;}
+.ig-website{font-size:12px;color:var(--lime);}
+.ig-stats{display:flex;gap:10px;flex-wrap:wrap;}
+.ig-stat{background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:8px 12px;min-width:96px;}
+.ig-stat .val{font-family:var(--font-head);font-size:16px;font-weight:700;}
+.ig-stat .lbl{font-size:9px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;font-family:var(--font-mono);}
+.ig-profile-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.ig-settings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.ig-card{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:18px;}
+.ig-card h4{font-family:var(--font-head);font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.ig-sub{font-size:12px;color:var(--t3);margin-top:6px;}
+.ig-form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px;}
+.ig-form .field-row.full{grid-column:1/-1;}
+.ig-inline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--b1);}
+.ig-inline:last-child{border-bottom:none;}
+.ig-reward{background:linear-gradient(135deg,rgba(184,255,0,.08),rgba(139,92,246,.12));border-color:rgba(184,255,0,.18);}
+.ig-progress{height:8px;background:var(--s2);border-radius:999px;overflow:hidden;border:1px solid var(--b1);margin-top:10px;}
+.ig-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--lime),rgba(139,92,246,.9));width:48%;}
+.ig-reward-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+.ig-reward-stat{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:8px;text-align:center;}
+.ig-reward-stat .val{font-family:var(--font-head);font-size:14px;}
+.ig-reward-stat .lbl{font-size:9px;color:var(--t3);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--b1);font-size:12px;color:var(--t1);}
 .toggle-row:last-child{border-bottom:none;}
 .tog{width:28px;height:16px;background:var(--s2);border-radius:8px;cursor:pointer;position:relative;transition:background .18s;border:1px solid var(--b1);}
@@ -529,8 +541,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   .side-card{min-width:210px;}
   .kanban{grid-template-columns:repeat(2,1fr);}
   .ana-grid{grid-template-columns:1fr;}
-  .settings-shell{grid-template-columns:1fr;}
-  .settings-nav{position:relative;top:auto;}
+  .ig-profile-card{grid-template-columns:1fr;}
+  .ig-settings-grid{grid-template-columns:1fr;}
   .plat-grid{grid-template-columns:repeat(2,1fr);}
   .credit-packages{grid-template-columns:1fr;}
 }
@@ -1506,69 +1518,86 @@ body::after{
 
   <!-- ════ SETTINGS ════ -->
   <div class="content" id="tab-settings">
-    <div class="sh"><h2>Settings</h2><p class="body">Creator studio preferences & platform controls</p></div>
-    <div class="settings-shell">
-      <div class="settings-nav">
-        <h3>Studio Settings</h3>
-        <a href="#settings-account">Account</a>
-        <a href="#settings-creator">Creator Identity</a>
-        <a href="#settings-publishing">Publishing Defaults</a>
-        <a href="#settings-notify">Notifications</a>
-        <a href="#settings-security">Security</a>
-        <a href="#settings-monetize">Monetization</a>
-        <a href="#settings-integrations">Integrations</a>
-        <a href="#settings-data">Data & Privacy</a>
-      </div>
-      <div class="settings-panels">
-        <div class="setting-card creator-banner" id="settings-creator">
-          <div class="creator-avatar">C</div>
-          <div class="creator-meta">
-            <h5>CreatorOS Studio</h5>
-            <span>Primary workspace for your content operation.</span>
-            <div class="creator-pills">
-              <div class="creator-pill">Timezone: Local</div>
-              <div class="creator-pill">Default Platform: YouTube</div>
-              <div class="creator-pill">Creator Tier: Free</div>
+    <div class="sh"><h2>Creator Studio Settings</h2><p class="body">Profile, rewards, and publishing controls</p></div>
+    <div class="settings-wrap">
+      <div class="ig-profile-card">
+        <div class="ig-avatar" id="setting-avatar">C</div>
+        <div class="ig-profile-meta">
+          <div class="ig-profile-top">
+            <div>
+              <h3 id="setting-display-name">Creator Name</h3>
+              <div class="ig-handle" id="setting-display-handle">@creator</div>
+              <div class="ig-category" id="setting-display-category">Creator</div>
             </div>
+            <div class="save-status" id="profile-save-status">Saved</div>
+          </div>
+          <div class="ig-bio" id="setting-display-bio">Share your creator story and what you publish.</div>
+          <a class="ig-website" id="setting-display-website" href="#" target="_blank" rel="noopener noreferrer"></a>
+          <div class="ig-stats">
+            <div class="ig-stat"><div class="val" id="setting-stat-posts">—</div><div class="lbl">Posts</div></div>
+            <div class="ig-stat"><div class="val" id="setting-stat-reach">—</div><div class="lbl">Reach</div></div>
+            <div class="ig-stat"><div class="val" id="setting-stat-earn">—</div><div class="lbl">Earnings</div></div>
+          </div>
+          <div class="ig-profile-actions">
+            <a class="btn btn-ghost btn-sm" href="#settings-profile">Edit Profile</a>
+            <button class="btn btn-lime btn-sm" onclick="tab('publish')">Publish Now</button>
           </div>
         </div>
+      </div>
 
-        <div class="setting-card" id="settings-account">
-          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Account Profile</h4>
-          <div class="setting-sub">Manage your creator profile, public details, and brand identity.</div>
-          <div class="setting-rows">
+      <div class="ig-settings-grid">
+        <div class="ig-card" id="settings-profile">
+          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile</h4>
+          <div class="ig-sub">Make your creator profile look polished across every platform.</div>
+          <div class="ig-form">
             <div class="field-row">
               <label>Display Name</label>
               <input type="text" class="field" id="setting-name" placeholder="Your name">
             </div>
             <div class="field-row">
-              <label>Creator Handle</label>
-              <input type="text" class="field" placeholder="@yourhandle">
+              <label>Username</label>
+              <input type="text" class="field" id="setting-handle" placeholder="creatorhandle">
             </div>
             <div class="field-row">
               <label>Email</label>
               <input type="email" class="field" id="setting-email" placeholder="your@email.com" disabled>
             </div>
             <div class="field-row">
-              <label>Primary Niche</label>
-              <input type="text" class="field" placeholder="Creator economy, tech, lifestyle">
+              <label>Category</label>
+              <input type="text" class="field" id="setting-category" placeholder="Creator, Tech, Lifestyle">
             </div>
             <div class="field-row full">
               <label>Bio</label>
-              <textarea class="field" id="setting-bio" placeholder="Tell us about yourself" style="resize:vertical;min-height:90px"></textarea>
+              <textarea class="field" id="setting-bio" placeholder="Tell your audience what you create" style="resize:vertical;min-height:90px"></textarea>
             </div>
             <div class="field-row full">
               <label>Website / Link in Bio</label>
-              <input type="text" class="field" placeholder="https://yourlink.com">
+              <input type="text" class="field" id="setting-website" placeholder="https://yourlink.com">
             </div>
           </div>
           <button class="btn btn-lime btn-sm" onclick="saveProfile()" style="width:100%;margin-top:12px">Save Profile</button>
         </div>
 
-        <div class="setting-card" id="settings-publishing">
+        <div class="ig-card ig-reward" id="settings-rewards">
+          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M5 5h14"/><path d="M7 9h10"/><path d="M7 15h10"/><path d="M5 19h14"/></svg> Creator Rewards</h4>
+          <div class="ig-sub">Publish consistently, hit high reach milestones, and unlock payouts.</div>
+          <div style="margin-top:10px;font-size:12px;color:var(--t2)">Monthly Reach Progress</div>
+          <div class="ig-progress"><span></span></div>
+          <div class="ig-reward-stats">
+            <div class="ig-reward-stat"><div class="val">12/20</div><div class="lbl">Posts</div></div>
+            <div class="ig-reward-stat"><div class="val">120k</div><div class="lbl">Reach</div></div>
+            <div class="ig-reward-stat"><div class="val">$140</div><div class="lbl">Est. Payout</div></div>
+          </div>
+          <div class="ig-inline">
+            <span>Monetization enabled</span>
+            <div class="tog on" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+
+        <div class="ig-card" id="settings-publishing">
           <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M9 9h6v6H9z"/></svg> Publishing Defaults</h4>
-          <div class="setting-sub">Set platform defaults so every upload ships in your preferred format.</div>
-          <div class="setting-rows">
+          <div class="ig-sub">Keep every post consistent with your creator brand.</div>
+          <div class="ig-form">
             <div class="field-row">
               <label>Default Platform</label>
               <select class="field">
@@ -1588,58 +1617,27 @@ body::after{
             </div>
             <div class="field-row full">
               <label>Default Hashtags</label>
-              <input type="text" class="field" placeholder="#creator #content #growth">
+              <input type="text" class="field" id="setting-default-hashtags" placeholder="#creator #content #growth">
             </div>
             <div class="field-row full">
               <label>Default CTA</label>
-              <input type="text" class="field" placeholder="Follow for more creator playbooks">
+              <input type="text" class="field" id="setting-default-cta" placeholder="Follow for more creator playbooks">
             </div>
           </div>
-          <div class="setting-inline">
+          <div class="ig-inline">
             <span>Auto-generate captions on upload</span>
             <div class="tog on" onclick="this.classList.toggle('on')"></div>
           </div>
-          <div class="setting-inline">
+          <div class="ig-inline">
             <span>Auto-schedule to peak time</span>
             <div class="tog" onclick="this.classList.toggle('on')"></div>
           </div>
         </div>
 
-        <div class="setting-card" id="settings-notify">
-          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Notifications</h4>
-          <div class="setting-sub">Stay updated on analytics, collaborations, and account activity.</div>
-          <div class="setting-inline">
-            <span>Performance digests</span>
-            <div class="tog on" onclick="toggleNotif(this)"></div>
-          </div>
-          <div class="setting-inline">
-            <span>CreatorOS product updates</span>
-            <div class="tog on" onclick="toggleMarketing(this)"></div>
-          </div>
-          <div class="setting-inline">
-            <span>Brand deal alerts</span>
-            <div class="tog" onclick="this.classList.toggle('on')"></div>
-          </div>
-        </div>
-
-        <div class="setting-card" id="settings-security">
-          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Security</h4>
-          <div class="setting-sub">Protect your studio and manage access.</div>
-          <div class="setting-inline">
-            <span>Two-factor authentication</span>
-            <div class="tog" id="tog-2fa" onclick="toggle2FA(this)"></div>
-          </div>
-          <div class="setting-inline">
-            <span>Login alerts</span>
-            <div class="tog on" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:10px" onclick="changePassword()">Change Password</button>
-        </div>
-
-        <div class="setting-card" id="settings-monetize">
-          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> Monetization & Payouts</h4>
-          <div class="setting-sub">Track creator earnings and set payout details.</div>
-          <div class="setting-rows">
+        <div class="ig-card" id="settings-monetize">
+          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> Payouts & Earnings</h4>
+          <div class="ig-sub">Connect payout methods to receive creator rewards.</div>
+          <div class="ig-form">
             <div class="field-row">
               <label>Payout Method</label>
               <select class="field">
@@ -1664,31 +1662,45 @@ body::after{
           <button class="btn btn-lime btn-sm" style="width:100%;margin-top:12px">Save Payout Details</button>
         </div>
 
-        <div class="setting-card" id="settings-integrations">
-          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 1 0-7.07-7.07L10 5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 1 0 7.07 7.07L14 19"/></svg> Integrations</h4>
-          <div class="setting-sub">Connect platforms, analytics tools, and collaboration apps.</div>
-          <div class="setting-inline">
-            <span>Social platforms</span>
-            <button class="btn btn-lime btn-xs" onclick="tab('connect')">Manage</button>
+        <div class="ig-card" id="settings-notifications">
+          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Notifications</h4>
+          <div class="ig-sub">Stay in the loop on performance, growth, and payouts.</div>
+          <div class="ig-inline">
+            <span>Performance digests</span>
+            <div class="tog on" onclick="toggleNotif(this)"></div>
           </div>
-          <div class="setting-inline">
-            <span>Notion / Docs export</span>
-            <button class="btn btn-ghost btn-xs">Connect</button>
+          <div class="ig-inline">
+            <span>CreatorOS product updates</span>
+            <div class="tog on" onclick="toggleMarketing(this)"></div>
           </div>
-          <div class="setting-inline">
-            <span>Slack alerts</span>
-            <button class="btn btn-ghost btn-xs">Connect</button>
+          <div class="ig-inline">
+            <span>Brand deal alerts</span>
+            <div class="tog" onclick="this.classList.toggle('on')"></div>
           </div>
         </div>
 
-        <div class="setting-card" id="settings-data">
+        <div class="ig-card" id="settings-security">
+          <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Security</h4>
+          <div class="ig-sub">Protect your account and control access.</div>
+          <div class="ig-inline">
+            <span>Two-factor authentication</span>
+            <div class="tog" id="tog-2fa" onclick="toggle2FA(this)"></div>
+          </div>
+          <div class="ig-inline">
+            <span>Login alerts</span>
+            <div class="tog on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:10px" onclick="changePassword()">Change Password</button>
+        </div>
+
+        <div class="ig-card" id="settings-data">
           <h4><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 9v11"/></svg> Data & Privacy</h4>
-          <div class="setting-sub">Control how your data is stored and exported.</div>
-          <div class="setting-inline">
+          <div class="ig-sub">Download or control your creator data.</div>
+          <div class="ig-inline">
             <span>Download account data</span>
             <button class="btn btn-ghost btn-xs">Export</button>
           </div>
-          <div class="setting-inline">
+          <div class="ig-inline">
             <span>Delete account</span>
             <button class="btn btn-danger btn-xs">Delete</button>
           </div>
@@ -1847,6 +1859,33 @@ function setStoredAccessToken(token) {
     // Ignore storage errors (private mode, blocked, etc.)
   }
   accessToken = cleaned;
+}
+
+function getLocalSetting(key, fallback = '') {
+  try {
+    const value = localStorage.getItem(`creatoros_${key}`);
+    return value === null ? fallback : value;
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function setLocalSetting(key, value) {
+  try {
+    if (value === null || value === undefined || value === '') {
+      localStorage.removeItem(`creatoros_${key}`);
+      return;
+    }
+    localStorage.setItem(`creatoros_${key}`, value);
+  } catch (error) {
+    // ignore storage errors
+  }
+}
+
+function normalizeHandle(value) {
+  const cleaned = String(value || '').trim().replace(/\s+/g, '');
+  if (!cleaned) return '';
+  return cleaned.startsWith('@') ? cleaned : `@${cleaned}`;
 }
 
 let currentUser = null;
@@ -2210,6 +2249,17 @@ async function initializeApp() {
   document.getElementById('hero-greeting').textContent = `Welcome back, ${currentUser.name}! 🚀 Generate content, analyze trends, and publish — all from one place.`;
   document.getElementById('setting-name').value = currentUser.name;
   document.getElementById('setting-email').value = currentUser.email;
+  document.getElementById('setting-bio').value = currentUser.bio || '';
+  const backendHandle = (currentUser.username || '').trim();
+  const defaultHandle = backendHandle || (currentUser.email || '').split('@')[0] || (currentUser.name || '').toLowerCase().replace(/\s+/g, '');
+  const storedHandle = getLocalSetting('handle', defaultHandle);
+  document.getElementById('setting-handle').value = normalizeHandle(storedHandle).replace(/^@/, '');
+  document.getElementById('setting-category').value = getLocalSetting('category', currentUser.category || '');
+  document.getElementById('setting-website').value = getLocalSetting('website', currentUser.website || '');
+  document.getElementById('setting-default-hashtags').value = getLocalSetting('hashtags', currentUser.default_hashtags || '');
+  document.getElementById('setting-default-cta').value = getLocalSetting('cta', currentUser.default_cta || '');
+  updateSettingsDisplay();
+  bindSettingsPreview();
   
   // Load connected platforms
   await loadConnectedPlatforms();
@@ -4196,6 +4246,11 @@ async function saveProfile() {
   try {
     const name = document.getElementById('setting-name').value;
     const bio = document.getElementById('setting-bio').value;
+    const handleInput = document.getElementById('setting-handle').value;
+    const category = document.getElementById('setting-category').value;
+    const website = document.getElementById('setting-website').value;
+    const hashtags = document.getElementById('setting-default-hashtags').value;
+    const cta = document.getElementById('setting-default-cta').value;
     
     const response = await fetch(`${API_URL}/user/profile`, {
       method: 'PUT',
@@ -4203,19 +4258,38 @@ async function saveProfile() {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ name, bio })
+      body: JSON.stringify({
+        name,
+        bio,
+        username: normalizeHandle(handleInput),
+        category,
+        website,
+        default_hashtags: hashtags,
+        default_cta: cta
+      })
     });
     
     if (response.ok) {
       const data = await response.json();
       currentUser = data.user;
-      alert('Profile saved successfully!');
+      setLocalSetting('handle', normalizeHandle(handleInput));
+      setLocalSetting('category', category.trim());
+      setLocalSetting('website', website.trim());
+      setLocalSetting('hashtags', hashtags.trim());
+      setLocalSetting('cta', cta.trim());
+      updateSettingsDisplay();
+      const status = document.getElementById('profile-save-status');
+      if (status) {
+        status.classList.add('show');
+        setTimeout(() => status.classList.remove('show'), 2200);
+      }
+      showToast('Profile updated', 'Your creator profile looks polished and ready.');
     } else {
-      alert('Failed to save profile');
+      showToast('Save failed', 'Please try again.', 'error', 4000);
     }
   } catch (error) {
     console.error('Error saving profile:', error);
-    alert('Error saving profile');
+    showToast('Save failed', 'Network error while saving profile.', 'error', 4000);
   }
 }
 
@@ -4262,6 +4336,68 @@ function toggleNotif(el) {
 
 function toggleMarketing(el) {
   el.classList.toggle('on');
+}
+
+function updateSettingsDisplay() {
+  const name = (document.getElementById('setting-name')?.value || currentUser?.name || 'Creator').trim();
+  const rawHandle = document.getElementById('setting-handle')?.value || getLocalSetting('handle', '');
+  const handle = normalizeHandle(rawHandle) || '@creator';
+  const bio = (document.getElementById('setting-bio')?.value || currentUser?.bio || '').trim();
+  const website = (document.getElementById('setting-website')?.value || '').trim();
+  const category = (document.getElementById('setting-category')?.value || '').trim();
+
+  const displayName = document.getElementById('setting-display-name');
+  if (displayName) displayName.textContent = name || 'Creator';
+  const displayHandle = document.getElementById('setting-display-handle');
+  if (displayHandle) displayHandle.textContent = handle;
+  const displayCategory = document.getElementById('setting-display-category');
+  if (displayCategory) displayCategory.textContent = category ? category.toUpperCase() : 'CREATOR';
+  const displayBio = document.getElementById('setting-display-bio');
+  if (displayBio) displayBio.textContent = bio || 'Share your creator story and what you publish.';
+  const displayWebsite = document.getElementById('setting-display-website');
+  if (displayWebsite) {
+    if (website) {
+      const normalized = website.startsWith('http') ? website : `https://${website}`;
+      displayWebsite.textContent = normalized;
+      displayWebsite.setAttribute('href', normalized);
+      displayWebsite.style.display = 'inline';
+    } else {
+      displayWebsite.textContent = '';
+      displayWebsite.setAttribute('href', '#');
+      displayWebsite.style.display = 'none';
+    }
+  }
+
+  const postsSource = document.getElementById('ds-posts')?.textContent || '—';
+  const reachSource = document.getElementById('ds-reach')?.textContent || '—';
+  const statPosts = document.getElementById('setting-stat-posts');
+  if (statPosts) statPosts.textContent = postsSource;
+  const statReachEl = document.getElementById('setting-stat-reach');
+  if (statReachEl) statReachEl.textContent = reachSource;
+  const statEarn = document.getElementById('setting-stat-earn');
+  if (statEarn) statEarn.textContent = '$0';
+
+  const avatar = document.getElementById('setting-avatar');
+  if (avatar) avatar.textContent = (name || 'C')[0].toUpperCase();
+
+  const categoryText = category ? `${category} Creator` : 'Creator';
+  if (statReachEl && categoryText) statReachEl.title = categoryText;
+}
+
+function bindSettingsPreview() {
+  const fields = [
+    'setting-name',
+    'setting-handle',
+    'setting-bio',
+    'setting-website',
+    'setting-category'
+  ];
+  fields.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el || el.dataset.previewBound) return;
+    el.addEventListener('input', updateSettingsDisplay);
+    el.dataset.previewBound = 'true';
+  });
 }
 
 async function disconnectPlatform(platform) {

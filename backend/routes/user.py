@@ -48,6 +48,17 @@ def update_profile():
         
         if 'name' in data:
             user.name = data['name']
+        if 'username' in data:
+            username = (data.get('username') or '').strip()
+            user.username = username.lstrip('@') if username else None
+        if 'category' in data:
+            user.category = (data.get('category') or '').strip() or None
+        if 'website' in data:
+            user.website = (data.get('website') or '').strip() or None
+        if 'default_hashtags' in data:
+            user.default_hashtags = (data.get('default_hashtags') or '').strip() or None
+        if 'default_cta' in data:
+            user.default_cta = (data.get('default_cta') or '').strip() or None
         if 'bio' in data:
             user.bio = data['bio']
         if 'avatar_url' in data:

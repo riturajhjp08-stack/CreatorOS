@@ -110,9 +110,19 @@ def _run_sqlite_compat_migrations():
     # Migrate users table
     if "users" in inspector.get_table_names():
         existing_user_cols = {col["name"] for col in inspector.get_columns("users")}
-        if "status" not in existing_user_cols:
-            with engine.begin() as conn:
-                conn.execute(text("ALTER TABLE users ADD COLUMN status VARCHAR(50) DEFAULT 'active'"))
+        expected_user = {
+            "status": "VARCHAR(50) DEFAULT 'active'",
+            "username": "VARCHAR(60)",
+            "category": "VARCHAR(120)",
+            "website": "VARCHAR(500)",
+            "default_hashtags": "TEXT",
+            "default_cta": "VARCHAR(255)",
+        }
+        with engine.begin() as conn:
+            for col, col_type in expected_user.items():
+                if col in existing_user_cols:
+                    continue
+                conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {col_type}"))
 
 def create_app(config_name=None):
     """Application factory"""

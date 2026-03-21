@@ -16,6 +16,11 @@ class User(db.Model):
     premium = db.Column(db.Boolean, default=False)
     premium_expires = db.Column(db.DateTime, nullable=True)
     bio = db.Column(db.Text, nullable=True)
+    username = db.Column(db.String(60), nullable=True)
+    category = db.Column(db.String(120), nullable=True)
+    website = db.Column(db.String(500), nullable=True)
+    default_hashtags = db.Column(db.Text, nullable=True)
+    default_cta = db.Column(db.String(255), nullable=True)
     avatar_url = db.Column(db.String(500), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -35,6 +40,11 @@ class User(db.Model):
         return {
             'id': self.id,
             'name': self.name,
+            'username': self.username,
+            'category': self.category,
+            'website': self.website,
+            'default_hashtags': self.default_hashtags,
+            'default_cta': self.default_cta,
             'email': self.email,
             'credits': self.credits,
             'premium': self.premium,
