@@ -125,6 +125,9 @@ class Config:
     LOG_FORMAT = os.environ.get("LOG_FORMAT", "text")
     SENTRY_DSN = os.environ.get("SENTRY_DSN", "")
 
+    # Cache
+    REDIS_URL = os.environ.get("REDIS_URL", "")
+
     # Storage
     STORAGE_BACKEND = os.environ.get("STORAGE_BACKEND", "local")
     UPLOAD_DIR = os.environ.get("UPLOAD_DIR", "")

@@ -119,6 +119,11 @@ def _run_schema_compat_migrations():
             "website": "VARCHAR(500)",
             "default_hashtags": "TEXT",
             "default_cta": "VARCHAR(255)",
+            "avatar_url": "VARCHAR(500)",
+            "two_fa_enabled": "BOOLEAN DEFAULT 0",
+            "email_notifications": "BOOLEAN DEFAULT 1",
+            "marketing_emails": "BOOLEAN DEFAULT 1",
+            "last_seen": "DATETIME",
         }
         with engine.begin() as conn:
             for col, col_type in expected_user.items():
@@ -127,6 +132,35 @@ def _run_schema_compat_migrations():
                 ddl = f"ALTER TABLE users ADD COLUMN {col} {col_type}"
                 if engine.dialect.name == "postgresql":
                     ddl = f"ALTER TABLE users ADD COLUMN IF NOT EXISTS {col} {col_type}"
+                conn.execute(text(ddl))
+
+        # Indexes for faster search
+        if engine.dialect.name == "postgresql":
+            with engine.begin() as conn:
+                conn.execute(text("CREATE INDEX IF NOT EXISTS idx_users_username ON users (username)"))
+                conn.execute(text("CREATE INDEX IF NOT EXISTS idx_users_category ON users (category)"))
+                conn.execute(text("CREATE INDEX IF NOT EXISTS idx_users_name ON users (name)"))
+        elif engine.dialect.name == "sqlite":
+            with engine.begin() as conn:
+                conn.execute(text("CREATE INDEX IF NOT EXISTS idx_users_username ON users (username)"))
+                conn.execute(text("CREATE INDEX IF NOT EXISTS idx_users_category ON users (category)"))
+                conn.execute(text("CREATE INDEX IF NOT EXISTS idx_users_name ON users (name)"))
+
+    # Migrate notifications table
+    if "notifications" in inspector.get_table_names():
+        existing_notif_cols = {col["name"] for col in inspector.get_columns("notifications")}
+        expected_notif = {
+            "type": "VARCHAR(50)",
+            "actor_user_id": "VARCHAR(36)",
+            "data": "JSON",
+        }
+        with engine.begin() as conn:
+            for col, col_type in expected_notif.items():
+                if col in existing_notif_cols:
+                    continue
+                ddl = f"ALTER TABLE notifications ADD COLUMN {col} {col_type}"
+                if engine.dialect.name == "postgresql":
+                    ddl = f"ALTER TABLE notifications ADD COLUMN IF NOT EXISTS {col} {col_type}"
                 conn.execute(text(ddl))
 
 def create_app(config_name=None):
@@ -188,6 +222,8 @@ def create_app(config_name=None):
     from routes.admin import admin_bp
     from routes.admin_advanced import admin_advanced_bp
     from routes.notifications import notifications_bp
+    from routes.discovery import discovery_bp
+    from routes.social import social_bp
     
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(platforms_bp, url_prefix='/api/platforms')
@@ -199,6 +235,8 @@ def create_app(config_name=None):
     app.register_blueprint(admin_bp, url_prefix='/api/admin')
     app.register_blueprint(admin_advanced_bp, url_prefix='/api/admin_advanced')
     app.register_blueprint(notifications_bp, url_prefix='/api/notifications')
+    app.register_blueprint(discovery_bp, url_prefix='/api/discovery')
+    app.register_blueprint(social_bp, url_prefix='/api/social')
 
     public_paths = {
         "/health",

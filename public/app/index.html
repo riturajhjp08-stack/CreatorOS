@@ -494,6 +494,59 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .field.compact{padding:8px 10px;font-size:12px;}
 .btn-xs{padding:6px 10px;font-size:11px;border-radius:8px;}
 
+/* ── COMMUNITY ── */
+.community-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;}
+.community-card{background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:18px;box-shadow:var(--clay-shadow-soft);}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.card-head h4{font-family:var(--font-head);font-size:14px;margin-bottom:4px;}
+.card-head .body{font-size:12px;color:var(--t2);}
+.pill{background:var(--s2);border:1px solid var(--b1);border-radius:999px;padding:4px 10px;font-size:10px;color:var(--t2);font-family:var(--font-mono);}
+.search-controls{display:grid;gap:10px;margin-bottom:10px;}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{border:1px solid var(--b1);background:var(--s2);border-radius:999px;padding:6px 10px;font-size:11px;color:var(--t2);cursor:pointer;transition:all .15s;}
+.chip.active{border-color:rgba(184,255,0,.35);color:var(--lime);background:var(--lime-d);}
+.user-results{display:flex;flex-direction:column;gap:10px;min-height:120px;}
+.user-card{display:flex;gap:12px;align-items:flex-start;background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:10px;}
+.user-avatar{width:44px;height:44px;border-radius:12px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-head);color:var(--t1);overflow:hidden;}
+.user-avatar img{width:100%;height:100%;object-fit:cover;}
+.user-meta{flex:1;min-width:0;}
+.user-meta h5{font-size:13px;font-weight:600;}
+.user-meta .handle{font-size:11px;color:var(--t3);}
+.user-meta .niche{font-size:11px;color:var(--t2);}
+.user-meta .reach{font-size:10px;color:var(--t3);margin-top:4px;}
+.user-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.user-actions .btn{padding:6px 10px;font-size:11px;border-radius:8px;}
+.leaderboard-list{display:flex;flex-direction:column;gap:8px;max-height:360px;overflow:auto;}
+.leaderboard-row{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:8px 10px;}
+.lb-rank{font-family:var(--font-mono);font-size:11px;color:var(--t3);}
+.lb-name{font-size:12px;font-weight:600;}
+.lb-meta{font-size:10px;color:var(--t3);}
+.lb-score{font-family:var(--font-head);font-size:14px;color:var(--lime);}
+.chat-panel{margin-top:14px;}
+.chat-layout{display:grid;grid-template-columns:240px 1fr;gap:14px;}
+.chat-sidebar{background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:12px;}
+.chat-section h5{font-size:12px;margin-bottom:6px;color:var(--t2);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;}
+.chat-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;border:1px solid transparent;cursor:pointer;}
+.chat-item:hover{background:var(--s3);border-color:var(--b1);}
+.chat-item.active{background:var(--lime-d);border-color:rgba(184,255,0,.25);}
+.chat-item .avatar{width:32px;height:32px;border-radius:10px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.chat-item .name{font-size:12px;font-weight:600;}
+.chat-item .status{font-size:10px;color:var(--t3);}
+.chat-main{display:flex;flex-direction:column;gap:10px;}
+.chat-header{font-size:13px;font-weight:600;}
+.chat-messages{flex:1;min-height:300px;max-height:360px;overflow:auto;background:var(--s2);border:1px solid var(--b1);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;}
+.msg{max-width:72%;padding:8px 10px;border-radius:12px;background:var(--s3);font-size:12px;}
+.msg.me{align-self:flex-end;background:var(--lime-d);border:1px solid rgba(184,255,0,.25);}
+.msg .meta{font-size:9px;color:var(--t3);margin-top:4px;}
+.chat-typing{font-size:11px;color:var(--t3);min-height:16px;}
+.chat-input-row{display:flex;gap:8px;align-items:center;}
+.chat-input-row .field{flex:1;}
+.chat-input-row button{white-space:nowrap;}
+#chat-file{display:none;}
+.chat-attachments{display:flex;gap:8px;flex-wrap:wrap;}
+.attach-pill{background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:6px 8px;font-size:10px;display:flex;align-items:center;gap:6px;}
+.attach-pill span{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
 /* ── ADMIN ── */
 .admin-header{background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(139,92,246,.08));border:1px solid rgba(249,115,22,.15);border-radius:14px;padding:22px;flex-shrink:0;}
 .adm-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;flex-shrink:0;}
@@ -581,6 +634,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   .ig-profile-top{flex-direction:column;}
   .ig-profile-top-actions{align-items:flex-start;}
   .ig-settings-grid{grid-template-columns:1fr;}
+  .community-grid{grid-template-columns:1fr;}
+  .chat-layout{grid-template-columns:1fr;}
   .plat-grid{grid-template-columns:repeat(2,1fr);}
   .credit-packages{grid-template-columns:1fr;}
 }
@@ -902,6 +957,18 @@ body::after{
   </div>
 </div>
 
+<div class="overlay" id="creator-profile-modal">
+  <div class="modal" style="max-width:520px">
+    <h2 id="creator-profile-name">Creator</h2>
+    <p class="modal-sub" id="creator-profile-handle">@creator</p>
+    <div id="creator-profile-body" style="display:flex;flex-direction:column;gap:10px;font-size:12px;color:var(--t1)"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeCreatorProfile()">Close</button>
+      <button class="btn btn-lime" style="flex:1" id="creator-profile-follow-btn" onclick="toggleProfileFollow()">Follow</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════
      APP SHELL
 ═══════════════════════════════════════ -->
@@ -916,6 +983,7 @@ body::after{
   <div class="nav-item" onclick="tab('publish')" id="nav-publish"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span class="tip">Upload & Publish</span></div>
   <div class="nav-item" onclick="tab('ideas')" id="nav-ideas"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="tip">Idea Board</span></div>
   <div class="nav-item" onclick="tab('analytics')" id="nav-analytics"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="tip">Analytics</span></div>
+  <div class="nav-item" onclick="tab('community')" id="nav-community"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M7 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 3-3.87"/></svg><span class="tip">Community</span></div>
   <div class="nav-item" onclick="tab('trends')" id="nav-trends"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg><span class="tip">Trend Radar</span></div>
   <div class="nav-item" onclick="tab('repurpose')" id="nav-repurpose"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><span class="tip">Repurpose</span></div>
   <div class="nav-item" onclick="tab('scheduler')" id="nav-scheduler"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="tip">Scheduler</span></div>
@@ -1252,6 +1320,89 @@ body::after{
       <div class="chart-card"><h4>AI Quality Score</h4><div class="ring-wrap" style="margin:8px 0"><svg class="ring-svg" width="100" height="100" viewBox="0 0 100 100"><circle class="rt" cx="50" cy="50" r="40"/><circle class="rf" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="15"/></svg><div class="rl"><div class="rn">94</div><div class="rs">score</div></div></div><p style="font-size:12px;color:var(--t2);text-align:center">Exceeds 94% of creators in your niche</p></div>
       <div class="chart-card"><h4>Content Mix</h4><div style="display:flex;flex-direction:column;gap:8px;margin-top:4px"><div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>Long-form Video</span><span style="color:var(--lime)">38%</span></div><div class="pbar"><div class="pfill pf-lime" style="width:38%"></div></div></div><div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>Short-form</span><span style="color:var(--purple)">28%</span></div><div class="pbar"><div class="pfill pf-purple" style="width:28%"></div></div></div><div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>Text &amp; Threads</span><span style="color:var(--orange)">20%</span></div><div class="pbar"><div class="pfill pf-orange" style="width:20%"></div></div></div><div><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>Newsletters</span><span style="color:var(--t2)">14%</span></div><div class="pbar"><div class="pfill pf-blue" style="width:14%"></div></div></div></div></div>
       <div class="chart-card"><h4>Best Post Times</h4><div style="display:flex;flex-direction:column;gap:6px;margin-top:4px"><div style="display:flex;justify-content:space-between;padding:7px 9px;background:var(--s2);border-radius:7px;font-size:11px"><span>YouTube</span><span style="color:var(--lime);font-family:var(--font-mono)">Fri 3–5 PM</span></div><div style="display:flex;justify-content:space-between;padding:7px 9px;background:var(--s2);border-radius:7px;font-size:11px"><span>TikTok</span><span style="color:var(--lime);font-family:var(--font-mono)">Tue 7–9 PM</span></div><div style="display:flex;justify-content:space-between;padding:7px 9px;background:var(--s2);border-radius:7px;font-size:11px"><span>Instagram</span><span style="color:var(--lime);font-family:var(--font-mono)">Wed 11 AM</span></div><div style="display:flex;justify-content:space-between;padding:7px 9px;background:var(--s2);border-radius:7px;font-size:11px"><span>LinkedIn</span><span style="color:var(--lime);font-family:var(--font-mono)">Tue 8 AM</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- ════ COMMUNITY ════ -->
+  <div class="content" id="tab-community">
+    <div class="sh"><h2>Community</h2><p class="body">Find creators, follow, and connect in real time</p></div>
+    <div class="community-grid">
+      <div class="community-card">
+        <div class="card-head">
+          <div>
+            <h4>Creator Search</h4>
+            <p class="body">Search by username, niche, and platform</p>
+          </div>
+          <span class="pill">Live</span>
+        </div>
+        <div class="search-controls">
+          <input type="text" class="field" id="user-search-input" placeholder="Search @username" oninput="queueUserSearch()">
+          <input type="text" class="field" id="user-search-category" placeholder="Filter by niche (e.g. Tech)" oninput="queueUserSearch()">
+          <div class="chip-row" id="user-search-platforms">
+            <button class="chip" data-platform="youtube" onclick="togglePlatformFilter(this)">YouTube</button>
+            <button class="chip" data-platform="instagram" onclick="togglePlatformFilter(this)">Instagram</button>
+            <button class="chip" data-platform="twitter" onclick="togglePlatformFilter(this)">Twitter</button>
+            <button class="chip" data-platform="tiktok" onclick="togglePlatformFilter(this)">TikTok</button>
+            <button class="chip" data-platform="linkedin" onclick="togglePlatformFilter(this)">LinkedIn</button>
+          </div>
+        </div>
+        <div class="user-results" id="user-search-results"></div>
+        <button class="btn btn-ghost btn-sm" id="user-search-more" onclick="loadMoreUsers()" style="width:100%;margin-top:10px">Load more</button>
+      </div>
+
+      <div class="community-card">
+        <div class="card-head">
+          <div>
+            <h4>Top Creators</h4>
+            <p class="body">Ranked by total reach across platforms</p>
+          </div>
+          <select class="field" id="leaderboard-sort" onchange="loadLeaderboard(true)" style="max-width:180px">
+            <option value="total">Total Reach</option>
+            <option value="youtube">YouTube</option>
+            <option value="instagram">Instagram</option>
+            <option value="twitter">Twitter</option>
+            <option value="tiktok">TikTok</option>
+            <option value="linkedin">LinkedIn</option>
+          </select>
+        </div>
+        <div class="leaderboard-list" id="leaderboard-list"></div>
+        <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard(true)" style="width:100%;margin-top:10px">Refresh leaderboard</button>
+      </div>
+    </div>
+
+    <div class="community-card chat-panel">
+      <div class="card-head">
+        <div>
+          <h4>Messages</h4>
+          <p class="body">Chat after connections are accepted</p>
+        </div>
+        <div class="pill" id="presence-pill">Online</div>
+      </div>
+      <div class="chat-layout">
+        <div class="chat-sidebar">
+          <div class="chat-section">
+            <h5>Friend Requests</h5>
+            <div id="friend-requests"></div>
+          </div>
+          <div class="chat-section">
+            <h5>Friends</h5>
+            <div id="friends-list"></div>
+          </div>
+        </div>
+        <div class="chat-main">
+          <div class="chat-header" id="chat-header">Select a friend to start chatting</div>
+          <div class="chat-messages" id="chat-messages"></div>
+          <div class="chat-typing" id="chat-typing"></div>
+          <div class="chat-input-row">
+            <input type="text" class="field" id="chat-input" placeholder="Write a message..." oninput="handleTyping()">
+            <input type="file" id="chat-file" accept="image/*,application/pdf" onchange="uploadChatAttachment(this.files)">
+            <button class="btn btn-ghost btn-xs" type="button" onclick="triggerChatFile()">Attach</button>
+            <button class="btn btn-ghost btn-xs" type="button" onclick="insertEmoji('✨')">Emoji</button>
+            <button class="btn btn-lime btn-xs" type="button" onclick="sendChatMessage()">Send</button>
+          </div>
+          <div class="chat-attachments" id="chat-attachments"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1825,6 +1976,7 @@ body::after{
     <button class="mob-nav-item active" data-tab="dashboard" onclick="tab('dashboard')">Dashboard</button>
     <button class="mob-nav-item" data-tab="writer" onclick="tab('writer')">Writer</button>
     <button class="mob-nav-item" data-tab="publish" onclick="tab('publish')">Publish</button>
+    <button class="mob-nav-item" data-tab="community" onclick="tab('community')">Community</button>
     <button class="mob-nav-item" data-tab="settings" onclick="tab('settings')">Settings</button>
   </div>
 </div>
@@ -1980,6 +2132,31 @@ let selectedSchedulerFiles = [];
 let queuePollTimer = null;
 let queueStatusMap = {};
 let publishedVideoStatsCache = null;
+let communityInterval = null;
+let presenceInterval = null;
+let searchState = {
+  query: '',
+  category: '',
+  platforms: [],
+  page: 1,
+  hasNext: false,
+  loading: false
+};
+let searchAbort = null;
+let searchTimer = null;
+let leaderboardState = {
+  sort: 'total',
+  page: 1,
+  loading: false
+};
+let chatState = {
+  activeUser: null,
+  messagesPage: 1,
+  hasMore: false,
+  loading: false,
+  typingTimer: null,
+  pendingAttachments: []
+};
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -2346,6 +2523,12 @@ async function initializeApp() {
   document.getElementById('setting-default-cta').value = getLocalSetting('cta', currentUser.default_cta || '');
   updateSettingsDisplay();
   bindSettingsPreview();
+
+  // Presence heartbeat for community features
+  if (!presenceInterval) {
+    presencePing();
+    presenceInterval = setInterval(presencePing, 30000);
+  }
   
   // Load connected platforms
   await loadConnectedPlatforms();
@@ -3269,6 +3452,11 @@ async function logout() {
       clearInterval(notificationInterval);
       notificationInterval = null;
     }
+    if (presenceInterval) {
+      clearInterval(presenceInterval);
+      presenceInterval = null;
+    }
+    stopCommunityPolling();
     location.reload();
   }
 }
@@ -3289,6 +3477,7 @@ function tab(name) {
     publish: 'Upload & Publish',
     ideas: 'Idea Board',
     analytics: 'Analytics',
+    community: 'Community',
     trends: 'Trend Radar',
     repurpose: 'Content Multiplier',
     scheduler: 'Scheduler',
@@ -3302,6 +3491,11 @@ function tab(name) {
   
   if (name === 'admin') {
     loadAdminData();
+  }
+  if (name === 'community') {
+    startCommunityPolling();
+  } else {
+    stopCommunityPolling();
   }
 }
 
@@ -3449,6 +3643,613 @@ async function markNotificationRead(id) {
     fetchNotifications(); 
   } catch (err) {
     console.error(err);
+  }
+}
+
+// --- COMMUNITY LOGIC --- //
+function queueUserSearch() {
+  const input = document.getElementById('user-search-input');
+  const category = document.getElementById('user-search-category');
+  searchState.query = (input?.value || '').trim();
+  searchState.category = (category?.value || '').trim();
+  if (searchTimer) clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => runUserSearch(true), 300);
+}
+
+function togglePlatformFilter(btn) {
+  if (!btn) return;
+  btn.classList.toggle('active');
+  const active = Array.from(document.querySelectorAll('#user-search-platforms .chip.active'));
+  searchState.platforms = active.map(el => el.dataset.platform);
+  runUserSearch(true);
+}
+
+async function runUserSearch(reset = false) {
+  if (!isAuthenticated) return;
+  const resultsEl = document.getElementById('user-search-results');
+  const moreBtn = document.getElementById('user-search-more');
+  if (!resultsEl || !moreBtn) return;
+
+  if (reset) {
+    searchState.page = 1;
+    searchState.hasNext = false;
+    resultsEl.innerHTML = '';
+  }
+  if (searchState.loading) return;
+  if (!searchState.query && !searchState.category && searchState.platforms.length === 0) {
+    resultsEl.innerHTML = '<div class="notif-empty">Start typing to search creators.</div>';
+    moreBtn.style.display = 'none';
+    return;
+  }
+
+  searchState.loading = true;
+  if (searchAbort) searchAbort.abort();
+  searchAbort = new AbortController();
+  const params = new URLSearchParams();
+  if (searchState.query) params.set('q', searchState.query);
+  if (searchState.category) params.set('category', searchState.category);
+  if (searchState.platforms.length) params.set('platforms', searchState.platforms.join(','));
+  params.set('page', String(searchState.page));
+  params.set('page_size', '10');
+
+  try {
+    const res = await fetch(`${API_URL}/discovery/users?${params.toString()}`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` },
+      signal: searchAbort.signal
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      resultsEl.innerHTML = '<div class="notif-empty">Search failed. Try again.</div>';
+      moreBtn.style.display = 'none';
+      return;
+    }
+    const users = data.users || [];
+    renderUserResults(users, reset);
+    searchState.hasNext = data.pagination?.has_next;
+    moreBtn.style.display = searchState.hasNext ? 'block' : 'none';
+  } catch (err) {
+    if (err && err.name === 'AbortError') return;
+    resultsEl.innerHTML = '<div class="notif-empty">Search failed. Try again.</div>';
+  } finally {
+    searchState.loading = false;
+  }
+}
+
+function renderUserResults(users, reset) {
+  const resultsEl = document.getElementById('user-search-results');
+  if (!resultsEl) return;
+  if (reset) resultsEl.innerHTML = '';
+  if (!users.length && reset) {
+    resultsEl.innerHTML = '<div class="notif-empty">No creators found.</div>';
+    return;
+  }
+  users.forEach(user => {
+    const reach = user.total_reach ? `${Number(user.total_reach).toLocaleString()} reach` : 'New creator';
+    const platforms = (user.platforms || []).map(p => p.toUpperCase()).join(' • ') || 'No platforms linked';
+    const avatar = user.avatar_url
+      ? `<img src="${user.avatar_url}" alt="${escapeHtml(user.name || 'Creator')}">`
+      : `<span>${escapeHtml((user.name || 'C')[0])}</span>`;
+    const followLabel = user.is_following ? 'Following' : 'Follow';
+    resultsEl.innerHTML += `
+      <div class="user-card">
+        <div class="user-avatar">${avatar}</div>
+        <div class="user-meta">
+          <h5>${escapeHtml(user.name || 'Creator')}</h5>
+          <div class="handle">${escapeHtml(user.username ? '@' + user.username : '@creator')}</div>
+          <div class="niche">${escapeHtml(user.category || 'Creator')}</div>
+          <div class="reach">${reach} · ${platforms}</div>
+          <div class="user-actions">
+            <button class="btn btn-ghost btn-xs" onclick="openCreatorProfile('${user.id}')">View Profile</button>
+            <button class="btn btn-ghost btn-xs" onclick="sendFriendRequest('${user.id}')">Connect</button>
+            <button class="btn btn-lime btn-xs" onclick="toggleFollow('${user.id}', ${!user.is_following})">${followLabel}</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function loadMoreUsers() {
+  if (!searchState.hasNext) return;
+  searchState.page += 1;
+  runUserSearch(false);
+}
+
+async function openCreatorProfile(userId) {
+  const modal = document.getElementById('creator-profile-modal');
+  if (!modal) return;
+  try {
+    const res = await fetch(`${API_URL}/discovery/users/${userId}`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      showToast('Error', data.error || 'Failed to load profile', 'error');
+      return;
+    }
+    document.getElementById('creator-profile-name').textContent = data.name || 'Creator';
+    document.getElementById('creator-profile-handle').textContent = data.username ? `@${data.username}` : '@creator';
+    const body = document.getElementById('creator-profile-body');
+    if (body) {
+      const reach = Number(data.total_reach || 0).toLocaleString();
+      const platforms = Object.entries(data.platform_reach || {}).map(([k, v]) => `${k}: ${Number(v).toLocaleString()}`).join(' · ');
+      body.innerHTML = `
+        <div style="display:flex;justify-content:space-between;gap:10px">
+          <span>Category</span><span>${escapeHtml(data.category || 'Creator')}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:10px">
+          <span>Total Reach</span><span>${reach}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:10px">
+          <span>Followers</span><span>${Number(data.followers_count || 0).toLocaleString()}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:10px">
+          <span>Following</span><span>${Number(data.following_count || 0).toLocaleString()}</span>
+        </div>
+        <div style="font-size:11px;color:var(--t3);margin-top:6px">${platforms || 'No linked platforms'}</div>
+      `;
+    }
+    const followBtn = document.getElementById('creator-profile-follow-btn');
+    if (followBtn) {
+      followBtn.dataset.userId = userId;
+      followBtn.dataset.following = data.is_following ? '1' : '0';
+      followBtn.textContent = data.is_following ? 'Following' : 'Follow';
+    }
+    modal.classList.add('open');
+  } catch (err) {
+    showToast('Error', 'Failed to load profile', 'error');
+  }
+}
+
+function closeCreatorProfile() {
+  document.getElementById('creator-profile-modal')?.classList.remove('open');
+}
+
+async function toggleProfileFollow() {
+  const btn = document.getElementById('creator-profile-follow-btn');
+  if (!btn) return;
+  const userId = btn.dataset.userId;
+  if (!userId) return;
+  const following = btn.dataset.following === '1';
+  await toggleFollow(userId, !following);
+  btn.dataset.following = following ? '0' : '1';
+  btn.textContent = following ? 'Follow' : 'Following';
+}
+
+async function toggleFollow(userId, follow) {
+  try {
+    const res = await fetch(`${API_URL}/social/follow`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: userId, follow })
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      showToast('Error', data.error || 'Failed to update follow', 'error');
+      return;
+    }
+    showToast('Success', follow ? 'Following creator.' : 'Unfollowed creator.', 'success');
+    runUserSearch(true);
+  } catch (err) {
+    showToast('Error', 'Failed to update follow', 'error');
+  }
+}
+
+async function loadLeaderboard(reset = false) {
+  if (!isAuthenticated) return;
+  const list = document.getElementById('leaderboard-list');
+  if (!list) return;
+  if (leaderboardState.loading) return;
+  leaderboardState.loading = true;
+  if (reset) leaderboardState.page = 1;
+  const sort = document.getElementById('leaderboard-sort')?.value || 'total';
+  leaderboardState.sort = sort;
+  try {
+    const res = await fetch(`${API_URL}/discovery/leaderboard?sort=${encodeURIComponent(sort)}&page=1&page_size=20`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      list.innerHTML = '<div class="notif-empty">Leaderboard unavailable.</div>';
+      return;
+    }
+    renderLeaderboard(data.leaders || []);
+  } catch (err) {
+    list.innerHTML = '<div class="notif-empty">Leaderboard unavailable.</div>';
+  } finally {
+    leaderboardState.loading = false;
+  }
+}
+
+function renderLeaderboard(leaders) {
+  const list = document.getElementById('leaderboard-list');
+  if (!list) return;
+  list.innerHTML = '';
+  if (!leaders.length) {
+    list.innerHTML = '<div class="notif-empty">No leaderboard data yet.</div>';
+    return;
+  }
+  leaders.forEach((leader, idx) => {
+    list.innerHTML += `
+      <div class="leaderboard-row">
+        <div class="lb-rank">#${idx + 1}</div>
+        <div>
+          <div class="lb-name">${escapeHtml(leader.name || 'Creator')}</div>
+          <div class="lb-meta">@${escapeHtml(leader.username || 'creator')} · ${escapeHtml(leader.category || 'Creator')}</div>
+        </div>
+        <div class="lb-score">${Number(leader.total_reach || 0).toLocaleString()}</div>
+      </div>
+    `;
+  });
+}
+
+async function sendFriendRequest(userId) {
+  try {
+    const res = await fetch(`${API_URL}/social/friends/requests`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recipient_id: userId })
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      showToast('Error', data.error || 'Failed to send request', 'error');
+      return;
+    }
+    showToast('Request sent', 'Connection request sent.', 'success');
+    loadFriendRequests();
+  } catch (err) {
+    showToast('Error', 'Failed to send request', 'error');
+  }
+}
+
+async function loadFriendRequests() {
+  const container = document.getElementById('friend-requests');
+  if (!container) return;
+  try {
+    const res = await fetch(`${API_URL}/social/friends/requests?type=all`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      container.innerHTML = '<div class="notif-empty">Failed to load requests.</div>';
+      return;
+    }
+    const requests = data.requests || [];
+    if (!requests.length) {
+      container.innerHTML = '<div class="notif-empty">No pending requests.</div>';
+      return;
+    }
+    container.innerHTML = '';
+    requests.forEach(req => {
+      const incoming = req.recipient_id === currentUser?.id;
+      if (req.status !== 'pending') return;
+      const other = incoming ? req.requester : req.recipient;
+      container.innerHTML += `
+        <div class="chat-item">
+          <div class="avatar">${escapeHtml((other?.name || 'C')[0])}</div>
+          <div style="flex:1">
+            <div class="name">${escapeHtml(other?.name || 'Creator')}</div>
+            <div class="status">${incoming ? 'Incoming request' : 'Pending'}</div>
+          </div>
+          ${incoming ? `
+            <div style="display:flex;gap:4px">
+              <button class="btn btn-lime btn-xs" onclick="respondFriendRequest('${req.id}','accept')">Accept</button>
+              <button class="btn btn-ghost btn-xs" onclick="respondFriendRequest('${req.id}','reject')">Reject</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    });
+  } catch (err) {
+    container.innerHTML = '<div class="notif-empty">Failed to load requests.</div>';
+  }
+}
+
+async function respondFriendRequest(id, action) {
+  try {
+    const res = await fetch(`${API_URL}/social/friends/requests/${id}/respond`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action })
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      showToast('Error', data.error || 'Failed to respond', 'error');
+      return;
+    }
+    showToast('Updated', 'Request updated.', 'success');
+    loadFriendRequests();
+    loadFriends();
+  } catch (err) {
+    showToast('Error', 'Failed to respond', 'error');
+  }
+}
+
+async function loadFriends() {
+  const container = document.getElementById('friends-list');
+  if (!container) return;
+  try {
+    const res = await fetch(`${API_URL}/social/friends`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      container.innerHTML = '<div class="notif-empty">Failed to load friends.</div>';
+      return;
+    }
+    const friends = data.friends || [];
+    if (!friends.length) {
+      container.innerHTML = '<div class="notif-empty">No friends yet.</div>';
+      return;
+    }
+    container.innerHTML = '';
+    friends.forEach(friend => {
+      const online = friend.last_seen ? isOnline(friend.last_seen) : false;
+      const safeName = escapeHtml(friend.name || 'Creator');
+      const encodedName = encodeURIComponent(friend.name || 'Creator');
+      container.innerHTML += `
+        <div class="chat-item ${chatState.activeUser?.id === friend.id ? 'active' : ''}" data-id="${friend.id}" data-name="${encodedName}" onclick="openChatFromElement(this)">
+          <div class="avatar">${escapeHtml((friend.name || 'C')[0])}</div>
+          <div style="flex:1">
+            <div class="name">${safeName}</div>
+            <div class="status">${online ? 'Online' : 'Offline'}</div>
+          </div>
+        </div>
+      `;
+    });
+  } catch (err) {
+    container.innerHTML = '<div class="notif-empty">Failed to load friends.</div>';
+  }
+}
+
+function isOnline(lastSeen) {
+  try {
+    const ts = new Date(lastSeen).getTime();
+    return Date.now() - ts < 120000;
+  } catch (err) {
+    return false;
+  }
+}
+
+function openChatFromElement(el) {
+  if (!el) return;
+  const userId = el.dataset.id;
+  const name = decodeURIComponent(el.dataset.name || 'Creator');
+  openChat(userId, name);
+}
+
+async function openChat(userId, name) {
+  chatState.activeUser = { id: userId, name };
+  chatState.messagesPage = 1;
+  document.getElementById('chat-header').textContent = `Chat with ${name}`;
+  await loadMessages(true);
+  await loadFriends();
+}
+
+async function loadMessages(reset = false) {
+  if (!chatState.activeUser) return;
+  const list = document.getElementById('chat-messages');
+  if (!list) return;
+  if (chatState.loading) return;
+  chatState.loading = true;
+  if (reset) {
+    list.innerHTML = '';
+    chatState.messagesPage = 1;
+  }
+  try {
+    const res = await fetch(`${API_URL}/social/messages?user_id=${chatState.activeUser.id}&page=${chatState.messagesPage}&page_size=50`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      list.innerHTML = '<div class="notif-empty">Failed to load messages.</div>';
+      return;
+    }
+    const messages = data.messages || [];
+    list.innerHTML = '';
+    messages.forEach(msg => {
+      const attachments = (msg.attachments || []).map(att => {
+        if (att.type && att.type.startsWith('image/') && att.url) {
+          return `<img src="${att.url}" alt="${escapeHtml(att.name || 'image')}" style="max-width:200px;border-radius:8px;margin-top:6px">`;
+        }
+        if (att.url) {
+          return `<a href="${att.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(att.name || 'Attachment')}</a>`;
+        }
+        return '';
+      }).join('');
+      list.innerHTML += `
+        <div class="msg ${msg.from_me ? 'me' : ''}">
+          <div>${escapeHtml(msg.content || '')}</div>
+          ${attachments}
+          <div class="meta">${new Date(msg.created_at).toLocaleTimeString()} ${msg.from_me ? (msg.read_at ? '· Seen' : '· Sent') : ''}</div>
+        </div>
+      `;
+    });
+    list.scrollTop = list.scrollHeight;
+    await markMessagesRead(chatState.activeUser.id);
+  } catch (err) {
+    list.innerHTML = '<div class="notif-empty">Failed to load messages.</div>';
+  } finally {
+    chatState.loading = false;
+  }
+}
+
+async function sendChatMessage() {
+  if (!chatState.activeUser) return;
+  const input = document.getElementById('chat-input');
+  const content = (input?.value || '').trim();
+  const attachments = chatState.pendingAttachments || [];
+  if (!content && !attachments.length) return;
+  try {
+    const res = await fetch(`${API_URL}/social/messages`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        receiver_id: chatState.activeUser.id,
+        content,
+        attachments
+      })
+    });
+    const data = await parseJsonSafely(res);
+    if (!res.ok) {
+      showToast('Error', data.error || 'Failed to send message', 'error');
+      return;
+    }
+    input.value = '';
+    chatState.pendingAttachments = [];
+    renderChatAttachments();
+    await loadMessages(true);
+  } catch (err) {
+    showToast('Error', 'Failed to send message', 'error');
+  }
+}
+
+function triggerChatFile() {
+  document.getElementById('chat-file')?.click();
+}
+
+async function uploadChatAttachment(files) {
+  if (!files || !files.length) return;
+  const list = Array.from(files);
+  for (const file of list) {
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch(`${API_URL}/social/messages/upload`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${accessToken}` },
+        body: formData
+      });
+      const data = await parseJsonSafely(res);
+      if (res.ok && data.attachment) {
+        chatState.pendingAttachments.push(data.attachment);
+      } else {
+        showToast('Upload failed', data.error || 'Failed to upload file', 'error');
+      }
+    } catch (err) {
+      showToast('Upload failed', 'Failed to upload file', 'error');
+    }
+  }
+  const fileInput = document.getElementById('chat-file');
+  if (fileInput) fileInput.value = '';
+  renderChatAttachments();
+}
+
+function renderChatAttachments() {
+  const wrap = document.getElementById('chat-attachments');
+  if (!wrap) return;
+  if (!chatState.pendingAttachments.length) {
+    wrap.innerHTML = '';
+    return;
+  }
+  wrap.innerHTML = chatState.pendingAttachments.map((att, idx) => `
+    <div class="attach-pill">
+      <span>${escapeHtml(att.name || 'Attachment')}</span>
+      <button class="btn btn-ghost btn-xs" onclick="removeChatAttachment(${idx})">x</button>
+    </div>
+  `).join('');
+}
+
+function removeChatAttachment(index) {
+  chatState.pendingAttachments.splice(index, 1);
+  renderChatAttachments();
+}
+
+function insertEmoji(emoji) {
+  const input = document.getElementById('chat-input');
+  if (!input) return;
+  input.value = `${input.value || ''}${emoji}`;
+  input.focus();
+}
+
+function handleTyping() {
+  if (!chatState.activeUser) return;
+  if (chatState.typingTimer) clearTimeout(chatState.typingTimer);
+  sendTyping(true);
+  chatState.typingTimer = setTimeout(() => sendTyping(false), 1200);
+}
+
+async function sendTyping(isTyping) {
+  if (!chatState.activeUser) return;
+  try {
+    await fetch(`${API_URL}/social/typing`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: chatState.activeUser.id, typing: isTyping })
+    });
+  } catch (err) {
+    // ignore
+  }
+}
+
+async function checkTyping() {
+  if (!chatState.activeUser) return;
+  const typingEl = document.getElementById('chat-typing');
+  if (!typingEl) return;
+  try {
+    const res = await fetch(`${API_URL}/social/typing?user_id=${chatState.activeUser.id}`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const data = await parseJsonSafely(res);
+    if (res.ok && data.typing) {
+      typingEl.textContent = `${chatState.activeUser.name} is typing...`;
+    } else {
+      typingEl.textContent = '';
+    }
+  } catch (err) {
+    typingEl.textContent = '';
+  }
+}
+
+async function markMessagesRead(userId) {
+  try {
+    await fetch(`${API_URL}/social/messages/read`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: userId })
+    });
+  } catch (err) {
+    // ignore
+  }
+}
+
+function startCommunityPolling() {
+  stopCommunityPolling();
+  loadFriendRequests();
+  loadFriends();
+  loadLeaderboard(true);
+  if (!presenceInterval) {
+    presenceInterval = setInterval(presencePing, 30000);
+  }
+  communityInterval = setInterval(() => {
+    loadFriendRequests();
+    loadFriends();
+    if (chatState.activeUser) {
+      loadMessages(true);
+      checkTyping();
+    }
+  }, 5000);
+}
+
+function stopCommunityPolling() {
+  if (communityInterval) {
+    clearInterval(communityInterval);
+    communityInterval = null;
+  }
+}
+
+async function presencePing() {
+  if (!isAuthenticated) return;
+  try {
+    await fetch(`${API_URL}/social/presence`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const pill = document.getElementById('presence-pill');
+    if (pill) pill.textContent = 'Online';
+  } catch (err) {
+    const pill = document.getElementById('presence-pill');
+    if (pill) pill.textContent = 'Offline';
   }
 }
 

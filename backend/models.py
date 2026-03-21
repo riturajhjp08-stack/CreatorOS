@@ -7,6 +7,11 @@ db = SQLAlchemy()
 class User(db.Model):
     """User model for authentication"""
     __tablename__ = 'users'
+    __table_args__ = (
+        db.Index('idx_users_username', 'username'),
+        db.Index('idx_users_category', 'category'),
+        db.Index('idx_users_name', 'name'),
+    )
     
     id = db.Column(db.String(36), primary_key=True)
     name = db.Column(db.String(255), nullable=False)
@@ -29,6 +34,7 @@ class User(db.Model):
     email_notifications = db.Column(db.Boolean, default=True)
     marketing_emails = db.Column(db.Boolean, default=True)
     status = db.Column(db.String(50), default='active')  # active, suspended, banned
+    last_seen = db.Column(db.DateTime, nullable=True)
     
     # Relationships
     oauth_accounts = db.relationship('OAuthAccount', backref='user', lazy=True, cascade='all, delete-orphan')
@@ -52,6 +58,7 @@ class User(db.Model):
             'avatar_url': self.avatar_url,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'last_login': self.last_login.isoformat() if self.last_login else None,
+            'last_seen': self.last_seen.isoformat() if self.last_seen else None,
         }
 
 class OAuthAccount(db.Model):
@@ -254,6 +261,9 @@ class Notification(db.Model):
     user_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False, index=True)
     title = db.Column(db.String(255), nullable=False)
     message = db.Column(db.Text, nullable=True)
+    type = db.Column(db.String(50), nullable=True, index=True)
+    actor_user_id = db.Column(db.String(36), nullable=True, index=True)
+    data = db.Column(db.JSON, default=dict)
     is_read = db.Column(db.Boolean, default=False, index=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     
@@ -262,7 +272,85 @@ class Notification(db.Model):
             'id': self.id,
             'title': self.title,
             'message': self.message,
+            'type': self.type,
+            'actor_user_id': self.actor_user_id,
+            'data': self.data or {},
             'is_read': self.is_read,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+        }
+
+class FriendRequest(db.Model):
+    """Friend/connection requests for messaging"""
+    __tablename__ = 'friend_requests'
+
+    id = db.Column(db.String(36), primary_key=True)
+    requester_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False, index=True)
+    recipient_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False, index=True)
+    status = db.Column(db.String(20), default='pending', index=True)  # pending, accepted, rejected
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    responded_at = db.Column(db.DateTime, nullable=True)
+
+    __table_args__ = (
+        db.UniqueConstraint('requester_id', 'recipient_id', name='unique_friend_request'),
+        db.Index('idx_friend_request_pair', 'requester_id', 'recipient_id'),
+    )
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'requester_id': self.requester_id,
+            'recipient_id': self.recipient_id,
+            'status': self.status,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'responded_at': self.responded_at.isoformat() if self.responded_at else None,
+        }
+
+class Message(db.Model):
+    """Direct messages between users"""
+    __tablename__ = 'messages'
+
+    id = db.Column(db.String(36), primary_key=True)
+    sender_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False, index=True)
+    receiver_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False, index=True)
+    content = db.Column(db.Text, nullable=True)
+    attachments = db.Column(db.JSON, default=list)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    read_at = db.Column(db.DateTime, nullable=True, index=True)
+
+    __table_args__ = (
+        db.Index('idx_messages_pair_time', 'sender_id', 'receiver_id', 'created_at'),
+    )
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'sender_id': self.sender_id,
+            'receiver_id': self.receiver_id,
+            'content': self.content,
+            'attachments': self.attachments or [],
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'read_at': self.read_at.isoformat() if self.read_at else None,
+        }
+
+class Follow(db.Model):
+    """One-way follow relationships"""
+    __tablename__ = 'follows'
+
+    id = db.Column(db.String(36), primary_key=True)
+    follower_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False, index=True)
+    following_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+
+    __table_args__ = (
+        db.UniqueConstraint('follower_id', 'following_id', name='unique_follow'),
+        db.Index('idx_follow_pair', 'follower_id', 'following_id'),
+    )
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'follower_id': self.follower_id,
+            'following_id': self.following_id,
             'created_at': self.created_at.isoformat() if self.created_at else None,
         }
 
