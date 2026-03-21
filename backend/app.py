@@ -57,42 +57,41 @@ def _configure_logging(app):
     root.setLevel(level)
 
 
-def _run_sqlite_compat_migrations():
+def _run_schema_compat_migrations():
     """
-    Lightweight compatibility migration for local SQLite DB.
-    Avoids breaking local dev when columns are added.
+    Lightweight compatibility migrations for existing databases.
+    Adds missing columns safely to avoid runtime errors.
     """
     engine = db.engine
-    if engine.dialect.name != "sqlite":
-        return
 
-    table_name = "scheduled_posts"
     inspector = inspect(engine)
-    if table_name not in inspector.get_table_names():
-        return
+    table_name = "scheduled_posts"
+    if table_name in inspector.get_table_names():
+        existing_post_cols = {col["name"] for col in inspector.get_columns(table_name)}
+        expected_posts = {
+            "schedule_type": "TEXT DEFAULT 'now'",
+            "scheduled_for": "DATETIME",
+            "caption": "TEXT",
+            "hashtags": "TEXT",
+            "media_items": "JSON",
+            "virality_score": "INTEGER",
+            "external_post_id": "TEXT",
+            "publish_response": "JSON",
+            "error_message": "TEXT",
+            "credits_spent": "INTEGER DEFAULT 0",
+            "credits_earned": "INTEGER DEFAULT 0",
+            "reward_granted": "BOOLEAN DEFAULT 0",
+            "published_at": "DATETIME",
+        }
 
-    existing_post_cols = {col["name"] for col in inspector.get_columns(table_name)}
-    expected_posts = {
-        "schedule_type": "TEXT DEFAULT 'now'",
-        "scheduled_for": "DATETIME",
-        "caption": "TEXT",
-        "hashtags": "TEXT",
-        "media_items": "JSON",
-        "virality_score": "INTEGER",
-        "external_post_id": "TEXT",
-        "publish_response": "JSON",
-        "error_message": "TEXT",
-        "credits_spent": "INTEGER DEFAULT 0",
-        "credits_earned": "INTEGER DEFAULT 0",
-        "reward_granted": "BOOLEAN DEFAULT 0",
-        "published_at": "DATETIME",
-    }
-
-    with engine.begin() as conn:
-        for col, col_type in expected_posts.items():
-            if col in existing_post_cols:
-                continue
-            conn.execute(text(f"ALTER TABLE scheduled_posts ADD COLUMN {col} {col_type}"))
+        with engine.begin() as conn:
+            for col, col_type in expected_posts.items():
+                if col in existing_post_cols:
+                    continue
+                ddl = f"ALTER TABLE scheduled_posts ADD COLUMN {col} {col_type}"
+                if engine.dialect.name == "postgresql":
+                    ddl = f"ALTER TABLE scheduled_posts ADD COLUMN IF NOT EXISTS {col} {col_type}"
+                conn.execute(text(ddl))
             
     # Also migrate feedback table
     if "feedback" in inspector.get_table_names():
@@ -105,7 +104,10 @@ def _run_sqlite_compat_migrations():
             for col, col_type in expected_fb.items():
                 if col in existing_fb_cols:
                     continue
-                conn.execute(text(f"ALTER TABLE feedback ADD COLUMN {col} {col_type}"))
+                ddl = f"ALTER TABLE feedback ADD COLUMN {col} {col_type}"
+                if engine.dialect.name == "postgresql":
+                    ddl = f"ALTER TABLE feedback ADD COLUMN IF NOT EXISTS {col} {col_type}"
+                conn.execute(text(ddl))
 
     # Migrate users table
     if "users" in inspector.get_table_names():
@@ -122,7 +124,10 @@ def _run_sqlite_compat_migrations():
             for col, col_type in expected_user.items():
                 if col in existing_user_cols:
                     continue
-                conn.execute(text(f"ALTER TABLE users ADD COLUMN {col} {col_type}"))
+                ddl = f"ALTER TABLE users ADD COLUMN {col} {col_type}"
+                if engine.dialect.name == "postgresql":
+                    ddl = f"ALTER TABLE users ADD COLUMN IF NOT EXISTS {col} {col_type}"
+                conn.execute(text(ddl))
 
 def create_app(config_name=None):
     """Application factory"""
@@ -170,7 +175,7 @@ def create_app(config_name=None):
         if app.config.get("DB_AUTO_CREATE", True):
             if app.config.get("ENV_NAME") != "production" or app.config.get("SERVERLESS_MODE"):
                 db.create_all()
-                _run_sqlite_compat_migrations()
+                _run_schema_compat_migrations()
     
     # Register blueprints
     from routes.auth import auth_bp
