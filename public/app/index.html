@@ -1569,37 +1569,79 @@ body::after{
 // CONFIGURATION
 // ═══════════════════════════════════════════════════════════════════════════════════════
 
+function normalizeApiUrl(url) {
+  return String(url || '').trim().replace(/\/+$/, '');
+}
+
 function resolveApiUrl() {
   // Optional override:
   // window.__CREATOROS_API_URL__ = 'https://api.example.com/api'
   // localStorage.setItem('creatoros_api_url', 'https://api.example.com/api')
   const explicitUrl = window.__CREATOROS_API_URL__ || localStorage.getItem('creatoros_api_url');
   if (explicitUrl) {
-    const cleaned = explicitUrl.replace(/\/+$/, '');
-    // Auto-migrate old local override from older ports -> localhost:5004.
-    if (cleaned === 'http://localhost:5000/api' || cleaned === 'http://127.0.0.1:5000/api' || 
-        cleaned === 'http://localhost:5001/api' || cleaned === 'http://127.0.0.1:5001/api') {
-      const migrated = 'http://localhost:5004/api';
-      localStorage.setItem('creatoros_api_url', migrated);
-      return migrated;
-    }
-    return cleaned;
+    return normalizeApiUrl(explicitUrl);
   }
   
   if (window.location.protocol === 'file:') {
-    return 'http://localhost:5004/api';
+    return 'http://localhost:5000/api';
   }
   
   const { protocol, hostname, origin, port } = window.location;
-  if (hostname === 'localhost' || hostname === '127.0.0.1') {
-    if (port === '5004') return `${origin}/api`;
-    return `${protocol}//${hostname}:5004/api`;
+  const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
+  if (isLocal) {
+    if (port === '5000' || port === '5004') return `${origin}/api`;
+    if (port === '3000' || port === '8000' || port === '5173') {
+      return `${protocol}//${hostname}:5000/api`;
+    }
+    return `${protocol}//${hostname}:5000/api`;
   }
   
   return `${origin}/api`;
 }
 
-const API_URL = resolveApiUrl();
+let API_URL = resolveApiUrl();
+
+async function probeApiUrl(apiUrl) {
+  try {
+    const response = await fetch(`${apiUrl}/auth/verify-token`, {
+      method: 'GET',
+      credentials: 'include'
+    });
+    return response.ok || response.status === 401 || response.status === 403;
+  } catch (error) {
+    return false;
+  }
+}
+
+async function autoDetectApiUrl() {
+  const explicitUrl = window.__CREATOROS_API_URL__ || localStorage.getItem('creatoros_api_url');
+  if (explicitUrl) {
+    const cleaned = normalizeApiUrl(explicitUrl);
+    if (await probeApiUrl(cleaned)) {
+      API_URL = cleaned;
+      return;
+    }
+  }
+
+  const { protocol, hostname } = window.location;
+  const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
+  if (!isLocal) return;
+
+  const baseProtocol = protocol === 'https:' ? 'https:' : 'http:';
+  const candidates = [
+    API_URL,
+    `${baseProtocol}//${hostname}:5000/api`,
+    `${baseProtocol}//${hostname}:5004/api`
+  ].filter((value, index, self) => self.indexOf(value) === index);
+
+  for (const candidate of candidates) {
+    if (await probeApiUrl(candidate)) {
+      API_URL = candidate;
+      localStorage.setItem('creatoros_api_url', candidate);
+      return;
+    }
+  }
+}
 let currentUser = null;
 let accessToken = null;
 let isAuthenticated = false;
@@ -4081,8 +4123,11 @@ function repurpose() {
 }
 
 // Initialize on load
-hydrateAuthFromUrl();
-handleOAuthResultFromUrl();
-checkAuth();
+(async () => {
+  await autoDetectApiUrl();
+  hydrateAuthFromUrl();
+  handleOAuthResultFromUrl();
+  checkAuth();
+})();
 </script>
 </html>
