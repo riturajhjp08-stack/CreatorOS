@@ -1642,8 +1642,37 @@ async function autoDetectApiUrl() {
     }
   }
 }
+function normalizeStoredToken(value) {
+  if (!value) return null;
+  const cleaned = String(value).trim();
+  if (!cleaned || cleaned === 'null' || cleaned === 'undefined') return null;
+  return cleaned;
+}
+
+function getStoredAccessToken() {
+  try {
+    return normalizeStoredToken(localStorage.getItem('creatoros_access_token'));
+  } catch (error) {
+    return null;
+  }
+}
+
+function setStoredAccessToken(token) {
+  const cleaned = normalizeStoredToken(token);
+  try {
+    if (cleaned) {
+      localStorage.setItem('creatoros_access_token', cleaned);
+    } else {
+      localStorage.removeItem('creatoros_access_token');
+    }
+  } catch (error) {
+    // Ignore storage errors (private mode, blocked, etc.)
+  }
+  accessToken = cleaned;
+}
+
 let currentUser = null;
-let accessToken = null;
+let accessToken = getStoredAccessToken();
 let isAuthenticated = false;
 let latestConnectedPlatforms = [];
 let syncInProgress = false;
@@ -1673,6 +1702,9 @@ function installFetchWrapper() {
   window.fetch = (url, options = {}) => {
     const opts = { ...options };
     const headers = new Headers(opts.headers || {});
+    if (!headers.has('Authorization') && accessToken) {
+      headers.set('Authorization', `Bearer ${accessToken}`);
+    }
     const auth = headers.get('Authorization') || '';
     const authToken = auth.replace(/^Bearer\s+/i, '').trim();
     if (!authToken || authToken === 'null' || authToken === 'undefined') {
@@ -1750,6 +1782,8 @@ function hydrateAuthFromUrl() {
   const token = params.get('token');
   if (!token) return;
 
+  setStoredAccessToken(token);
+
   ['token', 'user', 'provider', 'auth'].forEach(key => params.delete(key));
   const nextQuery = params.toString();
   const cleanUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ''}${window.location.hash || ''}`;
@@ -1825,7 +1859,7 @@ async function checkAuth() {
       showAppScreen();
       initializeApp();
     } else {
-      accessToken = null;
+      setStoredAccessToken(null);
       isAuthenticated = false;
       showAuthScreen();
     }
@@ -1882,7 +1916,7 @@ async function handleLogin(event) {
     }
     
     // Store user and auth state
-    accessToken = data.access_token || null;
+    setStoredAccessToken(data.access_token || null);
     currentUser = data.user;
     isAuthenticated = true;
     
@@ -1940,7 +1974,7 @@ async function handleRegister(event) {
     }
     
     // Auto-login
-    accessToken = data.access_token || null;
+    setStoredAccessToken(data.access_token || null);
     currentUser = data.user;
     isAuthenticated = true;
     
@@ -2913,7 +2947,7 @@ async function logout() {
       console.error('Logout error:', error);
     }
     
-    accessToken = null;
+    setStoredAccessToken(null);
     isAuthenticated = false;
     currentUser = null;
     stopQueuePolling();

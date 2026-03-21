@@ -38,6 +38,8 @@ def _use_cookies():
     return "cookies" in (current_app.config.get("JWT_TOKEN_LOCATION") or [])
 
 def _should_expose_token():
+    if not _use_cookies():
+        return True
     return bool(current_app.config.get("AUTH_EXPOSE_ACCESS_TOKEN", True))
 
 def _issue_access_token(user_id):
