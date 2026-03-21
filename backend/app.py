@@ -63,6 +63,12 @@ def _run_schema_compat_migrations():
     Adds missing columns safely to avoid runtime errors.
     """
     engine = db.engine
+    is_postgres = engine.dialect.name == "postgresql"
+
+    def _dialect_type(col_type):
+        if is_postgres:
+            return col_type.replace("DATETIME", "TIMESTAMP")
+        return col_type
 
     inspector = inspect(engine)
     table_name = "scheduled_posts"
@@ -88,9 +94,9 @@ def _run_schema_compat_migrations():
             for col, col_type in expected_posts.items():
                 if col in existing_post_cols:
                     continue
-                ddl = f"ALTER TABLE scheduled_posts ADD COLUMN {col} {col_type}"
-                if engine.dialect.name == "postgresql":
-                    ddl = f"ALTER TABLE scheduled_posts ADD COLUMN IF NOT EXISTS {col} {col_type}"
+                ddl = f"ALTER TABLE scheduled_posts ADD COLUMN {col} {_dialect_type(col_type)}"
+                if is_postgres:
+                    ddl = f"ALTER TABLE scheduled_posts ADD COLUMN IF NOT EXISTS {col} {_dialect_type(col_type)}"
                 conn.execute(text(ddl))
             
     # Also migrate feedback table
@@ -104,9 +110,9 @@ def _run_schema_compat_migrations():
             for col, col_type in expected_fb.items():
                 if col in existing_fb_cols:
                     continue
-                ddl = f"ALTER TABLE feedback ADD COLUMN {col} {col_type}"
-                if engine.dialect.name == "postgresql":
-                    ddl = f"ALTER TABLE feedback ADD COLUMN IF NOT EXISTS {col} {col_type}"
+                ddl = f"ALTER TABLE feedback ADD COLUMN {col} {_dialect_type(col_type)}"
+                if is_postgres:
+                    ddl = f"ALTER TABLE feedback ADD COLUMN IF NOT EXISTS {col} {_dialect_type(col_type)}"
                 conn.execute(text(ddl))
 
     # Migrate users table
@@ -129,13 +135,13 @@ def _run_schema_compat_migrations():
             for col, col_type in expected_user.items():
                 if col in existing_user_cols:
                     continue
-                ddl = f"ALTER TABLE users ADD COLUMN {col} {col_type}"
-                if engine.dialect.name == "postgresql":
-                    ddl = f"ALTER TABLE users ADD COLUMN IF NOT EXISTS {col} {col_type}"
+                ddl = f"ALTER TABLE users ADD COLUMN {col} {_dialect_type(col_type)}"
+                if is_postgres:
+                    ddl = f"ALTER TABLE users ADD COLUMN IF NOT EXISTS {col} {_dialect_type(col_type)}"
                 conn.execute(text(ddl))
 
         # Indexes for faster search
-        if engine.dialect.name == "postgresql":
+        if is_postgres:
             with engine.begin() as conn:
                 conn.execute(text("CREATE INDEX IF NOT EXISTS idx_users_username ON users (username)"))
                 conn.execute(text("CREATE INDEX IF NOT EXISTS idx_users_category ON users (category)"))
@@ -158,9 +164,9 @@ def _run_schema_compat_migrations():
             for col, col_type in expected_notif.items():
                 if col in existing_notif_cols:
                     continue
-                ddl = f"ALTER TABLE notifications ADD COLUMN {col} {col_type}"
-                if engine.dialect.name == "postgresql":
-                    ddl = f"ALTER TABLE notifications ADD COLUMN IF NOT EXISTS {col} {col_type}"
+                ddl = f"ALTER TABLE notifications ADD COLUMN {col} {_dialect_type(col_type)}"
+                if is_postgres:
+                    ddl = f"ALTER TABLE notifications ADD COLUMN IF NOT EXISTS {col} {_dialect_type(col_type)}"
                 conn.execute(text(ddl))
 
 def create_app(config_name=None):
