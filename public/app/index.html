@@ -2064,6 +2064,10 @@ function getNetworkErrorMessage(error) {
   return 'Network error. Please try again.';
 }
 
+function getApiNotFoundMessage() {
+  return 'API endpoint not found. Check API URL; it should end with /api (example: https://your-domain/api).';
+}
+
 // Check if user is logged in
 async function checkAuth() {
   try {
@@ -2126,7 +2130,8 @@ async function handleLogin(event) {
     const data = await parseJsonSafely(response);
     
     if (!response.ok) {
-      showError(errorEl, data.error || 'Login failed');
+      const notFound = response.status === 404 || data.error === 'Not found';
+      showError(errorEl, notFound ? getApiNotFoundMessage() : (data.error || 'Login failed'));
       loginBtn.disabled = false;
       loginBtn.textContent = 'Sign In to CreatorOS';
       return;
@@ -2184,7 +2189,8 @@ async function handleRegister(event) {
     const data = await parseJsonSafely(response);
     
     if (!response.ok) {
-      showError(errorEl, data.error || 'Registration failed');
+      const notFound = response.status === 404 || data.error === 'Not found';
+      showError(errorEl, notFound ? getApiNotFoundMessage() : (data.error || 'Registration failed'));
       registerBtn.disabled = false;
       registerBtn.textContent = 'Create Account — Get 350 Credits Free';
       return;

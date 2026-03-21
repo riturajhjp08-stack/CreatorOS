@@ -197,6 +197,8 @@ def create_app(config_name=None):
 
     public_paths = {
         "/health",
+        "/api/health",
+        "/api/ready",
         "/api/auth/register",
         "/api/auth/login",
         "/api/auth/google/login",
@@ -266,10 +268,12 @@ def create_app(config_name=None):
     
     # Health check
     @app.route('/health', methods=['GET'])
+    @app.route('/api/health', methods=['GET'])
     def health():
         return {"status": "healthy"}, 200
 
     @app.route('/ready', methods=['GET'])
+    @app.route('/api/ready', methods=['GET'])
     def ready():
         try:
             db.session.execute(text("SELECT 1"))
