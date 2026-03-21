@@ -1778,6 +1778,17 @@ function handleOAuthResultFromUrl() {
   window.history.replaceState({}, document.title, cleanUrl);
 }
 
+function handlePremiumFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const plan = (params.get('show') || params.get('plan') || '').toLowerCase();
+  if (plan !== 'premium') return;
+  openPremiumModal();
+  ['show', 'plan'].forEach(key => params.delete(key));
+  const nextQuery = params.toString();
+  const cleanUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ''}${window.location.hash || ''}`;
+  window.history.replaceState({}, document.title, cleanUrl);
+}
+
 async function parseJsonSafely(response) {
   const contentType = response.headers.get('content-type') || '';
   if (!contentType.includes('application/json')) return {};
@@ -4127,7 +4138,8 @@ function repurpose() {
   await autoDetectApiUrl();
   hydrateAuthFromUrl();
   handleOAuthResultFromUrl();
-  checkAuth();
+  await checkAuth();
+  handlePremiumFromUrl();
 })();
 </script>
 </html>

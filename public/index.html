@@ -104,6 +104,19 @@ section{position:relative;z-index:2;}
 .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;} 
 .eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);} 
 .hero h1{font-family:var(--font-head);font-size:clamp(38px,5.6vw,66px);line-height:1.03;margin:14px 0 16px;} 
+.hero-title{position:relative;display:inline-block;text-shadow:0 0 28px rgba(184,255,0,.18);} 
+.hero-title::before,.hero-title::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  pointer-events:none;
+  opacity:.35;
+  mix-blend-mode:screen;
+}
+.hero-title::before{color:var(--accent);transform:translate(2px,-2px);}
+.hero-title::after{color:var(--accent-2);transform:translate(-2px,2px);}
 .hero h1 em{font-family:var(--font-serif);font-weight:600;font-style:italic;color:var(--accent);} 
 .hero p{font-size:16px;color:var(--t2);max-width:520px;} 
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;} 
@@ -160,10 +173,37 @@ section{position:relative;z-index:2;}
 .quote strong{display:block;margin-top:14px;font-family:var(--font-head);} 
 .quote span{font-size:12px;color:var(--t3);} 
 
-.cta{padding:78px 0;} 
-.cta-card{background:linear-gradient(135deg,rgba(184,255,0,.16),rgba(139,92,246,.18));border:1px solid var(--line);border-radius:26px;padding:32px;display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;} 
-.cta-card h2{font-family:var(--font-head);font-size:30px;} 
-.cta-card p{color:var(--t2);} 
+/* Plans */
+.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;} 
+.plan-card{background:var(--s1);border:1px solid var(--line);border-radius:20px;padding:22px;position:relative;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.35);} 
+.plan-card.premium{border-color:rgba(184,255,0,.35);box-shadow:0 22px 60px rgba(0,0,0,.5);} 
+.plan-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);} 
+.plan-tag.premium{color:var(--accent);} 
+.plan-price{font-family:var(--font-head);font-size:28px;font-weight:700;margin-top:10px;} 
+.plan-sub{color:var(--t3);font-size:12px;margin-top:4px;margin-bottom:16px;} 
+.plan-features{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;} 
+.plan-feature{display:flex;gap:10px;align-items:center;font-size:12px;color:var(--t2);} 
+.plan-feature svg{flex-shrink:0;color:var(--accent);} 
+.plan-card .btn{width:100%;justify-content:center;} 
+.premium-logo{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:conic-gradient(from 120deg,rgba(245,158,11,.95),rgba(184,255,0,.95),rgba(59,130,246,.85),rgba(245,158,11,.95));
+  color:#000;font-family:var(--font-head);font-weight:800;font-size:22px;box-shadow:0 12px 28px rgba(0,0,0,.4);} 
+.plan-note{margin-top:18px;color:var(--t3);font-size:12px;text-align:center;} 
+
+/* Motion helpers */
+.magnetic{display:inline-flex;will-change:transform;}
+.tilt{transform-style:preserve-3d;will-change:transform;}
+.tilt::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(120deg,rgba(184,255,0,.06),rgba(139,92,246,.04),transparent 60%);
+  opacity:0;transition:opacity .2s ease;}
+.tilt:hover::after{opacity:1;}
+.scanline{position:relative;overflow:hidden;}
+.scanline::after{content:'';position:absolute;left:-20%;top:0;width:40%;height:120%;
+  background:linear-gradient(120deg,transparent,rgba(184,255,0,.18),transparent);
+  opacity:.4;mix-blend-mode:screen;transform:translateY(-10%);animation:scan 3.4s ease-in-out infinite;}
+.starfield{position:absolute;inset:0;pointer-events:none;}
+.starfield span{position:absolute;border-radius:50%;background:rgba(255,255,255,.8);}
+@keyframes scan{0%{transform:translate(-30%,-10%);}50%{transform:translate(60%,-10%);}100%{transform:translate(-30%,-10%);}}
 
 .footer{padding:28px 0 60px;color:var(--t3);font-size:12px;} 
 .footer .row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;} 
@@ -180,6 +220,7 @@ section{position:relative;z-index:2;}
   .feature-grid{grid-template-columns:repeat(2,1fr);} 
   .workflow{grid-template-columns:1fr;} 
   .split{grid-template-columns:1fr;} 
+  .plan-grid{grid-template-columns:1fr;}
 }
 @media(max-width:640px){
   .nav-links{display:none;} 
@@ -225,11 +266,11 @@ section{position:relative;z-index:2;}
     <div class="container hero-grid">
       <div>
         <div class="eyebrow reveal" style="--i:1">Creator Intelligence</div>
-        <h1 class="reveal" style="--i:2">Run your creator business from a single <em>signal canvas</em>.</h1>
+        <h1 class="reveal hero-title scanline" data-text="Run your creator business from a single signal canvas." style="--i:2">Run your creator business from a single <em>signal canvas</em>.</h1>
         <p class="reveal" style="--i:3">CreatorOS unifies content planning, analytics, and monetization into one calm workspace. Know what to post, when to post, and how to grow - without juggling five tabs.</p>
         <div class="hero-actions reveal" style="--i:4">
-          <a class="btn btn-primary" href="/app/">Launch Studio</a>
-          <a class="btn btn-outline" href="#signals">See how it works</a>
+          <a class="btn btn-primary magnetic" href="/app/">Launch Studio</a>
+          <a class="btn btn-outline magnetic" href="#signals">See how it works</a>
         </div>
         <div class="hero-meta reveal" style="--i:5">
           <div class="meta-pill">Realtime growth signals</div>
@@ -238,7 +279,7 @@ section{position:relative;z-index:2;}
         </div>
       </div>
       <div class="hero-visual reveal" style="--i:6">
-        <div class="studio float">
+        <div class="studio float tilt">
           <div class="studio-head">
             <div class="studio-title">Daily Pulse</div>
             <div class="chip">Live</div>
@@ -257,12 +298,12 @@ section{position:relative;z-index:2;}
           </div>
         </div>
         <div class="mini-grid">
-          <div class="mini-card">
+          <div class="mini-card tilt">
             <div class="eyebrow">Idea Jetstream</div>
             <h3>Trend radar auto-briefs</h3>
             <p>Stay ahead with AI summaries of what your audience is saving and sharing.</p>
           </div>
-          <div class="mini-card">
+          <div class="mini-card tilt">
             <div class="eyebrow">Revenue Map</div>
             <h3>Predictable income lanes</h3>
             <p>Track brand deals, shop clicks, and affiliate lift in one view.</p>
@@ -282,32 +323,32 @@ section{position:relative;z-index:2;}
         <p>CreatorOS connects analytics, publishing, and monetization into a single operating system. The signal stack keeps your next move obvious.</p>
       </div>
       <div class="feature-grid">
-        <div class="feature reveal" style="--i:1">
+        <div class="feature reveal tilt" style="--i:1">
           <div class="tag">Insight</div>
           <h3>Momentum Scoring</h3>
           <p>Understand which formats accelerate growth before the curve shifts.</p>
         </div>
-        <div class="feature reveal" style="--i:2">
+        <div class="feature reveal tilt" style="--i:2">
           <div class="tag">Strategy</div>
           <h3>Audience Heatmap</h3>
           <p>See the exact windows where your community is most responsive.</p>
         </div>
-        <div class="feature reveal" style="--i:3">
+        <div class="feature reveal tilt" style="--i:3">
           <div class="tag">Production</div>
           <h3>Launch Queue</h3>
           <p>Ship across YouTube, Instagram, and X with one scheduling flow.</p>
         </div>
-        <div class="feature reveal" style="--i:4">
+        <div class="feature reveal tilt" style="--i:4">
           <div class="tag">Revenue</div>
           <h3>Deal Tracker</h3>
           <p>Manage brand partnership status, assets, and payout timing.</p>
         </div>
-        <div class="feature reveal" style="--i:5">
+        <div class="feature reveal tilt" style="--i:5">
           <div class="tag">Creative</div>
           <h3>Idea Sprint</h3>
           <p>Generate scripts, hooks, and repurpose plans from one prompt.</p>
         </div>
-        <div class="feature reveal" style="--i:6">
+        <div class="feature reveal tilt" style="--i:6">
           <div class="tag">Focus</div>
           <h3>Signal Filters</h3>
           <p>Zoom into what matters: the stories that move people to act.</p>
@@ -326,17 +367,17 @@ section{position:relative;z-index:2;}
         <p>Every CreatorOS flow is built to keep you shipping. From signal to story to scheduled post, without context switching.</p>
       </div>
       <div class="workflow">
-        <div class="step reveal" style="--i:1">
+        <div class="step reveal tilt" style="--i:1">
           <div class="num">01</div>
           <h4>Capture signals</h4>
           <p>Pull live stats, trend pulses, and audience insights automatically.</p>
         </div>
-        <div class="step reveal" style="--i:2">
+        <div class="step reveal tilt" style="--i:2">
           <div class="num">02</div>
           <h4>Shape content</h4>
           <p>Turn insights into scripts, thumbnails, and repurpose packs.</p>
         </div>
-        <div class="step reveal" style="--i:3">
+        <div class="step reveal tilt" style="--i:3">
           <div class="num">03</div>
           <h4>Ship everywhere</h4>
           <p>Schedule once and publish to every connected platform.</p>
@@ -352,11 +393,11 @@ section{position:relative;z-index:2;}
         <h2>Less chaos. More momentum.</h2>
         <p>Teams use CreatorOS to get their growth, revenue, and operations into a single reliable home. Every signal is visible, every launch is accounted for.</p>
         <div class="hero-actions" style="margin-top:22px;">
-          <a class="btn btn-primary" href="/app/">Start building</a>
-          <a class="btn btn-outline" href="#pricing">View plans</a>
+          <a class="btn btn-primary magnetic" href="/app/">Start building</a>
+          <a class="btn btn-outline magnetic" href="#pricing">View plans</a>
         </div>
       </div>
-      <div class="quote reveal" style="--i:2">
+      <div class="quote reveal tilt" style="--i:2">
         <p>"CreatorOS replaced three dashboards and a messy spreadsheet. We finally ship on schedule and the team knows exactly which content moves revenue."</p>
         <strong>Marin Silva</strong>
         <span>Media Director, Satellite Studios</span>
@@ -364,19 +405,41 @@ section{position:relative;z-index:2;}
     </div>
   </section>
 
-  <section class="cta" id="pricing">
+  <section class="section" id="pricing">
     <div class="container">
-      <div class="cta-card reveal" style="--i:1">
+      <div class="section-head">
         <div>
-          <div class="eyebrow">Ready to launch?</div>
-          <h2>Start with 350 free creator credits.</h2>
-          <p>Upgrade when your workflow is dialed in. No credit card required to begin.</p>
+          <div class="eyebrow">Plans</div>
+          <h2>Choose the CreatorOS tier for your studio.</h2>
         </div>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/app/">Open CreatorOS</a>
-          <a class="btn btn-outline" href="/app/">Talk to sales</a>
+        <p>Start free with credits. Unlock Premium with a one-time credit upgrade and keep every advanced feature.</p>
+      </div>
+      <div class="plan-grid">
+        <div class="plan-card reveal tilt" style="--i:1">
+          <div class="plan-tag">Free</div>
+          <div class="plan-price">Free</div>
+          <div class="plan-sub">350 credits to start</div>
+          <div class="plan-features">
+            <div class="plan-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Creator dashboard + analytics</div>
+            <div class="plan-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>AI captions and content ideas</div>
+            <div class="plan-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Scheduling for connected platforms</div>
+          </div>
+          <a class="btn btn-outline magnetic" href="/app/">Start Free</a>
+        </div>
+        <div class="plan-card premium reveal tilt" style="--i:2">
+          <div class="premium-logo">C</div>
+          <div class="plan-tag premium">Premium</div>
+          <div class="plan-price">1,000 credits</div>
+          <div class="plan-sub">Lifetime upgrade - no monthly fees</div>
+          <div class="plan-features">
+            <div class="plan-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Unlimited AI generations per session</div>
+            <div class="plan-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Advanced analytics + audience insights</div>
+            <div class="plan-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority trend data and premium badge</div>
+          </div>
+          <a class="btn btn-primary magnetic" href="/app/?show=premium">Upgrade to Premium</a>
         </div>
       </div>
+      <div class="plan-note">Need team access or enterprise billing? Contact us inside the app.</div>
     </div>
   </section>
 
@@ -395,6 +458,29 @@ section{position:relative;z-index:2;}
       if (!window.gsap) return;
       if (window.ScrollTrigger) {
         gsap.registerPlugin(ScrollTrigger);
+      }
+
+      const ambient = document.querySelector('.ambient');
+      if (ambient && !ambient.querySelector('.starfield')) {
+        const starfield = document.createElement('div');
+        starfield.className = 'starfield';
+        for (let i = 0; i < 36; i += 1) {
+          const star = document.createElement('span');
+          star.style.left = `${gsap.utils.random(0, 100)}%`;
+          star.style.top = `${gsap.utils.random(0, 100)}%`;
+          star.style.width = `${gsap.utils.random(1, 2.6)}px`;
+          star.style.height = star.style.width;
+          star.style.opacity = gsap.utils.random(0.2, 0.8);
+          starfield.appendChild(star);
+        }
+        ambient.appendChild(starfield);
+        gsap.to('.starfield span', {
+          opacity: gsap.utils.random(0.1, 0.9),
+          duration: 1.6,
+          yoyo: true,
+          repeat: -1,
+          stagger: { each: 0.05, from: 'random' }
+        });
       }
 
       const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -426,6 +512,66 @@ section{position:relative;z-index:2;}
       gsap.to('.ribbon', { xPercent: -8, duration: 8, yoyo: true, repeat: -1, ease: 'sine.inOut' });
       gsap.to('.sparkfield', { scale: 1.05, duration: 6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
       gsap.to('.meta-pill', { y: -6, duration: 2.4, yoyo: true, repeat: -1, ease: 'sine.inOut', stagger: 0.2 });
+
+      gsap.to('.hero-title', { textShadow: '0 0 40px rgba(139,92,246,.35)', duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+
+      if (window.ScrollTrigger) {
+        gsap.to('.ambient', {
+          scrollTrigger: { scrub: true },
+          y: -80,
+          ease: 'none'
+        });
+      }
+
+      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+      if (hasFinePointer) {
+        const orbQuick = gsap.quickTo('.orbital', 'x', { duration: 0.6, ease: 'power3' });
+        const sparkQuick = gsap.quickTo('.sparkfield', 'x', { duration: 0.6, ease: 'power3' });
+        const studioQuick = gsap.quickTo('.studio', 'x', { duration: 0.6, ease: 'power3' });
+        window.addEventListener('mousemove', (event) => {
+          const dx = (event.clientX / window.innerWidth - 0.5) * 40;
+          const dy = (event.clientY / window.innerHeight - 0.5) * 20;
+          orbQuick(dx);
+          sparkQuick(-dx * 0.6);
+          studioQuick(dx * 0.3);
+          gsap.to('.hero-visual', { y: dy * 0.6, duration: 0.6, ease: 'power3' });
+        });
+
+        document.querySelectorAll('.magnetic').forEach((el) => {
+          const quickX = gsap.quickTo(el, 'x', { duration: 0.4, ease: 'power3' });
+          const quickY = gsap.quickTo(el, 'y', { duration: 0.4, ease: 'power3' });
+          el.addEventListener('mousemove', (event) => {
+            const rect = el.getBoundingClientRect();
+            const x = (event.clientX - rect.left - rect.width / 2) / 6;
+            const y = (event.clientY - rect.top - rect.height / 2) / 6;
+            quickX(x);
+            quickY(y);
+          });
+          el.addEventListener('mouseleave', () => {
+            quickX(0);
+            quickY(0);
+          });
+        });
+
+        document.querySelectorAll('.tilt').forEach((card) => {
+          const quickRX = gsap.quickTo(card, 'rotationX', { duration: 0.5, ease: 'power3' });
+          const quickRY = gsap.quickTo(card, 'rotationY', { duration: 0.5, ease: 'power3' });
+          const quickScale = gsap.quickTo(card, 'scale', { duration: 0.5, ease: 'power3' });
+          card.addEventListener('mousemove', (event) => {
+            const rect = card.getBoundingClientRect();
+            const dx = (event.clientX - rect.left) / rect.width - 0.5;
+            const dy = (event.clientY - rect.top) / rect.height - 0.5;
+            quickRX(-dy * 6);
+            quickRY(dx * 6);
+            quickScale(1.02);
+          });
+          card.addEventListener('mouseleave', () => {
+            quickRX(0);
+            quickRY(0);
+            quickScale(1);
+          });
+        });
+      }
     })();
   </script>
 </body>
