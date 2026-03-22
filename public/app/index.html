@@ -9,6 +9,7 @@
 <title>CreatorOS — AI-Powered Creator Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://js.stripe.com/v3/"></script>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
 <style>
 /* ═══════════════════════════════════════════
    DESIGN SYSTEM
@@ -803,6 +804,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 .chat-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .community-v2 .chat-item .name{font-size:12px;font-weight:600;}
 .community-v2 .chat-time{font-size:9px;color:var(--c-t3);letter-spacing:.5px;}
+.community-v2 .chat-time-row{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.community-v2 .chat-unread{
+  min-width:18px;height:18px;border-radius:999px;padding:0 6px;
+  background:var(--c-lime);color:#0b0b12;font-size:9px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
 .community-v2 .chat-preview{font-size:10px;color:var(--c-t3);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .community-v2 .chat-actions{display:flex;gap:4px;}
 
@@ -2417,6 +2424,54 @@ async function autoDetectApiUrl() {
     }
   }
 }
+
+function resolveSocketUrl() {
+  const explicitUrl = window.__CREATOROS_SOCKET_URL__ || localStorage.getItem('creatoros_socket_url');
+  const base = explicitUrl ? normalizeApiUrl(explicitUrl) : normalizeApiUrl(API_URL);
+  if (!base) return '';
+  return base.endsWith('/api') ? base.replace(/\/api$/, '') : base;
+}
+
+function connectChatSocket() {
+  if (!accessToken || !window.io) return;
+  const socketUrl = resolveSocketUrl();
+  if (!socketUrl) return;
+  if (chatSocket && chatSocket.connected) return;
+  if (chatSocket) {
+    chatSocket.disconnect();
+    chatSocket = null;
+  }
+  chatSocket = io(socketUrl, {
+    auth: { token: accessToken },
+    withCredentials: true,
+    transports: ['websocket', 'polling']
+  });
+
+  chatSocket.on('connect', () => {
+    chatSocketReady = true;
+  });
+  chatSocket.on('disconnect', () => {
+    chatSocketReady = false;
+  });
+  chatSocket.on('socket:ready', () => {
+    chatSocketReady = true;
+  });
+  chatSocket.on('message:new', handleSocketMessage);
+  chatSocket.on('message:read', handleSocketRead);
+  chatSocket.on('typing', handleSocketTyping);
+  chatSocket.on('message:error', payload => {
+    const msg = payload?.error || 'Failed to send message';
+    showToast('Error', msg, 'error');
+  });
+}
+
+function disconnectChatSocket() {
+  if (chatSocket) {
+    chatSocket.disconnect();
+    chatSocket = null;
+  }
+  chatSocketReady = false;
+}
 function normalizeStoredToken(value) {
   if (!value) return null;
   const cleaned = String(value).trim();
@@ -2510,8 +2565,11 @@ let chatState = {
   hasMore: false,
   loading: false,
   typingTimer: null,
-  pendingAttachments: []
+  pendingAttachments: [],
+  messageIds: new Set()
 };
+let chatSocket = null;
+let chatSocketReady = false;
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -2884,6 +2942,7 @@ async function initializeApp() {
     presencePing();
     presenceInterval = setInterval(presencePing, 30000);
   }
+  connectChatSocket();
   
   // Load connected platforms
   await loadConnectedPlatforms();
@@ -3812,6 +3871,7 @@ async function logout() {
       presenceInterval = null;
     }
     stopCommunityPolling();
+    disconnectChatSocket();
     location.reload();
   }
 }
@@ -4582,6 +4642,114 @@ async function respondFriendRequest(id, action) {
   }
 }
 
+function formatChatTime(ts) {
+  if (!ts) return '';
+  const date = new Date(ts);
+  if (Number.isNaN(date.getTime())) return '';
+  const now = new Date();
+  if (date.toDateString() === now.toDateString()) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  if (date.toDateString() === yesterday.toDateString()) {
+    return 'Yesterday';
+  }
+  return date.toLocaleDateString();
+}
+
+function formatMessageMeta(msg) {
+  const time = msg.created_at
+    ? new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    : '';
+  if (!msg.from_me) return time;
+  if (msg.read_at) return `${time} · Seen`;
+  if (msg.delivered_at) return `${time} · Delivered`;
+  return `${time} · Sent`;
+}
+
+function renderChatMessage(msg) {
+  const attachments = (msg.attachments || []).map(att => {
+    if (att.type && att.type.startsWith('image/') && att.url) {
+      return `<img src="${att.url}" alt="${escapeHtml(att.name || 'image')}" style="max-width:200px;border-radius:8px;margin-top:6px">`;
+    }
+    if (att.url) {
+      return `<a href="${att.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(att.name || 'Attachment')}</a>`;
+    }
+    return '';
+  }).join('');
+  return `
+    <div class="msg ${msg.from_me ? 'me' : ''}" data-msg-id="${escapeHtml(msg.id || '')}">
+      <div>${escapeHtml(msg.content || '')}</div>
+      ${attachments}
+      <div class="meta">${formatMessageMeta(msg)}</div>
+    </div>
+  `;
+}
+
+function appendChatMessage(msg) {
+  const list = document.getElementById('chat-messages');
+  if (!list || !msg || !msg.id) return;
+  if (chatState.messageIds.has(msg.id)) return;
+  list.insertAdjacentHTML('beforeend', renderChatMessage(msg));
+  chatState.messageIds.add(msg.id);
+  list.scrollTop = list.scrollHeight;
+}
+
+function clearChatUnread(userId) {
+  const item = document.querySelector(`.chat-item[data-id="${userId}"]`);
+  if (!item) return;
+  const badge = item.querySelector('.chat-unread');
+  if (badge) badge.remove();
+}
+
+function updateChatItemPreview(userId, msg, unreadCount) {
+  const item = document.querySelector(`.chat-item[data-id="${userId}"]`);
+  if (!item) return;
+  const previewEl = item.querySelector('.chat-preview');
+  const timeEl = item.querySelector('.chat-time');
+  if (previewEl && msg) {
+    const content = (msg.content || '').trim();
+    const hasAttachment = (msg.attachments || []).length > 0;
+    const prefix = msg.from_me ? 'You: ' : '';
+    previewEl.textContent = content ? `${prefix}${content}` : (hasAttachment ? `${prefix}Attachment` : prefix.trim());
+  }
+  if (timeEl && msg) {
+    timeEl.textContent = formatChatTime(msg.created_at);
+  }
+  if (typeof unreadCount === 'number') {
+    const row = item.querySelector('.chat-time-row');
+    let badge = item.querySelector('.chat-unread');
+    if (unreadCount > 0) {
+      if (!badge && row) {
+        badge = document.createElement('div');
+        badge.className = 'chat-unread';
+        row.appendChild(badge);
+      }
+      if (badge) badge.textContent = unreadCount;
+    } else if (badge) {
+      badge.remove();
+    }
+  }
+}
+
+function maybeNotifyMessage(msg, peerName) {
+  if (!msg || msg.from_me) return;
+  if (!document.hidden) return;
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') {
+    const body = (msg.content || '').trim() || 'New attachment received.';
+    new Notification(`Message from ${peerName || 'Creator'}`, { body });
+  } else if (Notification.permission === 'default') {
+    Notification.requestPermission().then(result => {
+      if (result === 'granted') {
+        const body = (msg.content || '').trim() || 'New attachment received.';
+        new Notification(`Message from ${peerName || 'Creator'}`, { body });
+      }
+    });
+  }
+}
+
 async function loadFriends() {
   const container = document.getElementById('friends-list');
   if (!container) return;
@@ -4599,12 +4767,22 @@ async function loadFriends() {
       container.innerHTML = '<div class="notif-empty">No friends yet.</div>';
       return;
     }
+    friends.sort((a, b) => {
+      const ta = a.last_message?.created_at ? new Date(a.last_message.created_at).getTime() : 0;
+      const tb = b.last_message?.created_at ? new Date(b.last_message.created_at).getTime() : 0;
+      return tb - ta;
+    });
     container.innerHTML = '';
     friends.forEach(friend => {
       const online = friend.last_seen ? isOnline(friend.last_seen) : false;
       const safeName = escapeHtml(friend.name || 'Creator');
       const encodedName = encodeURIComponent(friend.name || 'Creator');
-      const preview = online ? 'Active now' : 'Tap to chat';
+      const lastMsg = friend.last_message;
+      const previewPrefix = lastMsg?.from_me ? 'You: ' : '';
+      const previewContent = lastMsg?.content ? lastMsg.content : ((lastMsg?.attachments || []).length ? 'Attachment' : '');
+      const preview = lastMsg ? `${previewPrefix}${previewContent}`.trim() : (online ? 'Active now' : 'Tap to chat');
+      const timeLabel = lastMsg ? formatChatTime(lastMsg.created_at) : (online ? 'Online' : 'Offline');
+      const unread = Number(friend.unread_count || 0);
       container.innerHTML += `
         <div class="chat-item ${chatState.activeUser?.id === friend.id ? 'active' : ''}" data-id="${friend.id}" data-name="${encodedName}" data-online="${online ? '1' : '0'}" onclick="openChatFromElement(this)">
           <div class="avatar">
@@ -4614,7 +4792,10 @@ async function loadFriends() {
           <div class="chat-info">
             <div class="chat-top">
               <div class="name">${safeName}</div>
-              <div class="chat-time">${online ? 'Online' : 'Offline'}</div>
+              <div class="chat-time-row">
+                <div class="chat-time">${timeLabel}</div>
+                ${unread > 0 ? `<div class="chat-unread">${unread}</div>` : ''}
+              </div>
             </div>
             <div class="chat-preview">${preview}</div>
           </div>
@@ -4653,6 +4834,7 @@ async function openChat(userId, name, online = true) {
   if (chatAvatar) chatAvatar.textContent = (safeName || 'C')[0].toUpperCase();
   const chatStatus = document.getElementById('chat-status');
   if (chatStatus) chatStatus.textContent = online ? 'Active now' : 'Offline';
+  clearChatUnread(userId);
   await loadMessages(true);
   await loadFriends();
 }
@@ -4666,6 +4848,7 @@ async function loadMessages(reset = false) {
   if (reset) {
     list.innerHTML = '';
     chatState.messagesPage = 1;
+    chatState.messageIds = new Set();
   }
   try {
     const res = await fetch(`${API_URL}/social/messages?user_id=${chatState.activeUser.id}&page=${chatState.messagesPage}&page_size=50`, {
@@ -4679,22 +4862,8 @@ async function loadMessages(reset = false) {
     const messages = data.messages || [];
     list.innerHTML = '';
     messages.forEach(msg => {
-      const attachments = (msg.attachments || []).map(att => {
-        if (att.type && att.type.startsWith('image/') && att.url) {
-          return `<img src="${att.url}" alt="${escapeHtml(att.name || 'image')}" style="max-width:200px;border-radius:8px;margin-top:6px">`;
-        }
-        if (att.url) {
-          return `<a href="${att.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(att.name || 'Attachment')}</a>`;
-        }
-        return '';
-      }).join('');
-      list.innerHTML += `
-        <div class="msg ${msg.from_me ? 'me' : ''}">
-          <div>${escapeHtml(msg.content || '')}</div>
-          ${attachments}
-          <div class="meta">${new Date(msg.created_at).toLocaleTimeString()} ${msg.from_me ? (msg.read_at ? '· Seen' : '· Sent') : ''}</div>
-        </div>
-      `;
+      chatState.messageIds.add(msg.id);
+      list.insertAdjacentHTML('beforeend', renderChatMessage(msg));
     });
     list.scrollTop = list.scrollHeight;
     await markMessagesRead(chatState.activeUser.id);
@@ -4712,24 +4881,34 @@ async function sendChatMessage() {
   const attachments = chatState.pendingAttachments || [];
   if (!content && !attachments.length) return;
   try {
-    const res = await fetch(`${API_URL}/social/messages`, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    if (chatSocketReady && chatSocket) {
+      chatSocket.emit('message:send', {
         receiver_id: chatState.activeUser.id,
         content,
         attachments
-      })
-    });
-    const data = await parseJsonSafely(res);
-    if (!res.ok) {
-      showToast('Error', data.error || 'Failed to send message', 'error');
-      return;
+      });
+    } else {
+      const res = await fetch(`${API_URL}/social/messages`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          receiver_id: chatState.activeUser.id,
+          content,
+          attachments
+        })
+      });
+      const data = await parseJsonSafely(res);
+      if (!res.ok) {
+        showToast('Error', data.error || 'Failed to send message', 'error');
+        return;
+      }
     }
     input.value = '';
     chatState.pendingAttachments = [];
     renderChatAttachments();
-    await loadMessages(true);
+    if (!chatSocketReady) {
+      await loadMessages(true);
+    }
   } catch (err) {
     showToast('Error', 'Failed to send message', 'error');
   }
@@ -4802,6 +4981,10 @@ function handleTyping() {
 
 async function sendTyping(isTyping) {
   if (!chatState.activeUser) return;
+  if (chatSocketReady && chatSocket) {
+    chatSocket.emit('typing', { user_id: chatState.activeUser.id, typing: isTyping });
+    return;
+  }
   try {
     await fetch(`${API_URL}/social/typing`, {
       method: 'POST',
@@ -4817,6 +5000,7 @@ async function checkTyping() {
   if (!chatState.activeUser) return;
   const typingEl = document.getElementById('chat-typing');
   if (!typingEl) return;
+  if (chatSocketReady) return;
   try {
     const res = await fetch(`${API_URL}/social/typing?user_id=${chatState.activeUser.id}`, {
       headers: { 'Authorization': `Bearer ${accessToken}` }
@@ -4833,19 +5017,72 @@ async function checkTyping() {
 }
 
 async function markMessagesRead(userId) {
+  if (chatSocketReady && chatSocket) {
+    chatSocket.emit('messages:read', { user_id: userId });
+    clearChatUnread(userId);
+    return;
+  }
   try {
     await fetch(`${API_URL}/social/messages/read`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: userId })
     });
+    clearChatUnread(userId);
   } catch (err) {
     // ignore
   }
 }
 
+function handleSocketMessage(payload) {
+  const msg = payload?.message;
+  const peerId = payload?.peer_id;
+  if (!msg || !peerId) return;
+  const activeId = chatState.activeUser?.id;
+  const isActive = activeId === peerId;
+  const item = document.querySelector(`.chat-item[data-id="${peerId}"]`);
+  const peerName = item?.dataset?.name ? decodeURIComponent(item.dataset.name) : chatState.activeUser?.name;
+  if (!item) {
+    loadFriends();
+  }
+  if (isActive) {
+    appendChatMessage(msg);
+    updateChatItemPreview(peerId, msg, 0);
+    if (!msg.from_me) {
+      markMessagesRead(peerId);
+    }
+  } else if (!msg.from_me) {
+    const badge = item?.querySelector('.chat-unread');
+    const current = badge ? Number(badge.textContent || 0) : 0;
+    updateChatItemPreview(peerId, msg, current + 1);
+    maybeNotifyMessage(msg, peerName);
+  } else {
+    updateChatItemPreview(peerId, msg);
+  }
+}
+
+function handleSocketRead(payload) {
+  const peerId = payload?.peer_id;
+  if (!peerId) return;
+  if (!chatState.activeUser || chatState.activeUser.id !== peerId) return;
+  document.querySelectorAll('#chat-messages .msg.me .meta').forEach(el => {
+    const text = el.textContent || '';
+    const time = text.split('·')[0].trim();
+    el.textContent = time ? `${time} · Seen` : 'Seen';
+  });
+  clearChatUnread(peerId);
+}
+
+function handleSocketTyping(payload) {
+  const typingEl = document.getElementById('chat-typing');
+  if (!typingEl || !chatState.activeUser) return;
+  if (payload?.user_id !== chatState.activeUser.id) return;
+  typingEl.textContent = payload.typing ? `${chatState.activeUser.name} is typing...` : '';
+}
+
 function startCommunityPolling() {
   stopCommunityPolling();
+  connectChatSocket();
   loadFriendRequests();
   loadFriends();
   loadLeaderboard(true);
@@ -4855,11 +5092,11 @@ function startCommunityPolling() {
   communityInterval = setInterval(() => {
     loadFriendRequests();
     loadFriends();
-    if (chatState.activeUser) {
+    if (chatState.activeUser && !chatSocketReady) {
       loadMessages(true);
       checkTyping();
     }
-  }, 5000);
+  }, 8000);
 }
 
 function stopCommunityPolling() {

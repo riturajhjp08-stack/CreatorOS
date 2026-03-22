@@ -316,6 +316,7 @@ class Message(db.Model):
     attachments = db.Column(db.JSON, default=list)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     read_at = db.Column(db.DateTime, nullable=True, index=True)
+    delivered_at = db.Column(db.DateTime, nullable=True, index=True)
 
     __table_args__ = (
         db.Index('idx_messages_pair_time', 'sender_id', 'receiver_id', 'created_at'),
@@ -330,6 +331,7 @@ class Message(db.Model):
             'attachments': self.attachments or [],
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'read_at': self.read_at.isoformat() if self.read_at else None,
+            'delivered_at': self.delivered_at.isoformat() if self.delivered_at else None,
         }
 
 class Follow(db.Model):

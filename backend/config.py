@@ -72,6 +72,7 @@ class Config:
     RATELIMIT_FEEDBACK = os.environ.get("RATELIMIT_FEEDBACK", "10 per hour")
     RATELIMIT_ADMIN = os.environ.get("RATELIMIT_ADMIN", "60 per minute")
     RATELIMIT_NOTIFICATIONS = os.environ.get("RATELIMIT_NOTIFICATIONS", "120 per minute")
+    RATELIMIT_MESSAGES = os.environ.get("RATELIMIT_MESSAGES", "120 per minute")
     RATELIMIT_SYNC = os.environ.get("RATELIMIT_SYNC", "10 per hour")
     RATELIMIT_STORAGE_URI = os.environ.get("RATELIMIT_STORAGE_URI", "memory://")
     RATELIMIT_HEADERS_ENABLED = _get_bool("RATELIMIT_HEADERS_ENABLED", True)

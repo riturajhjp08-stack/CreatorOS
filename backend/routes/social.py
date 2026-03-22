@@ -4,12 +4,15 @@ from datetime import datetime, timedelta
 
 from flask import Blueprint, request, current_app, send_file, redirect
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from sqlalchemy import and_, or_
+from sqlalchemy import and_, or_, case, func
 
 from models import db, User, FriendRequest, Message, Follow
+from extensions import limiter, socketio
+from realtime_state import is_user_online
 from utils.pagination import parse_pagination, pagination_meta
 from utils.cache import get_cache
 from utils.notify import create_notification
+from utils.chat import decorate_attachments
 from storage import get_storage
 
 logger = logging.getLogger(__name__)
@@ -194,7 +197,70 @@ def list_friends():
         if not friend_ids:
             return {"friends": [], "count": 0}, 200
         friends = User.query.filter(User.id.in_(friend_ids)).all()
-        return {"friends": [_user_summary(f) for f in friends], "count": len(friends)}, 200
+
+        unread_map = {}
+        last_message_map = {}
+        unread_rows = (
+            db.session.query(Message.sender_id, func.count(Message.id))
+            .filter(
+                Message.receiver_id == user_id,
+                Message.read_at.is_(None),
+                Message.sender_id.in_(friend_ids),
+            )
+            .group_by(Message.sender_id)
+            .all()
+        )
+        unread_map = {row[0]: int(row[1]) for row in unread_rows}
+
+        peer_case = case(
+            (Message.sender_id == user_id, Message.receiver_id),
+            else_=Message.sender_id,
+        )
+        last_subq = (
+            db.session.query(
+                peer_case.label("peer_id"),
+                func.max(Message.created_at).label("last_time"),
+            )
+            .filter(
+                or_(
+                    and_(Message.sender_id == user_id, Message.receiver_id.in_(friend_ids)),
+                    and_(Message.receiver_id == user_id, Message.sender_id.in_(friend_ids)),
+                )
+            )
+            .group_by(peer_case)
+            .subquery()
+        )
+
+        last_rows = (
+            db.session.query(Message, last_subq.c.peer_id)
+            .join(
+                last_subq,
+                and_(
+                    Message.created_at == last_subq.c.last_time,
+                    peer_case == last_subq.c.peer_id,
+                ),
+            )
+            .all()
+        )
+        for msg, peer_id in last_rows:
+            last_message_map[peer_id] = msg
+
+        payload = []
+        for friend in friends:
+            summary = _user_summary(friend)
+            last_msg = last_message_map.get(friend.id)
+            if last_msg:
+                last_msg_payload = last_msg.to_dict()
+                last_msg_payload["from_me"] = last_msg.sender_id == user_id
+            else:
+                last_msg_payload = None
+            summary.update({
+                "unread_count": unread_map.get(friend.id, 0),
+                "last_message": last_msg_payload,
+            })
+            payload.append(summary)
+
+        return {"friends": payload, "count": len(payload)}, 200
     except Exception:
         logger.exception("List friends error")
         return {"error": "Failed to fetch friends"}, 500
@@ -244,6 +310,7 @@ def follow_user():
 
 @social_bp.route("/messages", methods=["GET"])
 @jwt_required()
+@limiter.limit(lambda: current_app.config.get("RATELIMIT_MESSAGES", "120 per minute"))
 def get_messages():
     try:
         user_id = get_jwt_identity()
@@ -274,7 +341,7 @@ def get_messages():
             data = msg.to_dict()
             data["from_me"] = msg.sender_id == user_id
             if msg.attachments:
-                data["attachments"] = _decorate_attachments(msg, data.get("attachments", []))
+                data["attachments"] = decorate_attachments(msg, data.get("attachments", []))
             items.append(data)
 
         return {
@@ -288,33 +355,11 @@ def get_messages():
         return {"error": "Failed to fetch messages"}, 500
 
 
-def _decorate_attachments(message, attachments):
-    storage = get_storage()
-    decorated = []
-    for item in attachments or []:
-        decorated_item = dict(item)
-        if hasattr(storage, "client") and hasattr(storage, "bucket"):
-            key = item.get("key")
-            if key:
-                try:
-                    url = storage.client.generate_presigned_url(
-                        "get_object",
-                        Params={"Bucket": storage.bucket, "Key": key},
-                        ExpiresIn=3600,
-                    )
-                    decorated_item["url"] = url
-                except Exception:
-                    pass
-        else:
-            stored_name = item.get("stored_name")
-            if stored_name:
-                decorated_item["url"] = f"/api/social/messages/attachments/{message.id}/{stored_name}"
-        decorated.append(decorated_item)
-    return decorated
 
 
 @social_bp.route("/messages", methods=["POST"])
 @jwt_required()
+@limiter.limit(lambda: current_app.config.get("RATELIMIT_MESSAGES", "120 per minute"))
 def send_message():
     try:
         user_id = get_jwt_identity()
@@ -340,6 +385,7 @@ def send_message():
             content=content,
             attachments=attachments,
             created_at=datetime.utcnow(),
+            delivered_at=datetime.utcnow() if is_user_online(receiver_id) else None,
         )
         db.session.add(msg)
         create_notification(
@@ -353,7 +399,15 @@ def send_message():
         db.session.commit()
         payload = msg.to_dict()
         payload["from_me"] = True
-        payload["attachments"] = _decorate_attachments(msg, payload.get("attachments", []))
+        payload["attachments"] = decorate_attachments(msg, payload.get("attachments", []))
+        receiver_payload = msg.to_dict()
+        receiver_payload["from_me"] = False
+        receiver_payload["attachments"] = decorate_attachments(msg, receiver_payload.get("attachments", []))
+        try:
+            socketio.emit("message:new", {"message": receiver_payload, "peer_id": user_id}, room=receiver_id)
+            socketio.emit("message:new", {"message": payload, "peer_id": receiver_id}, room=user_id)
+        except Exception:
+            logger.exception("Socket emit failed")
         return {"message": payload}, 201
     except Exception:
         db.session.rollback()
@@ -363,6 +417,7 @@ def send_message():
 
 @social_bp.route("/messages/read", methods=["POST"])
 @jwt_required()
+@limiter.limit(lambda: current_app.config.get("RATELIMIT_MESSAGES", "120 per minute"))
 def mark_messages_read():
     try:
         user_id = get_jwt_identity()
@@ -375,6 +430,14 @@ def mark_messages_read():
             .update({"read_at": datetime.utcnow()}, synchronize_session=False)
         )
         db.session.commit()
+        try:
+            socketio.emit(
+                "message:read",
+                {"user_id": user_id, "peer_id": peer_id, "updated": updated},
+                room=peer_id,
+            )
+        except Exception:
+            logger.exception("Socket read receipt emit failed")
         return {"success": True, "updated": updated}, 200
     except Exception:
         db.session.rollback()

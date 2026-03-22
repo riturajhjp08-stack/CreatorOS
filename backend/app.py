@@ -4,7 +4,7 @@ from flask import Flask, request, g, has_request_context
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from config import config, validate_production_config
-from extensions import limiter
+from extensions import limiter, socketio
 from models import db
 from sqlalchemy import inspect, text
 import os
@@ -169,6 +169,21 @@ def _run_schema_compat_migrations():
                     ddl = f"ALTER TABLE notifications ADD COLUMN IF NOT EXISTS {col} {_dialect_type(col_type)}"
                 conn.execute(text(ddl))
 
+    # Migrate messages table
+    if "messages" in inspector.get_table_names():
+        existing_msg_cols = {col["name"] for col in inspector.get_columns("messages")}
+        expected_msg = {
+            "delivered_at": "DATETIME",
+        }
+        with engine.begin() as conn:
+            for col, col_type in expected_msg.items():
+                if col in existing_msg_cols:
+                    continue
+                ddl = f"ALTER TABLE messages ADD COLUMN {col} {_dialect_type(col_type)}"
+                if is_postgres:
+                    ddl = f"ALTER TABLE messages ADD COLUMN IF NOT EXISTS {col} {_dialect_type(col_type)}"
+                conn.execute(text(ddl))
+
 def create_app(config_name=None):
     """Application factory"""
     if config_name is None:
@@ -199,6 +214,11 @@ def create_app(config_name=None):
         supports_credentials=True,
     )
     JWTManager(app)
+    socketio.init_app(
+        app,
+        cors_allowed_origins=app.config.get("CORS_ALLOWED_ORIGINS") or [],
+        async_mode=os.environ.get("SOCKETIO_ASYNC_MODE") or None,
+    )
 
     # Observability
     if app.config.get("SENTRY_DSN"):
@@ -230,6 +250,7 @@ def create_app(config_name=None):
     from routes.notifications import notifications_bp
     from routes.discovery import discovery_bp
     from routes.social import social_bp
+    import socketio_handlers  # noqa: F401
     
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(platforms_bp, url_prefix='/api/platforms')
