@@ -2,7 +2,7 @@
 name = "creatoros"
 version = "0.1.0"
 description = "CreatorOS backend"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
   "Flask==2.3.3",
   "Flask-SQLAlchemy==3.0.5",
