@@ -178,6 +178,8 @@ select.field option{background:var(--s2);}
 .content{flex:1;overflow-y:auto;padding:22px;display:none;flex-direction:column;gap:16px;}
 .content.active{display:flex;animation:fi .2s ease;}
 @keyframes fi{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
 
 /* ── TYPOGRAPHY ── */
 h1,h2{font-family:var(--font-head);font-weight:700;}
@@ -578,7 +580,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 
 .community-v2 .c-page{display:none;animation:fadeUp .2s ease;}
 .community-v2 .c-page.active{display:block;}
-.community-v2 .c-net-bar{display:flex;gap:10px;flex-wrap:wrap;}
+.community-v2 .c-net-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
 .community-v2 .c-search{position:relative;flex:1;min-width:220px;}
 .community-v2 .c-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--c-t3);}
 .community-v2 .c-input{
@@ -587,6 +589,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   color:var(--c-t1);font-family:var(--font-body);font-size:12px;outline:none;
 }
 .community-v2 .c-input:focus{border-color:var(--c-lime-b);}
+.community-v2 .c-filter-pills{display:flex;gap:6px;flex-wrap:wrap;width:100%;}
+.community-v2 .c-pill-filter{
+  padding:7px 14px;border-radius:20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  border:1px solid var(--c-border);background:var(--c-bg2);color:var(--c-t2);cursor:pointer;transition:all .15s;
+  font-family:var(--font-head);font-weight:600;
+}
+.community-v2 .c-pill-filter:hover{border-color:var(--c-border2);color:var(--c-t1);}
+.community-v2 .c-pill-filter.active{background:var(--c-lime-d);border-color:var(--c-lime-b);color:var(--c-lime);}
+.community-v2 .c-hidden{display:none;}
 .community-v2 .c-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
 .community-v2 .c-filter{
   padding:7px 14px;border-radius:20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
@@ -596,7 +607,138 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 .c-filter:hover{border-color:var(--c-border2);color:var(--c-t1);}
 .community-v2 .c-filter.active{background:var(--c-lime-d);border-color:var(--c-lime-b);color:var(--c-lime);}
 
-.community-v2 .c-net-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:16px;margin-top:18px;}
+.community-v2 .c-section-head{display:flex;align-items:center;gap:12px;margin:20px 0 12px;}
+.community-v2 .c-section-title{font-family:var(--font-head);font-weight:700;font-size:15px;}
+.community-v2 .c-section-count{
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--c-t2);
+  border:1px solid var(--c-border);border-radius:999px;padding:4px 10px;background:var(--c-bg3);
+  font-family:var(--font-mono);
+}
+.community-v2 .c-section-line{flex:1;height:1px;background:var(--c-border);}
+.community-v2 .c-section-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--c-t3);font-family:var(--font-mono);}
+
+.community-v2 .c-featured{
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:14px;
+  overflow:hidden;display:grid;grid-template-columns:1fr 320px;
+  box-shadow:0 18px 36px rgba(0,0,0,.35);
+}
+.community-v2 .c-featured.is-empty{
+  display:flex;align-items:center;justify-content:center;padding:24px;color:var(--c-t2);
+}
+.community-v2 .c-featured-left{padding:26px 28px;position:relative;overflow:hidden;}
+.community-v2 .c-featured-left::before{
+  content:'';position:absolute;top:-120px;right:-100px;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(184,255,0,.08),transparent 70%);pointer-events:none;
+}
+.community-v2 .c-featured-eyebrow{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--c-lime);
+  background:var(--c-lime-d);border:1px solid var(--c-lime-b);font-family:var(--font-mono);
+  margin-bottom:14px;
+}
+.community-v2 .c-featured-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--c-lime);animation:blink 1.6s infinite;}
+.community-v2 .c-featured-profile{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+.community-v2 .c-featured-avatar{
+  width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-weight:800;color:#fff;overflow:hidden;
+}
+.community-v2 .c-featured-avatar img{width:100%;height:100%;object-fit:cover;}
+.community-v2 .c-featured-avatar span{display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#fff;}
+.community-v2 .c-featured-status{
+  margin-left:auto;font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;border:1px solid var(--c-lime-b);
+  color:var(--c-lime);background:var(--c-lime-d);font-family:var(--font-mono);
+  display:flex;align-items:center;gap:6px;
+}
+.community-v2 .c-featured-status::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--c-lime);display:inline-block;
+}
+.community-v2 .c-featured-status.off{
+  color:var(--c-t3);border-color:var(--c-border);background:var(--c-bg3);
+}
+.community-v2 .c-featured-status.off::before{background:var(--c-t3);}
+.community-v2 .c-featured-name{font-family:var(--font-head);font-weight:800;font-size:26px;letter-spacing:-.4px;}
+.community-v2 .c-featured-handle{font-size:11px;color:var(--c-t2);letter-spacing:.6px;margin-top:4px;}
+.community-v2 .c-featured-bio{font-size:12px;color:var(--c-t2);line-height:1.7;margin-top:12px;max-width:420px;}
+.community-v2 .c-featured-stats{display:flex;gap:22px;flex-wrap:wrap;margin:18px 0;}
+.community-v2 .c-featured-stat{min-width:90px;}
+.community-v2 .cfs-n{font-family:var(--font-head);font-weight:800;font-size:20px;}
+.community-v2 .cfs-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--c-t3);margin-top:3px;font-family:var(--font-mono);}
+.community-v2 .c-featured-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.community-v2 .c-featured-right{
+  background:var(--c-bg3);border-left:1px solid var(--c-border);
+  padding:22px;display:flex;flex-direction:column;gap:12px;
+}
+.community-v2 .c-featured-right-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--c-t3);font-family:var(--font-mono);}
+.community-v2 .c-featured-plat{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;
+  background:var(--c-bg2);border:1px solid var(--c-border);font-size:11px;color:var(--c-t1);
+}
+.community-v2 .c-featured-plat .count{margin-left:auto;font-family:var(--font-head);font-weight:700;color:var(--c-lime);}
+.community-v2 .c-featured-plat .label{font-size:10px;color:var(--c-t2);}
+.community-v2 .c-featured-empty{font-size:11px;color:var(--c-t2);}
+
+.community-v2 .c-creator-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px;
+}
+.community-v2 .c-creator-grid .notif-empty{grid-column:1/-1;}
+.community-v2 .c-card{
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;overflow:hidden;
+  cursor:pointer;transition:transform .2s, box-shadow .2s, border-color .2s;position:relative;
+  --c-card-accent:var(--c-lime);
+  --c-card-accent-soft:rgba(184,255,0,.12);
+  --c-card-accent-border:rgba(184,255,0,.35);
+  --c-card-grad:linear-gradient(135deg,var(--c-lime),var(--c-cyan));
+}
+.community-v2 .c-card:hover{transform:translateY(-3px);border-color:var(--c-border2);box-shadow:0 18px 40px rgba(0,0,0,.4);}
+.community-v2 .c-card-banner{height:74px;position:relative;background:var(--c-card-grad);}
+.community-v2 .c-card-banner::after{content:'';position:absolute;inset:0;background:rgba(7,7,14,.25);}
+.community-v2 .c-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:var(--c-card-accent);}
+.community-v2 .c-card-avatar{
+  position:absolute;bottom:-22px;left:18px;width:46px;height:46px;border-radius:50%;
+  border:3px solid var(--c-bg2);background:var(--c-card-grad);
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;color:#fff;
+}
+.community-v2 .c-card-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
+.community-v2 .c-card-online{
+  position:absolute;bottom:-18px;left:52px;width:10px;height:10px;border-radius:50%;
+  background:var(--c-lime);border:2px solid var(--c-bg2);
+}
+.community-v2 .c-card-body{padding:30px 16px 16px;}
+.community-v2 .c-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px;}
+.community-v2 .c-card-name{font-family:var(--font-head);font-weight:700;font-size:14px;}
+.community-v2 .c-card-handle{font-size:10px;color:var(--c-t3);letter-spacing:.8px;}
+.community-v2 .c-card-niche{
+  font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 7px;border-radius:5px;
+  background:var(--c-card-accent-soft);color:var(--c-card-accent);border:1px solid var(--c-card-accent-border);
+  font-family:var(--font-head);font-weight:700;
+}
+.community-v2 .c-card-bio{
+  font-size:11px;color:var(--c-t2);line-height:1.6;margin-bottom:12px;
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+}
+.community-v2 .c-card-metrics{
+  display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--c-border);
+  background:var(--c-bg3);border-radius:8px;overflow:hidden;margin-bottom:12px;
+}
+.community-v2 .c-card-metric{padding:8px 0;text-align:center;border-right:1px solid var(--c-border);}
+.community-v2 .c-card-metric:last-child{border-right:none;}
+.community-v2 .c-card-metric .num{font-family:var(--font-head);font-weight:700;font-size:13px;}
+.community-v2 .c-card-metric .lbl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--c-t3);margin-top:2px;font-family:var(--font-mono);}
+.community-v2 .c-card-platforms{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.community-v2 .c-plat{
+  width:24px;height:24px;border-radius:6px;background:var(--c-bg3);border:1px solid var(--c-border);
+  display:flex;align-items:center;justify-content:center;font-size:9px;font-family:var(--font-mono);
+  color:var(--c-t2);text-transform:uppercase;
+}
+.community-v2 .c-plat.youtube{color:#ff4b4b;border-color:rgba(255,75,75,.3);}
+.community-v2 .c-plat.instagram{color:#f43f85;border-color:rgba(244,63,133,.3);}
+.community-v2 .c-plat.twitter{color:#9ca3af;border-color:rgba(156,163,175,.3);}
+.community-v2 .c-plat.tiktok{color:#22d3ee;border-color:rgba(34,211,238,.3);}
+.community-v2 .c-plat.linkedin{color:#3b82f6;border-color:rgba(59,130,246,.3);}
+.community-v2 .c-card-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.community-v2 .c-card-actions .btn-ghost{background:transparent;border:1px solid var(--c-border2);color:var(--c-t1);}
+
 .community-v2 .c-panel{
   background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:18px;
   box-shadow:0 18px 36px rgba(0,0,0,.35);position:relative;
@@ -609,57 +751,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 .c-full{width:100%;margin-top:12px;}
 .community-v2 .c-divider{height:1px;background:var(--c-border);margin:16px 0;}
 
-.community-v2 .c-spotlight{display:flex;flex-direction:column;gap:12px;}
-.community-v2 .c-spotlight-card{
-  background:var(--c-bg3);border:1px solid var(--c-border);border-radius:10px;padding:14px;
-  display:grid;gap:8px;
-}
-.community-v2 .c-spotlight-row{display:flex;align-items:center;gap:10px;}
-.community-v2 .c-spotlight-avatar{
-  width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--c-violet),var(--c-pink));
-  display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;
-}
-.community-v2 .c-spotlight-avatar img,
-.community-v2 .c-spotlight-avatar span{
-  width:100%;height:100%;border-radius:10px;display:flex;align-items:center;justify-content:center;object-fit:cover;
-  background:var(--c-bg2);color:#fff;
-}
-.community-v2 .c-spotlight-name{font-family:var(--font-head);font-weight:700;}
-.community-v2 .c-spotlight-handle{font-size:10px;color:var(--c-t3);}
-.community-v2 .c-spotlight-meta{font-size:11px;color:var(--c-t2);}
-.community-v2 .c-spotlight-actions{display:flex;gap:6px;flex-wrap:wrap;}
-.community-v2 .c-spotlight-empty{font-size:11px;color:var(--c-t2);}
-
-.community-v2 .c-tip-grid{display:grid;gap:10px;}
-.community-v2 .c-tip{background:var(--c-bg3);border:1px solid var(--c-border);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;}
-.community-v2 .c-tip strong{font-size:12px;}
-.community-v2 .c-tip span{font-size:11px;color:var(--c-t2);}
-
 .community-v2 .c-select-wrap{display:flex;align-items:center;gap:8px;}
 .community-v2 .c-select-wrap label{font-size:10px;color:var(--c-t3);letter-spacing:1px;text-transform:uppercase;}
 .community-v2 .c-select-wrap .field{background:var(--c-bg3);border:1px solid var(--c-border);}
-
-.community-v2 .user-card{
-  display:flex;gap:12px;align-items:center;background:var(--c-bg3);border:1px solid var(--c-border);
-  border-radius:10px;padding:12px;transition:transform .15s, box-shadow .15s;
-}
-.community-v2 .user-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.35);}
-.community-v2 .user-avatar{
-  width:46px;height:46px;border-radius:10px;overflow:hidden;
-  background:linear-gradient(135deg,var(--c-violet),var(--c-pink));
-  display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;
-}
-.community-v2 .user-avatar img{width:100%;height:100%;object-fit:cover;}
-.community-v2 .user-avatar span{color:#fff;}
-.community-v2 .user-meta{flex:1;min-width:0;}
-.community-v2 .user-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.community-v2 .user-top .btn{padding:5px 10px;font-size:10px;border-radius:999px;}
-.community-v2 .user-meta h5{font-size:13px;font-weight:600;}
-.community-v2 .user-meta .handle{font-size:11px;color:var(--c-t3);}
-.community-v2 .user-meta .niche{font-size:11px;color:var(--c-t2);}
-.community-v2 .user-meta .reach{font-size:10px;color:var(--c-t3);margin-top:4px;}
-.community-v2 .user-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
-.community-v2 .user-actions .btn-ghost{background:transparent;border:1px solid var(--c-border2);color:var(--c-t1);}
 
 .community-v2 .leaderboard-list{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow:auto;}
 .community-v2 .leaderboard-row{display:grid;grid-template-columns:32px 40px 1fr auto;gap:10px;align-items:center;
@@ -674,7 +768,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 .lb-meta{font-size:10px;color:var(--c-t3);}
 .community-v2 .lb-score{font-family:var(--font-head);font-size:13px;color:var(--c-lime);}
 
-.community-v2 .c-msg-layout{display:grid;grid-template-columns:320px 1fr;gap:16px;min-height:600px;}
+.community-v2 .c-msg-layout{display:grid;grid-template-columns:300px 1fr;gap:16px;min-height:640px;}
 .community-v2 .c-msg-left{
   background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px;overflow:auto;
 }
@@ -691,17 +785,26 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 #friend-requests,
 .community-v2 #friends-list{display:flex;flex-direction:column;gap:8px;}
 .community-v2 .chat-item{
-  display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:all .15s;
-  background:var(--c-bg3);
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--c-border);
+  cursor:pointer;transition:all .15s;background:var(--c-bg3);position:relative;
 }
 .community-v2 .chat-item:hover{border-color:var(--c-border2);}
 .community-v2 .chat-item.active{background:var(--c-lime-d);border-color:var(--c-lime-b);}
 .community-v2 .chat-item .avatar{
-  width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--c-violet),var(--c-pink));
-  display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;
+  width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--c-violet),var(--c-pink));
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;position:relative;
 }
+.community-v2 .chat-item .status-dot{
+  position:absolute;bottom:-2px;right:-2px;width:10px;height:10px;border-radius:50%;
+  background:var(--c-lime);border:2px solid var(--c-bg2);
+}
+.community-v2 .chat-item .status-dot.offline{background:var(--c-t3);}
+.community-v2 .chat-info{flex:1;min-width:0;}
+.community-v2 .chat-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .community-v2 .chat-item .name{font-size:12px;font-weight:600;}
-.community-v2 .chat-item .status{font-size:10px;color:var(--c-t3);}
+.community-v2 .chat-time{font-size:9px;color:var(--c-t3);letter-spacing:.5px;}
+.community-v2 .chat-preview{font-size:10px;color:var(--c-t3);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.community-v2 .chat-actions{display:flex;gap:4px;}
 
 .community-v2 .c-msg-right{
   background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;
@@ -724,21 +827,34 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 }
 .community-v2 .c-icon-btn:hover{border-color:var(--c-border2);color:var(--c-t1);}
 .community-v2 .c-icon-btn svg{width:13px;height:13px;}
-.community-v2 .c-chat-body{
-  flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg3);
+.community-v2 .c-chat-pin{
+  display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--c-border);
+  border-radius:10px;background:var(--c-bg3);font-size:10px;color:var(--c-t2);
 }
-.community-v2 .msg{max-width:72%;padding:8px 10px;border-radius:10px;background:var(--c-bg2);border:1px solid var(--c-border);font-size:12px;}
-.community-v2 .msg.me{align-self:flex-end;background:var(--c-lime-d);border-color:var(--c-lime-b);}
+.community-v2 .c-chat-pin .pin-icon{color:var(--c-lime);}
+.community-v2 .c-chat-pin .pin-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.community-v2 .c-chat-pin strong{color:var(--c-t1);}
+.community-v2 .c-chat-pin .pin-action{font-size:9px;color:var(--c-t3);letter-spacing:1px;}
+.community-v2 .c-chat-body{
+  flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg3);
+}
+.community-v2 .msg{max-width:72%;padding:8px 12px;border-radius:12px 12px 12px 4px;background:var(--c-bg2);border:1px solid var(--c-border);font-size:12px;}
+.community-v2 .msg.me{align-self:flex-end;background:var(--c-lime-d);border-color:var(--c-lime-b);border-radius:12px 4px 12px 12px;}
 .community-v2 .msg .meta{font-size:9px;color:var(--c-t3);margin-top:4px;}
 .community-v2 .c-chat-typing{font-size:10px;color:var(--c-t3);min-height:16px;padding-left:4px;}
-.community-v2 .c-chat-compose{display:flex;gap:8px;align-items:center;}
-.community-v2 .c-chat-compose .field{flex:1;background:var(--c-bg3);border:1px solid var(--c-border);border-radius:8px;padding:8px 10px;}
+.community-v2 .c-chat-compose{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px;border:1px solid var(--c-border);
+  border-radius:10px;background:var(--c-bg3);
+}
+.community-v2 .c-chat-compose .field{flex:1;min-width:180px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:8px;padding:8px 10px;}
 .community-v2 .c-chat-compose .btn-ghost{background:transparent;border:1px solid var(--c-border2);}
 .community-v2 .c-chat-attachments{display:flex;gap:8px;flex-wrap:wrap;}
 .community-v2 .attach-pill{background:var(--c-bg3);border:1px solid var(--c-border);border-radius:8px;padding:6px 8px;font-size:10px;display:flex;align-items:center;gap:6px;}
+.community-v2 #chat-file{display:none;}
 
 @media(max-width:1000px){
-  .community-v2 .c-net-grid{grid-template-columns:1fr;}
+  .community-v2 .c-featured{grid-template-columns:1fr;}
+  .community-v2 .c-featured-right{border-left:none;border-top:1px solid var(--c-border);}
   .community-v2 .c-msg-layout{grid-template-columns:1fr;}
 }
 
@@ -1509,11 +1625,16 @@ body::after{
         <div class="c-net-bar">
           <div class="c-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input class="c-input" id="user-search-input" placeholder="Search creators by name or @handle" oninput="queueUserSearch()">
+            <input class="c-input" id="user-search-input" placeholder="Search creators by name, niche, or @handle" oninput="queueUserSearch()">
           </div>
-          <div class="c-search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2.5 7-6-4-6 4 2.5-7L2 9h7z"/></svg>
-            <input class="c-input" id="user-search-category" placeholder="Filter by niche (e.g. Tech)" oninput="queueUserSearch()">
+          <input class="c-hidden" id="user-search-category" placeholder="Category" oninput="queueUserSearch()">
+          <div class="c-filter-pills">
+            <button class="c-pill-filter active" data-category="" onclick="setCommunityCategory(this,'')">All</button>
+            <button class="c-pill-filter" data-category="Tech & AI" onclick="setCommunityCategory(this,'Tech & AI')">Tech & AI</button>
+            <button class="c-pill-filter" data-category="Creator" onclick="setCommunityCategory(this,'Creator')">Creator</button>
+            <button class="c-pill-filter" data-category="Lifestyle" onclick="setCommunityCategory(this,'Lifestyle')">Lifestyle</button>
+            <button class="c-pill-filter" data-category="Business" onclick="setCommunityCategory(this,'Business')">Business</button>
+            <button class="c-pill-filter" data-category="Finance" onclick="setCommunityCategory(this,'Finance')">Finance</button>
           </div>
         </div>
         <div class="c-filter-row" id="user-search-platforms">
@@ -1524,55 +1645,23 @@ body::after{
           <button class="c-filter" data-platform="linkedin" onclick="togglePlatformFilter(this)">LinkedIn</button>
         </div>
 
-        <div class="c-net-grid">
-          <div class="c-panel c-panel-wide">
-            <div class="c-panel-head">
-              <div>
-                <div class="c-panel-title">Creator Search</div>
-                <div class="c-panel-sub">Live results powered by your database</div>
-              </div>
-              <span class="c-pill">Live</span>
-            </div>
-            <div class="c-results" id="user-search-results"></div>
-            <button class="btn btn-ghost btn-sm c-full" id="user-search-more" onclick="loadMoreUsers()">Load more</button>
-          </div>
-
-          <div class="c-panel">
-            <div class="c-panel-head">
-              <div>
-                <div class="c-panel-title">Spotlight</div>
-                <div class="c-panel-sub">Featured creator from your search</div>
-              </div>
-              <span class="c-pill c-pill-soft">Auto</span>
-            </div>
-            <div class="c-spotlight" id="community-spotlight">
-              <div class="c-spotlight-empty">Search creators to reveal the spotlight.</div>
-            </div>
-
-            <div class="c-divider"></div>
-            <div class="c-panel-head">
-              <div>
-                <div class="c-panel-title">Growth Tips</div>
-                <div class="c-panel-sub">Community playbook</div>
-              </div>
-            </div>
-            <div class="c-tip-grid">
-              <div class="c-tip">
-                <strong>Connect daily</strong>
-                <span>Send 5–10 requests to creators in your niche.</span>
-              </div>
-              <div class="c-tip">
-                <strong>Lead with value</strong>
-                <span>Open with feedback or a collab idea.</span>
-              </div>
-              <div class="c-tip">
-                <strong>Track momentum</strong>
-                <span>Follow creators who are trending up.</span>
-              </div>
-            </div>
-            <button class="btn btn-lime btn-sm c-full" onclick="switchCommunityTab('leaderboard')">View Top Creators</button>
-          </div>
+        <div class="c-section-head">
+          <div class="c-section-title">Featured Creator</div>
+          <div class="c-section-line"></div>
+          <div class="c-section-tag">Spotlight · Live</div>
         </div>
+        <div class="c-featured is-empty" id="community-spotlight">
+          <div class="c-featured-empty">Search creators to reveal the spotlight.</div>
+        </div>
+
+        <div class="c-section-head">
+          <div class="c-section-title">All Creators</div>
+          <div class="c-section-count" id="community-count">0 creators</div>
+          <div class="c-section-line"></div>
+          <div class="c-section-tag">Click any card to view profile</div>
+        </div>
+        <div class="c-creator-grid" id="user-search-results"></div>
+        <button class="btn btn-ghost btn-sm c-full" id="user-search-more" onclick="loadMoreUsers()">Load more</button>
       </div>
 
       <div class="c-page" id="community-leaderboard">
@@ -1631,6 +1720,11 @@ body::after{
                 <button class="c-icon-btn" type="button" title="Pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></button>
                 <button class="c-icon-btn" type="button" title="Details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
               </div>
+            </div>
+            <div class="c-chat-pin">
+              <span class="pin-icon">📌</span>
+              <span class="pin-text"><strong>Pinned:</strong> Welcome to CreatorOS DMs — connect with creators, share files, and build collabs.</span>
+              <span class="pin-action">View all</span>
             </div>
             <div class="c-chat-body" id="chat-messages"></div>
             <div class="c-chat-typing" id="chat-typing"></div>
@@ -3924,6 +4018,9 @@ function switchCommunityTab(tab) {
     loadFriendRequests();
     loadFriends();
   }
+  if (tab === 'network') {
+    runUserSearch(true);
+  }
 }
 
 function queueUserSearch() {
@@ -3933,6 +4030,14 @@ function queueUserSearch() {
   searchState.category = (category?.value || '').trim();
   if (searchTimer) clearTimeout(searchTimer);
   searchTimer = setTimeout(() => runUserSearch(true), 300);
+}
+
+function setCommunityCategory(el, value) {
+  const input = document.getElementById('user-search-category');
+  if (input) input.value = value || '';
+  document.querySelectorAll('.c-pill-filter').forEach(btn => btn.classList.remove('active'));
+  if (el) el.classList.add('active');
+  queueUserSearch();
 }
 
 function togglePlatformFilter(btn) {
@@ -3955,11 +4060,8 @@ async function runUserSearch(reset = false) {
     resultsEl.innerHTML = '';
   }
   if (searchState.loading) return;
-  if (!searchState.query && !searchState.category && searchState.platforms.length === 0) {
-    resultsEl.innerHTML = '<div class="notif-empty">Start typing to search creators.</div>';
-    moreBtn.style.display = 'none';
-    updateCommunitySpotlight(null);
-    return;
+  if (!searchState.query && !searchState.category && searchState.platforms.length === 0 && reset) {
+    resultsEl.innerHTML = '<div class="notif-empty">Loading creators...</div>';
   }
 
   searchState.loading = true;
@@ -3981,18 +4083,152 @@ async function runUserSearch(reset = false) {
     if (!res.ok) {
       resultsEl.innerHTML = '<div class="notif-empty">Search failed. Try again.</div>';
       moreBtn.style.display = 'none';
+      const countEl = document.getElementById('community-count');
+      if (countEl) countEl.textContent = '0 creators';
       return;
     }
     const users = data.users || [];
+    const total = typeof data.total === 'number' ? data.total : (data.count || users.length);
+    const countEl = document.getElementById('community-count');
+    if (countEl) countEl.textContent = `${total} creators`;
     renderUserResults(users, reset);
     searchState.hasNext = data.pagination?.has_next;
     moreBtn.style.display = searchState.hasNext ? 'block' : 'none';
   } catch (err) {
     if (err && err.name === 'AbortError') return;
     resultsEl.innerHTML = '<div class="notif-empty">Search failed. Try again.</div>';
+    const countEl = document.getElementById('community-count');
+    if (countEl) countEl.textContent = '0 creators';
   } finally {
     searchState.loading = false;
   }
+}
+
+const COMMUNITY_PALETTES = [
+  {
+    key: 'tech',
+    grad: 'linear-gradient(135deg,var(--c-violet),var(--c-pink))',
+    accent: 'var(--c-violet)',
+    soft: 'rgba(139,92,246,.12)',
+    border: 'rgba(139,92,246,.35)'
+  },
+  {
+    key: 'creator',
+    grad: 'linear-gradient(135deg,var(--c-cyan),var(--c-violet))',
+    accent: 'var(--c-cyan)',
+    soft: 'rgba(34,211,238,.12)',
+    border: 'rgba(34,211,238,.35)'
+  },
+  {
+    key: 'lifestyle',
+    grad: 'linear-gradient(135deg,var(--c-lime),var(--c-cyan))',
+    accent: 'var(--c-lime)',
+    soft: 'rgba(184,255,0,.12)',
+    border: 'rgba(184,255,0,.35)'
+  },
+  {
+    key: 'business',
+    grad: 'linear-gradient(135deg,var(--c-pink),var(--c-amber))',
+    accent: 'var(--c-amber)',
+    soft: 'rgba(245,158,11,.12)',
+    border: 'rgba(245,158,11,.35)'
+  },
+  {
+    key: 'finance',
+    grad: 'linear-gradient(135deg,var(--c-amber),var(--c-lime))',
+    accent: 'var(--c-amber)',
+    soft: 'rgba(245,158,11,.12)',
+    border: 'rgba(245,158,11,.35)'
+  },
+  {
+    key: 'default',
+    grad: 'linear-gradient(135deg,var(--c-lime),var(--c-cyan))',
+    accent: 'var(--c-lime)',
+    soft: 'rgba(184,255,0,.12)',
+    border: 'rgba(184,255,0,.35)'
+  }
+];
+
+function pickCommunityPalette(user) {
+  const cat = String(user?.category || '').toLowerCase();
+  if (cat.includes('tech') || cat.includes('ai')) return COMMUNITY_PALETTES[0];
+  if (cat.includes('creator')) return COMMUNITY_PALETTES[1];
+  if (cat.includes('life')) return COMMUNITY_PALETTES[2];
+  if (cat.includes('business')) return COMMUNITY_PALETTES[3];
+  if (cat.includes('finance')) return COMMUNITY_PALETTES[4];
+  return COMMUNITY_PALETTES[5];
+}
+
+function formatCompactNumber(value) {
+  const num = Number(value || 0);
+  if (!Number.isFinite(num)) return '0';
+  if (num >= 1000000) return `${(num / 1000000).toFixed(1).replace(/\.0$/, '')}M`;
+  if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+  return `${Math.round(num)}`;
+}
+
+const COMMUNITY_PLATFORM_LABELS = {
+  youtube: 'YouTube',
+  instagram: 'Instagram',
+  twitter: 'Twitter',
+  tiktok: 'TikTok',
+  linkedin: 'LinkedIn'
+};
+
+const COMMUNITY_PLATFORM_SHORT = {
+  youtube: 'YT',
+  instagram: 'IG',
+  twitter: 'X',
+  tiktok: 'TT',
+  linkedin: 'IN'
+};
+
+function getPlatformLabel(key) {
+  const normalized = String(key || '').toLowerCase();
+  return COMMUNITY_PLATFORM_LABELS[normalized] || key;
+}
+
+function getPlatformShort(key) {
+  const normalized = String(key || '').toLowerCase();
+  return COMMUNITY_PLATFORM_SHORT[normalized] || (normalized ? normalized[0].toUpperCase() : '?');
+}
+
+function renderPlatformBadges(platforms = []) {
+  if (!platforms.length) return '<div class="c-plat">—</div>';
+  const list = platforms.slice(0, 5);
+  const badges = list.map((platform) => {
+    const normalized = String(platform || '').toLowerCase();
+    const label = escapeHtml(getPlatformLabel(normalized));
+    const short = escapeHtml(getPlatformShort(normalized));
+    const cls = normalized.replace(/[^a-z0-9-]/g, '');
+    return `<div class="c-plat ${cls}" title="${label}">${short}</div>`;
+  });
+  const extra = platforms.length - list.length;
+  if (extra > 0) {
+    badges.push(`<div class="c-plat" title="More platforms">+${extra}</div>`);
+  }
+  return badges.join('');
+}
+
+function renderPlatformRows(platformReach = {}) {
+  const entries = Object.entries(platformReach || {})
+    .filter(([, value]) => Number(value || 0) > 0)
+    .sort((a, b) => Number(b[1] || 0) - Number(a[1] || 0));
+  if (!entries.length) {
+    return '<div class="c-featured-empty">No platforms connected yet.</div>';
+  }
+  return entries.slice(0, 4).map(([platform, count]) => {
+    const label = escapeHtml(getPlatformLabel(platform));
+    const short = escapeHtml(getPlatformShort(platform));
+    const cls = String(platform || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+    return `
+      <div class="c-featured-plat">
+        <div class="c-plat ${cls}">${short}</div>
+        <span class="label">${label}</span>
+        <span class="count">${formatCompactNumber(count)}</span>
+      </div>
+    `;
+  }).join('');
 }
 
 function renderUserResults(users, reset) {
@@ -4008,28 +4244,48 @@ function renderUserResults(users, reset) {
     updateCommunitySpotlight(users[0]);
   }
   users.forEach(user => {
-    const reach = user.total_reach ? `${Number(user.total_reach).toLocaleString()} reach` : 'New creator';
-    const platforms = (user.platforms || []).map(p => p.toUpperCase()).join(' • ') || 'No platforms linked';
+    const palette = pickCommunityPalette(user);
+    const safeName = escapeHtml(user.name || 'Creator');
+    const safeHandle = escapeHtml(user.username ? `@${user.username}` : '@creator');
+    const safeCategory = escapeHtml(user.category || 'Creator');
+    const safeBio = escapeHtml(user.bio || 'No bio yet.');
+    const initial = escapeHtml((user.name || user.username || 'C')[0].toUpperCase());
     const avatar = user.avatar_url
-      ? `<img src="${user.avatar_url}" alt="${escapeHtml(user.name || 'Creator')}">`
-      : `<span>${escapeHtml((user.name || 'C')[0])}</span>`;
-    const followLabel = user.is_following ? 'Following' : 'Follow';
+      ? `<img src="${user.avatar_url}" alt="${safeName}">`
+      : `<span>${initial}</span>`;
+    const totalReach = Number(user.total_reach || 0);
+    const reachValues = Object.values(user.platform_reach || {}).map(v => Number(v || 0));
+    const topPlatform = reachValues.length ? Math.max(...reachValues) : 0;
+    const platformCount = (user.platforms || []).length;
+    const isFollowing = !!user.is_following;
+    const followLabel = isFollowing ? 'Following' : 'Follow';
+    const platformBadges = renderPlatformBadges(user.platforms || []);
     resultsEl.innerHTML += `
-      <div class="user-card">
-        <div class="user-avatar">${avatar}</div>
-        <div class="user-meta">
-          <div class="user-top">
+      <div class="c-card" style="--c-card-accent:${palette.accent};--c-card-accent-soft:${palette.soft};--c-card-accent-border:${palette.border};--c-card-grad:${palette.grad};" onclick="openCreatorProfile('${user.id}')">
+        <div class="c-card-banner">
+          <div class="c-card-accent"></div>
+          <div class="c-card-avatar">${avatar}</div>
+          ${user.online ? '<div class="c-card-online"></div>' : ''}
+        </div>
+        <div class="c-card-body">
+          <div class="c-card-top">
             <div>
-              <h5>${escapeHtml(user.name || 'Creator')}</h5>
-              <div class="handle">${escapeHtml(user.username ? '@' + user.username : '@creator')}</div>
+              <div class="c-card-name">${safeName}</div>
+              <div class="c-card-handle">${safeHandle}</div>
             </div>
-            <button class="btn btn-lime btn-xs" onclick="toggleFollow('${user.id}', ${!user.is_following})">${followLabel}</button>
+            <div class="c-card-niche">${safeCategory}</div>
           </div>
-          <div class="niche">${escapeHtml(user.category || 'Creator')}</div>
-          <div class="reach">${reach} · ${platforms}</div>
-          <div class="user-actions">
-            <button class="btn btn-ghost btn-xs" onclick="openCreatorProfile('${user.id}')">View Profile</button>
+          <div class="c-card-bio">${safeBio}</div>
+          <div class="c-card-metrics">
+            <div class="c-card-metric"><div class="num">${formatCompactNumber(totalReach)}</div><div class="lbl">Reach</div></div>
+            <div class="c-card-metric"><div class="num">${platformCount || '—'}</div><div class="lbl">Platforms</div></div>
+            <div class="c-card-metric"><div class="num">${formatCompactNumber(topPlatform)}</div><div class="lbl">Top</div></div>
+          </div>
+          <div class="c-card-platforms">${platformBadges}</div>
+          <div class="c-card-actions" onclick="event.stopPropagation()">
+            <button class="btn btn-lime btn-xs" onclick="toggleFollow('${user.id}', ${!isFollowing})">${followLabel}</button>
             <button class="btn btn-ghost btn-xs" onclick="sendFriendRequest('${user.id}')">Connect</button>
+            <button class="btn btn-ghost btn-xs" onclick="openCreatorProfile('${user.id}')">View</button>
           </div>
         </div>
       </div>
@@ -4041,33 +4297,62 @@ function updateCommunitySpotlight(user) {
   const wrap = document.getElementById('community-spotlight');
   if (!wrap) return;
   if (!user) {
-    wrap.innerHTML = '<div class="c-spotlight-empty">Search creators to reveal the spotlight.</div>';
+    wrap.classList.add('is-empty');
+    wrap.innerHTML = '<div class="c-featured-empty">Search creators to reveal the spotlight.</div>';
     return;
   }
+  wrap.classList.remove('is-empty');
+  const palette = pickCommunityPalette(user);
   const safeName = escapeHtml(user.name || 'Creator');
   const safeHandle = escapeHtml(user.username ? `@${user.username}` : '@creator');
   const safeCategory = escapeHtml(user.category || 'Creator');
-  const reach = user.total_reach ? `${Number(user.total_reach).toLocaleString()} reach` : 'New creator';
-  const initial = escapeHtml((user.name || 'C')[0]);
+  const safeBio = escapeHtml(user.bio || 'No bio yet.');
+  const initial = escapeHtml((user.name || user.username || 'C')[0].toUpperCase());
   const avatar = user.avatar_url
     ? `<img src="${user.avatar_url}" alt="${safeName}">`
     : `<span>${initial}</span>`;
-  const followLabel = user.is_following ? 'Following' : 'Follow';
+  const totalReach = Number(user.total_reach || 0);
+  const reachValues = Object.values(user.platform_reach || {}).map(v => Number(v || 0));
+  const topPlatform = reachValues.length ? Math.max(...reachValues) : 0;
+  const platformCount = (user.platforms || []).length;
+  const isFollowing = !!user.is_following;
+  const followLabel = isFollowing ? 'Following' : 'Follow';
+  const platformRows = renderPlatformRows(user.platform_reach || {});
   wrap.innerHTML = `
-    <div class="c-spotlight-card">
-      <div class="c-spotlight-row">
-        <div class="c-spotlight-avatar">${avatar}</div>
+    <div class="c-featured-left">
+      <div class="c-featured-eyebrow"><span class="dot"></span>Creator Spotlight</div>
+      <div class="c-featured-profile">
+        <div class="c-featured-avatar" style="background:${palette.grad}">${avatar}</div>
         <div>
-          <div class="c-spotlight-name">${safeName}</div>
-          <div class="c-spotlight-handle">${safeHandle}</div>
+          <div class="c-featured-name">${safeName}</div>
+          <div class="c-featured-handle">${safeHandle} · ${safeCategory}</div>
+        </div>
+        <div class="c-featured-status ${user.online ? '' : 'off'}">${user.online ? 'Online' : 'Offline'}</div>
+      </div>
+      <div class="c-featured-bio">${safeBio}</div>
+      <div class="c-featured-stats">
+        <div class="c-featured-stat">
+          <div class="cfs-n">${formatCompactNumber(totalReach)}</div>
+          <div class="cfs-l">Total Reach</div>
+        </div>
+        <div class="c-featured-stat">
+          <div class="cfs-n">${formatCompactNumber(topPlatform)}</div>
+          <div class="cfs-l">Top Platform</div>
+        </div>
+        <div class="c-featured-stat">
+          <div class="cfs-n">${platformCount || '—'}</div>
+          <div class="cfs-l">Platforms</div>
         </div>
       </div>
-      <div class="c-spotlight-meta">${safeCategory} · ${reach}</div>
-      <div class="c-spotlight-actions">
-        <button class="btn btn-lime btn-xs" onclick="toggleFollow('${user.id}', ${!user.is_following})">${followLabel}</button>
-        <button class="btn btn-ghost btn-xs" onclick="openCreatorProfile('${user.id}')">View Profile</button>
+      <div class="c-featured-actions">
+        <button class="btn btn-lime btn-xs" onclick="toggleFollow('${user.id}', ${!isFollowing})">${followLabel}</button>
         <button class="btn btn-ghost btn-xs" onclick="sendFriendRequest('${user.id}')">Connect</button>
+        <button class="btn btn-ghost btn-xs" onclick="openCreatorProfile('${user.id}')">View Profile</button>
       </div>
+    </div>
+    <div class="c-featured-right">
+      <div class="c-featured-right-title">Platform Reach</div>
+      ${platformRows}
     </div>
   `;
 }
@@ -4249,15 +4534,22 @@ async function loadFriendRequests() {
       const incoming = req.recipient_id === currentUser?.id;
       if (req.status !== 'pending') return;
       const other = incoming ? req.requester : req.recipient;
+      const safeName = escapeHtml(other?.name || 'Creator');
+      const initial = escapeHtml((other?.name || 'C')[0]);
+      const preview = incoming ? 'Incoming request' : 'Request sent';
+      const timeLabel = incoming ? 'Now' : 'Pending';
       container.innerHTML += `
         <div class="chat-item">
-          <div class="avatar">${escapeHtml((other?.name || 'C')[0])}</div>
-          <div style="flex:1">
-            <div class="name">${escapeHtml(other?.name || 'Creator')}</div>
-            <div class="status">${incoming ? 'Incoming request' : 'Pending'}</div>
+          <div class="avatar">${initial}</div>
+          <div class="chat-info">
+            <div class="chat-top">
+              <div class="name">${safeName}</div>
+              <div class="chat-time">${timeLabel}</div>
+            </div>
+            <div class="chat-preview">${preview}</div>
           </div>
           ${incoming ? `
-            <div style="display:flex;gap:4px">
+            <div class="chat-actions">
               <button class="btn btn-lime btn-xs" onclick="respondFriendRequest('${req.id}','accept')">Accept</button>
               <button class="btn btn-ghost btn-xs" onclick="respondFriendRequest('${req.id}','reject')">Reject</button>
             </div>
@@ -4312,12 +4604,19 @@ async function loadFriends() {
       const online = friend.last_seen ? isOnline(friend.last_seen) : false;
       const safeName = escapeHtml(friend.name || 'Creator');
       const encodedName = encodeURIComponent(friend.name || 'Creator');
+      const preview = online ? 'Active now' : 'Tap to chat';
       container.innerHTML += `
-        <div class="chat-item ${chatState.activeUser?.id === friend.id ? 'active' : ''}" data-id="${friend.id}" data-name="${encodedName}" onclick="openChatFromElement(this)">
-          <div class="avatar">${escapeHtml((friend.name || 'C')[0])}</div>
-          <div style="flex:1">
-            <div class="name">${safeName}</div>
-            <div class="status">${online ? 'Online' : 'Offline'}</div>
+        <div class="chat-item ${chatState.activeUser?.id === friend.id ? 'active' : ''}" data-id="${friend.id}" data-name="${encodedName}" data-online="${online ? '1' : '0'}" onclick="openChatFromElement(this)">
+          <div class="avatar">
+            ${escapeHtml((friend.name || 'C')[0])}
+            <span class="status-dot ${online ? '' : 'offline'}"></span>
+          </div>
+          <div class="chat-info">
+            <div class="chat-top">
+              <div class="name">${safeName}</div>
+              <div class="chat-time">${online ? 'Online' : 'Offline'}</div>
+            </div>
+            <div class="chat-preview">${preview}</div>
           </div>
         </div>
       `;
@@ -4340,10 +4639,11 @@ function openChatFromElement(el) {
   if (!el) return;
   const userId = el.dataset.id;
   const name = decodeURIComponent(el.dataset.name || 'Creator');
-  openChat(userId, name);
+  const online = el.dataset.online === '1';
+  openChat(userId, name, online);
 }
 
-async function openChat(userId, name) {
+async function openChat(userId, name, online = true) {
   chatState.activeUser = { id: userId, name };
   chatState.messagesPage = 1;
   const safeName = name || 'Creator';
@@ -4352,7 +4652,7 @@ async function openChat(userId, name) {
   const chatAvatar = document.querySelector('#chat-avatar span');
   if (chatAvatar) chatAvatar.textContent = (safeName || 'C')[0].toUpperCase();
   const chatStatus = document.getElementById('chat-status');
-  if (chatStatus) chatStatus.textContent = 'Active now';
+  if (chatStatus) chatStatus.textContent = online ? 'Active now' : 'Offline';
   await loadMessages(true);
   await loadFriends();
 }
