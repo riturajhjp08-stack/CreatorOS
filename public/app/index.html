@@ -182,6 +182,7 @@ select.field option{background:var(--s2);}
 /* ── CONTENT TABS ── */
 .content{flex:1;overflow-y:auto;padding:22px;display:none;flex-direction:column;gap:16px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
 .content.active{display:flex;animation:fi .2s ease;}
+#tab-community{min-height:0;overflow:hidden;}
 @keyframes fi{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
@@ -775,9 +776,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 .lb-meta{font-size:10px;color:var(--c-t3);}
 .community-v2 .lb-score{font-family:var(--font-head);font-size:13px;color:var(--c-lime);}
 
-.community-v2 .c-msg-layout{display:grid;grid-template-columns:300px 1fr;gap:16px;min-height:640px;}
+.community-v2 .c-msg-layout{display:grid;grid-template-columns:300px 1fr;gap:16px;min-height:0;flex:1;}
 .community-v2 .c-msg-left{
-  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px;overflow:auto;
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px;overflow:hidden;min-height:0;
 }
 .community-v2 .c-msg-head{display:flex;flex-direction:column;gap:10px;}
 .community-v2 .c-msg-title{font-family:var(--font-head);font-weight:800;font-size:16px;}
@@ -789,6 +790,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 }
 .community-v2 .c-msg-section-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--c-t3);margin-bottom:6px;font-family:var(--font-mono);}
 .community-v2 .c-msg-section{display:flex;flex-direction:column;gap:8px;}
+.community-v2 .c-msg-scroll{flex:1;overflow:auto;display:flex;flex-direction:column;gap:16px;padding-right:4px;-webkit-overflow-scrolling:touch;}
 .community-v2 #friend-requests,
 .community-v2 #friends-list{display:flex;flex-direction:column;gap:8px;}
 .community-v2 .chat-item{
@@ -820,7 +822,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 .chat-actions{display:flex;gap:4px;}
 
 .community-v2 .c-msg-right{
-  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:0;
 }
 .community-v2 .c-chat-head{
   display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg3);
@@ -848,8 +850,20 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 .c-chat-pin .pin-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .community-v2 .c-chat-pin strong{color:var(--c-t1);}
 .community-v2 .c-chat-pin .pin-action{font-size:9px;color:var(--c-t3);letter-spacing:1px;}
+.community-v2 .c-chat-pin.hidden{display:none;}
 .community-v2 .c-chat-body{
-  flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg3);
+  flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid var(--c-border);border-radius:10px;background:var(--c-bg3);min-height:0;
+  -webkit-overflow-scrolling:touch;
+}
+.community-v2 .c-chat-empty{
+  margin:auto;
+  text-align:center;
+  color:var(--c-t3);
+  font-size:12px;
+  padding:18px;
+  border-radius:12px;
+  border:1px dashed var(--c-border);
+  background:rgba(255,255,255,.02);
 }
 .community-v2 .msg{max-width:72%;padding:8px 12px;border-radius:12px 12px 12px 4px;background:var(--c-bg2);border:1px solid var(--c-border);font-size:12px;}
 .community-v2 .msg.me{align-self:flex-end;background:var(--c-lime-d);border-color:var(--c-lime-b);border-radius:12px 4px 12px 12px;}
@@ -872,12 +886,25 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   border-radius:18px;
   border:1px solid var(--c-border2);
   background:
-    radial-gradient(1200px 400px at -10% -20%, rgba(34,211,238,.08), transparent 55%),
-    radial-gradient(900px 420px at 110% 10%, rgba(184,255,0,.08), transparent 60%),
-    linear-gradient(160deg, rgba(10,10,18,.95), rgba(8,8,14,.96));
+    radial-gradient(1200px 400px at -10% -20%, rgba(34,211,238,.06), transparent 55%),
+    radial-gradient(900px 420px at 110% 10%, rgba(184,255,0,.06), transparent 60%),
+    linear-gradient(180deg, rgba(12,12,18,.98), rgba(8,8,12,.98));
   box-shadow:0 22px 50px rgba(0,0,0,.45);
   overflow:hidden;
+  flex:1;
+  min-height:0;
 }
+.community-v2 .c-page{min-height:0;}
+.community-v2 .c-page.active{display:flex;flex-direction:column;flex:1;min-height:0;}
+#community-network,
+#community-leaderboard{
+  overflow:auto;
+  padding-bottom:12px;
+  padding-right:4px;
+  -webkit-overflow-scrolling:touch;
+}
+#community-messages{overflow:hidden;}
+.community-v2 .leaderboard-list{max-height:none;overflow:visible;}
 .community-v2::before{
   content:'';
   position:absolute;
@@ -886,8 +913,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   background:
     linear-gradient(transparent 94%, rgba(255,255,255,.03) 94%),
     linear-gradient(90deg, transparent 94%, rgba(255,255,255,.03) 94%);
-  background-size:22px 22px;
-  opacity:.35;
+  background-size:28px 28px;
+  opacity:.18;
   mix-blend-mode:screen;
 }
 .community-v2::after{
@@ -895,19 +922,29 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   position:absolute;
   top:-120px;
   right:-120px;
-  width:260px;
-  height:260px;
+  width:220px;
+  height:220px;
   border-radius:50%;
-  background:radial-gradient(circle, rgba(139,92,246,.16), transparent 60%);
-  opacity:.6;
+  background:radial-gradient(circle, rgba(139,92,246,.14), transparent 60%);
+  opacity:.4;
   pointer-events:none;
 }
 .community-v2 .c-topnav{
   border-radius:16px;
   padding:14px 18px;
   border:1px solid rgba(255,255,255,.08);
-  background:linear-gradient(135deg, rgba(20,20,32,.9), rgba(10,10,20,.88));
+  background:rgba(14,14,22,.92);
   box-shadow:0 12px 28px rgba(0,0,0,.35);
+}
+.community-v2 .c-net-bar{
+  position:sticky;
+  top:0;
+  z-index:4;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(12,12,20,.92);
+  backdrop-filter:blur(12px);
 }
 .community-v2 .c-logo{
   border-radius:10px;
@@ -983,7 +1020,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   border-radius:16px;
   border-color:rgba(255,255,255,.08);
   box-shadow:0 14px 28px rgba(0,0,0,.35);
-  background:linear-gradient(160deg, rgba(16,16,26,.96), rgba(10,10,18,.98));
+  background:rgba(12,12,20,.92);
 }
 .community-v2 .c-card::after{
   content:'';
@@ -1005,7 +1042,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .community-v2 .c-panel{
   border-radius:16px;
   border-color:rgba(255,255,255,.08);
-  background:linear-gradient(180deg, rgba(15,15,26,.95), rgba(8,8,14,.98));
+  background:rgba(12,12,20,.92);
 }
 .community-v2 .leaderboard-row{
   background:rgba(10,10,18,.9);
@@ -1017,14 +1054,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 }
 .community-v2 .c-msg-left{
   border-radius:16px;
-  background:linear-gradient(180deg, rgba(14,14,24,.96), rgba(8,8,14,.98));
+  background:rgba(12,12,20,.92);
   border-color:rgba(255,255,255,.08);
 }
 .community-v2 .c-msg-right{
   border-radius:16px;
-  background:
-    radial-gradient(900px 300px at 10% -10%, rgba(34,211,238,.08), transparent 55%),
-    linear-gradient(180deg, rgba(14,14,24,.96), rgba(8,8,14,.98));
+  background:rgba(12,12,20,.92);
   border-color:rgba(255,255,255,.08);
 }
 .community-v2 .c-chat-head{
@@ -1847,7 +1882,7 @@ body::after{
           <button class="c-tab" data-tab="messages" onclick="switchCommunityTab('messages')">Messages</button>
         </div>
         <div class="c-actions">
-          <div class="c-pill c-pill-live" id="presence-pill">Online</div>
+          <div class="c-pill" id="presence-pill">Checking...</div>
           <div class="c-avatar" id="community-avatar">
             <img id="community-avatar-img" alt="Profile">
             <span id="community-avatar-fallback">C</span>
@@ -1932,13 +1967,15 @@ body::after{
                 <input placeholder="Search messages">
               </div>
             </div>
-            <div class="c-msg-section">
-              <div class="c-msg-section-title">Friend Requests</div>
-              <div id="friend-requests"></div>
-            </div>
-            <div class="c-msg-section">
-              <div class="c-msg-section-title">Friends</div>
-              <div id="friends-list"></div>
+            <div class="c-msg-scroll">
+              <div class="c-msg-section">
+                <div class="c-msg-section-title">Friend Requests</div>
+                <div id="friend-requests"></div>
+              </div>
+              <div class="c-msg-section">
+                <div class="c-msg-section-title">Friends</div>
+                <div id="friends-list"></div>
+              </div>
             </div>
           </div>
 
@@ -1955,12 +1992,14 @@ body::after{
                 <button class="c-icon-btn" type="button" title="Details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
               </div>
             </div>
-            <div class="c-chat-pin">
+            <div class="c-chat-pin hidden" id="chat-pin">
               <span class="pin-icon">📌</span>
-              <span class="pin-text"><strong>Pinned:</strong> Welcome to CreatorOS DMs — connect with creators, share files, and build collabs.</span>
-              <span class="pin-action">View all</span>
+              <span class="pin-text" id="chat-pin-text"></span>
+              <span class="pin-action">View</span>
             </div>
-            <div class="c-chat-body" id="chat-messages"></div>
+            <div class="c-chat-body" id="chat-messages">
+              <div class="c-chat-empty" id="chat-empty">Select a friend to start chatting.</div>
+            </div>
             <div class="c-chat-typing" id="chat-typing"></div>
             <div class="c-chat-compose">
               <input type="file" id="chat-file" accept="image/*,application/pdf" onchange="uploadChatAttachment(this.files)">
@@ -4980,6 +5019,9 @@ function switchCommunityTab(tab) {
   if (tab === 'messages') {
     loadFriendRequests();
     loadFriends();
+    if (!chatState.activeUser) {
+      setChatEmptyState('Select a friend to start chatting.');
+    }
   }
   if (tab === 'network') {
     runUserSearch(true);
@@ -5130,6 +5172,24 @@ function formatCompactNumber(value) {
   return `${Math.round(num)}`;
 }
 
+function hasValue(value) {
+  return value !== null && value !== undefined && value !== '';
+}
+
+function formatCompactNumberOrDash(value) {
+  if (!hasValue(value)) return '—';
+  const num = Number(value);
+  if (!Number.isFinite(num)) return '—';
+  return formatCompactNumber(num);
+}
+
+function formatNumberOrDash(value) {
+  if (!hasValue(value)) return '—';
+  const num = Number(value);
+  if (!Number.isFinite(num)) return '—';
+  return num.toLocaleString();
+}
+
 const COMMUNITY_PLATFORM_LABELS = {
   youtube: 'YouTube',
   instagram: 'Instagram',
@@ -5208,18 +5268,20 @@ function renderUserResults(users, reset) {
   }
   users.forEach(user => {
     const palette = pickCommunityPalette(user);
-    const safeName = escapeHtml(user.name || 'Creator');
-    const safeHandle = escapeHtml(user.username ? `@${user.username}` : '@creator');
-    const safeCategory = escapeHtml(user.category || 'Creator');
-    const safeBio = escapeHtml(user.bio || 'No bio yet.');
-    const initial = escapeHtml((user.name || user.username || 'C')[0].toUpperCase());
+    const displayName = user.name || user.username || '';
+    const safeName = escapeHtml(displayName || '—');
+    const safeHandle = escapeHtml(user.username ? `@${user.username}` : '—');
+    const safeCategory = escapeHtml(user.category || '—');
+    const safeBio = escapeHtml(user.bio || '—');
+    const initial = escapeHtml((displayName || '?')[0].toUpperCase());
     const avatar = user.avatar_url
       ? `<img src="${user.avatar_url}" alt="${safeName}">`
       : `<span>${initial}</span>`;
-    const totalReach = Number(user.total_reach || 0);
-    const reachValues = Object.values(user.platform_reach || {}).map(v => Number(v || 0));
-    const topPlatform = reachValues.length ? Math.max(...reachValues) : 0;
-    const platformCount = (user.platforms || []).length;
+    const totalReachLabel = formatCompactNumberOrDash(user.total_reach);
+    const reachValues = Object.values(user.platform_reach || {}).map(v => Number(v)).filter(v => Number.isFinite(v));
+    const topPlatformLabel = reachValues.length ? formatCompactNumberOrDash(Math.max(...reachValues)) : '—';
+    const platformCount = Array.isArray(user.platforms) ? user.platforms.length : 0;
+    const platformCountLabel = platformCount ? platformCount : '—';
     const isFollowing = !!user.is_following;
     const followLabel = isFollowing ? 'Following' : 'Follow';
     const platformBadges = renderPlatformBadges(user.platforms || []);
@@ -5240,9 +5302,9 @@ function renderUserResults(users, reset) {
           </div>
           <div class="c-card-bio">${safeBio}</div>
           <div class="c-card-metrics">
-            <div class="c-card-metric"><div class="num">${formatCompactNumber(totalReach)}</div><div class="lbl">Reach</div></div>
-            <div class="c-card-metric"><div class="num">${platformCount || '—'}</div><div class="lbl">Platforms</div></div>
-            <div class="c-card-metric"><div class="num">${formatCompactNumber(topPlatform)}</div><div class="lbl">Top</div></div>
+            <div class="c-card-metric"><div class="num">${totalReachLabel}</div><div class="lbl">Reach</div></div>
+            <div class="c-card-metric"><div class="num">${platformCountLabel}</div><div class="lbl">Platforms</div></div>
+            <div class="c-card-metric"><div class="num">${topPlatformLabel}</div><div class="lbl">Top</div></div>
           </div>
           <div class="c-card-platforms">${platformBadges}</div>
           <div class="c-card-actions" onclick="event.stopPropagation()">
@@ -5261,23 +5323,25 @@ function updateCommunitySpotlight(user) {
   if (!wrap) return;
   if (!user) {
     wrap.classList.add('is-empty');
-    wrap.innerHTML = '<div class="c-featured-empty">Search creators to reveal the spotlight.</div>';
+    wrap.innerHTML = '<div class="c-featured-empty">No creators available yet.</div>';
     return;
   }
   wrap.classList.remove('is-empty');
   const palette = pickCommunityPalette(user);
-  const safeName = escapeHtml(user.name || 'Creator');
-  const safeHandle = escapeHtml(user.username ? `@${user.username}` : '@creator');
-  const safeCategory = escapeHtml(user.category || 'Creator');
-  const safeBio = escapeHtml(user.bio || 'No bio yet.');
-  const initial = escapeHtml((user.name || user.username || 'C')[0].toUpperCase());
+  const displayName = user.name || user.username || '';
+  const safeName = escapeHtml(displayName || '—');
+  const safeHandle = escapeHtml(user.username ? `@${user.username}` : '—');
+  const safeCategory = escapeHtml(user.category || '—');
+  const safeBio = escapeHtml(user.bio || '—');
+  const initial = escapeHtml((displayName || '?')[0].toUpperCase());
   const avatar = user.avatar_url
     ? `<img src="${user.avatar_url}" alt="${safeName}">`
     : `<span>${initial}</span>`;
-  const totalReach = Number(user.total_reach || 0);
-  const reachValues = Object.values(user.platform_reach || {}).map(v => Number(v || 0));
-  const topPlatform = reachValues.length ? Math.max(...reachValues) : 0;
-  const platformCount = (user.platforms || []).length;
+  const totalReachLabel = formatCompactNumberOrDash(user.total_reach);
+  const reachValues = Object.values(user.platform_reach || {}).map(v => Number(v)).filter(v => Number.isFinite(v));
+  const topPlatformLabel = reachValues.length ? formatCompactNumberOrDash(Math.max(...reachValues)) : '—';
+  const platformCount = Array.isArray(user.platforms) ? user.platforms.length : 0;
+  const platformCountLabel = platformCount ? platformCount : '—';
   const isFollowing = !!user.is_following;
   const followLabel = isFollowing ? 'Following' : 'Follow';
   const platformRows = renderPlatformRows(user.platform_reach || {});
@@ -5295,15 +5359,15 @@ function updateCommunitySpotlight(user) {
       <div class="c-featured-bio">${safeBio}</div>
       <div class="c-featured-stats">
         <div class="c-featured-stat">
-          <div class="cfs-n">${formatCompactNumber(totalReach)}</div>
+          <div class="cfs-n">${totalReachLabel}</div>
           <div class="cfs-l">Total Reach</div>
         </div>
         <div class="c-featured-stat">
-          <div class="cfs-n">${formatCompactNumber(topPlatform)}</div>
+          <div class="cfs-n">${topPlatformLabel}</div>
           <div class="cfs-l">Top Platform</div>
         </div>
         <div class="c-featured-stat">
-          <div class="cfs-n">${platformCount || '—'}</div>
+          <div class="cfs-n">${platformCountLabel}</div>
           <div class="cfs-l">Platforms</div>
         </div>
       </div>
@@ -5338,26 +5402,29 @@ async function openCreatorProfile(userId) {
       showToast('Error', data.error || 'Failed to load profile', 'error');
       return;
     }
-    document.getElementById('creator-profile-name').textContent = data.name || 'Creator';
-    document.getElementById('creator-profile-handle').textContent = data.username ? `@${data.username}` : '@creator';
+    document.getElementById('creator-profile-name').textContent = data.name || data.username || '—';
+    document.getElementById('creator-profile-handle').textContent = data.username ? `@${data.username}` : '—';
     const body = document.getElementById('creator-profile-body');
     if (body) {
-      const reach = Number(data.total_reach || 0).toLocaleString();
-      const platforms = Object.entries(data.platform_reach || {}).map(([k, v]) => `${k}: ${Number(v).toLocaleString()}`).join(' · ');
+      const reach = formatNumberOrDash(data.total_reach);
+      const platforms = Object.entries(data.platform_reach || {})
+        .filter(([, v]) => hasValue(v))
+        .map(([k, v]) => `${k}: ${formatNumberOrDash(v)}`)
+        .join(' · ');
       body.innerHTML = `
         <div style="display:flex;justify-content:space-between;gap:10px">
-          <span>Category</span><span>${escapeHtml(data.category || 'Creator')}</span>
+          <span>Category</span><span>${escapeHtml(data.category || '—')}</span>
         </div>
         <div style="display:flex;justify-content:space-between;gap:10px">
           <span>Total Reach</span><span>${reach}</span>
         </div>
         <div style="display:flex;justify-content:space-between;gap:10px">
-          <span>Followers</span><span>${Number(data.followers_count || 0).toLocaleString()}</span>
+          <span>Followers</span><span>${formatNumberOrDash(data.followers_count)}</span>
         </div>
         <div style="display:flex;justify-content:space-between;gap:10px">
-          <span>Following</span><span>${Number(data.following_count || 0).toLocaleString()}</span>
+          <span>Following</span><span>${formatNumberOrDash(data.following_count)}</span>
         </div>
-        <div style="font-size:11px;color:var(--t3);margin-top:6px">${platforms || 'No linked platforms'}</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:6px">${platforms || '—'}</div>
       `;
     }
     const followBtn = document.getElementById('creator-profile-follow-btn');
@@ -5441,16 +5508,21 @@ function renderLeaderboard(leaders) {
     return;
   }
   leaders.forEach((leader, idx) => {
-    const initial = (leader.name || 'C')[0].toUpperCase();
+    const displayName = leader.name || leader.username || '';
+    const initial = (displayName || '?')[0].toUpperCase();
+    const safeName = escapeHtml(displayName || '—');
+    const safeHandle = escapeHtml(leader.username ? `@${leader.username}` : '—');
+    const safeCategory = escapeHtml(leader.category || '—');
+    const scoreLabel = formatNumberOrDash(leader.total_reach);
     list.innerHTML += `
       <div class="leaderboard-row">
         <div class="lb-rank">#${idx + 1}</div>
         <div class="lb-avatar"><span>${escapeHtml(initial)}</span></div>
         <div>
-          <div class="lb-name">${escapeHtml(leader.name || 'Creator')}</div>
-          <div class="lb-meta">@${escapeHtml(leader.username || 'creator')} · ${escapeHtml(leader.category || 'Creator')}</div>
+          <div class="lb-name">${safeName}</div>
+          <div class="lb-meta">${safeHandle} · ${safeCategory}</div>
         </div>
-        <div class="lb-score">${Number(leader.total_reach || 0).toLocaleString()}</div>
+        <div class="lb-score">${scoreLabel}</div>
       </div>
     `;
   });
@@ -5590,10 +5662,18 @@ function renderChatMessage(msg) {
   `;
 }
 
+function setChatEmptyState(message) {
+  const list = document.getElementById('chat-messages');
+  if (!list) return;
+  list.innerHTML = `<div class="c-chat-empty">${escapeHtml(message || 'No messages yet.')}</div>`;
+}
+
 function appendChatMessage(msg) {
   const list = document.getElementById('chat-messages');
   if (!list || !msg || !msg.id) return;
   if (chatState.messageIds.has(msg.id)) return;
+  const empty = list.querySelector('.c-chat-empty');
+  if (empty) empty.remove();
   list.insertAdjacentHTML('beforeend', renderChatMessage(msg));
   chatState.messageIds.add(msg.id);
   list.scrollTop = list.scrollHeight;
@@ -5684,6 +5764,7 @@ async function loadFriends() {
       const previewPrefix = lastMsg?.from_me ? 'You: ' : '';
       const previewContent = lastMsg?.content ? lastMsg.content : ((lastMsg?.attachments || []).length ? 'Attachment' : '');
       const preview = lastMsg ? `${previewPrefix}${previewContent}`.trim() : (online ? 'Active now' : 'Tap to chat');
+      const safePreview = escapeHtml(preview);
       const timeLabel = lastMsg ? formatChatTime(lastMsg.created_at) : (online ? 'Online' : 'Offline');
       const unread = Number(friend.unread_count || 0);
       container.innerHTML += `
@@ -5700,7 +5781,7 @@ async function loadFriends() {
                 ${unread > 0 ? `<div class="chat-unread">${unread}</div>` : ''}
               </div>
             </div>
-            <div class="chat-preview">${preview}</div>
+            <div class="chat-preview">${safePreview}</div>
           </div>
         </div>
       `;
@@ -5738,6 +5819,7 @@ async function openChat(userId, name, online = true) {
   const chatStatus = document.getElementById('chat-status');
   if (chatStatus) chatStatus.textContent = online ? 'Active now' : 'Offline';
   clearChatUnread(userId);
+  setChatEmptyState('Loading messages...');
   await loadMessages(true);
   await loadFriends();
 }
@@ -5764,6 +5846,10 @@ async function loadMessages(reset = false) {
     }
     const messages = data.messages || [];
     list.innerHTML = '';
+    if (!messages.length) {
+      setChatEmptyState('No messages yet.');
+      return;
+    }
     messages.forEach(msg => {
       chatState.messageIds.add(msg.id);
       list.insertAdjacentHTML('beforeend', renderChatMessage(msg));
@@ -5989,6 +6075,7 @@ function startCommunityPolling() {
   loadFriendRequests();
   loadFriends();
   loadLeaderboard(true);
+  presencePing();
   if (!presenceInterval) {
     presenceInterval = setInterval(presencePing, 30000);
   }
@@ -6017,10 +6104,16 @@ async function presencePing() {
       headers: { 'Authorization': `Bearer ${accessToken}` }
     });
     const pill = document.getElementById('presence-pill');
-    if (pill) pill.textContent = 'Online';
+    if (pill) {
+      pill.textContent = 'Online';
+      pill.classList.add('c-pill-live');
+    }
   } catch (err) {
     const pill = document.getElementById('presence-pill');
-    if (pill) pill.textContent = 'Offline';
+    if (pill) {
+      pill.textContent = 'Offline';
+      pill.classList.remove('c-pill-live');
+    }
   }
 }
 
