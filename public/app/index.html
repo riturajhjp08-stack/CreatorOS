@@ -29,6 +29,10 @@
   --green:#22c55e; --red:#ef4444; --gold:#f59e0b;
   --t1:#eeeef5; --t2:#9898b8; --t3:#505068;
   --r:12px; --sidebar:62px;
+  --content-max:1180px;
+  --header-h:56px;
+  --mob-nav-h:66px;
+  --shadow-soft:0 18px 40px rgba(0,0,0,.35);
   --font-head:'Syne',sans-serif;
   --font-body:'Inter',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
@@ -47,7 +51,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:20px;z-index:500;transition:opacity .3s,transform .3s;}
 .screen.hidden{opacity:0;pointer-events:none;transform:translateY(8px);}
-.app-shell{position:fixed;inset:0;display:flex;z-index:100;transition:opacity .3s;}
+.app-shell{position:fixed;inset:0;display:flex;z-index:100;transition:opacity .3s;background:var(--bg);}
 .app-shell.hidden{opacity:0;pointer-events:none;}
 
 /* ── AUTH SCREEN ── */
@@ -150,10 +154,23 @@ select.field option{background:var(--s2);}
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
 
 /* ── TOPBAR ── */
-.topbar{display:flex;align-items:center;padding:0 20px;height:52px;border-bottom:1px solid var(--b1);
-  background:rgba(7,7,14,.88);backdrop-filter:blur(24px);flex-shrink:0;gap:10px;z-index:100;}
+.topbar{position:sticky;top:0;display:flex;align-items:center;gap:12px;
+  padding:10px 20px;min-height:var(--header-h);border-bottom:1px solid var(--b1);
+  background:rgba(7,7,14,.92);backdrop-filter:blur(24px);flex-shrink:0;z-index:120;}
+.topbar-left{display:flex;align-items:center;gap:10px;min-width:0;}
 .topbar-title{font-family:var(--font-head);font-size:15px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .topbar-title .dim{color:var(--t3);font-weight:400;font-size:13px;}
+.topbar-search{flex:1;display:flex;align-items:center;gap:10px;min-width:0;background:var(--s2);
+  border:1px solid var(--b1);border-radius:12px;padding:8px 12px;max-width:480px;}
+.topbar-search svg{width:14px;height:14px;color:var(--t3);flex-shrink:0;}
+.topbar-search input{flex:1;border:none;background:transparent;color:var(--t1);font-size:12px;outline:none;}
+.topbar-search:focus-within{border-color:rgba(184,255,0,.4);box-shadow:0 0 0 2px rgba(184,255,0,.08);}
+.topbar-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.topbar-avatar{width:34px;height:34px;border-radius:50%;overflow:hidden;border:2px solid var(--b1);
+  display:flex;align-items:center;justify-content:center;background:var(--s2);cursor:pointer;}
+.topbar-avatar img{width:100%;height:100%;object-fit:cover;display:none;}
+.topbar-avatar.has-img img{display:block;}
+.topbar-avatar span{font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--t1);}
 .ai-badge{display:flex;align-items:center;gap:6px;background:var(--lime-d);border:1px solid rgba(184,255,0,.2);
   padding:4px 12px;border-radius:20px;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;
   text-transform:uppercase;color:var(--lime);flex-shrink:0;}
@@ -168,7 +185,7 @@ select.field option{background:var(--s2);}
 .notif-bell{position:relative;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--s2);border:1px solid var(--b1);cursor:pointer;flex-shrink:0;transition:all .2s;color:var(--t2);}
 .notif-bell:hover{background:var(--s3);color:var(--t1);}
 .notif-dot{position:absolute;top:5px;right:6px;width:7px;height:7px;background:var(--red);border-radius:50%;box-shadow:0 0 4px var(--red);display:none;}
-.notif-dropdown{position:absolute;top:50px;right:90px;width:320px;background:var(--s1);border:1px solid var(--b2);border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.6);z-index:500;display:none;flex-direction:column;max-height:400px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.notif-dropdown{position:absolute;top:calc(var(--header-h) + 6px);right:14px;width:320px;background:var(--s1);border:1px solid var(--b2);border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.6);z-index:500;display:none;flex-direction:column;max-height:400px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .notif-dropdown.open{display:flex;animation:dropIn .2s ease;}
 @keyframes dropIn{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
 .notif-header{padding:14px;border-bottom:1px solid var(--b1);font-family:var(--font-head);font-size:13px;font-weight:700;}
@@ -185,8 +202,38 @@ select.field option{background:var(--s2);}
 .admin-pill.on{background:var(--ora-d);border-color:rgba(249,115,22,.3);color:var(--orange);}
 
 /* ── CONTENT TABS ── */
-.content{flex:1;overflow-y:auto;padding:22px;display:none;flex-direction:column;gap:16px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
+.content{flex:1;overflow-y:auto;padding:22px;display:none;flex-direction:column;gap:16px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  width:100%;max-width:var(--content-max);margin:0 auto;}
 .content.active{display:flex;animation:fi .2s ease;}
+
+.page-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;}
+.page-main{min-width:0;display:flex;flex-direction:column;gap:16px;}
+.page-rail{display:none;gap:12px;}
+.rail-card{background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:14px;box-shadow:var(--shadow-soft);}
+.rail-card h4{font-family:var(--font-head);font-size:12px;margin-bottom:8px;}
+
+.fab{position:fixed;right:16px;bottom:calc(var(--mob-nav-h) + 18px);width:54px;height:54px;border-radius:50%;
+  background:var(--lime);color:#000;border:none;box-shadow:0 10px 24px rgba(184,255,0,.35);
+  display:none;align-items:center;justify-content:center;font-size:26px;font-weight:700;cursor:pointer;z-index:210;}
+.fab:hover{transform:translateY(-1px);}
+.fab.is-hidden{display:none!important;}
+
+.search-shell{display:grid;grid-template-columns:1fr;gap:16px;}
+.search-grid{display:grid;grid-template-columns:260px minmax(0,1fr) 280px;gap:16px;}
+.search-results{display:flex;flex-direction:column;gap:12px;}
+
+.notif-page{display:flex;flex-direction:column;gap:12px;}
+.notif-page .notif-item{border-radius:12px;border:1px solid var(--b1);background:var(--s1);}
+.notif-page-header{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.notif-page-header h2{font-family:var(--font-head);font-size:18px;}
+
+.skeleton{position:relative;overflow:hidden;background:var(--s2);border-radius:12px;}
+.skeleton::after{content:'';position:absolute;inset:-100% 0 0;transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);animation:sk 1.2s infinite;}
+@keyframes sk{to{transform:translateX(100%);}}
+.creator-skeleton{border:1px solid var(--b1);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.creator-skeleton .line{height:10px;border-radius:999px;background:var(--s2);}
+.creator-skeleton .avatar{width:42px;height:42px;border-radius:50%;background:var(--s2);}
 #tab-community{min-height:0;overflow:hidden;}
 @keyframes fi{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
@@ -277,6 +324,11 @@ button,.btn,.nav-item,.mob-nav-item,.credit-pill,.notif-bell,.admin-pill{touch-a
 
 /* ── TOOLS GRID ── */
 .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.h-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;}
+.h-scroll::-webkit-scrollbar{height:4px;}
+.h-card{min-width:220px;flex-shrink:0;background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:14px;scroll-snap-align:start;}
+.h-card h4{font-family:var(--font-head);font-size:13px;margin-bottom:6px;}
+.h-card .meta{font-size:11px;color:var(--t2);}
 .tool-card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
 .tool-card:hover{border-color:rgba(184,255,0,.2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.4);}
 .tool-card:active{transform:translateY(0);}
@@ -979,6 +1031,17 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   font-size:14px;
   font-weight:700;
 }
+.community-v2 .c-rail-desc,
+.community-v2 .c-side-copy{
+  font-size:12px;
+  color:var(--c-t2);
+  line-height:1.5;
+}
+.community-v2 .c-feed-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
 .community-v2 .c-rail-stats{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -1195,6 +1258,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   .community-v2 .c-featured{grid-template-columns:1fr;}
   .community-v2 .c-featured-right{border-left:none;border-top:1px solid var(--c-border);}
   .community-v2 .c-msg-layout{grid-template-columns:1fr;}
+  .search-grid{grid-template-columns:1fr;}
+  .search-grid .c-rail{order:1;}
+  .search-grid .c-feed{order:2;}
+  .search-grid .c-side{order:3;}
 }
 
 /* ── ADMIN ── */
@@ -1238,13 +1305,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .pf-item svg{color:var(--gold);flex-shrink:0;}
 
 /* ── MOBILE NAV ── */
-.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--s1);border-top:1px solid var(--b1);padding:8px 0 max(8px,env(safe-area-inset-bottom));z-index:200;min-height:56px;}
-.mob-nav-inner{display:flex;justify-content:space-around;}
-.mob-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--t3);font-size:10px;padding:4px 8px;border-radius:7px;transition:all .12s;}
-.mob-item.active{color:var(--lime);}
-.mob-nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--t3);font-size:10px;
-  padding:6px 8px;border-radius:7px;transition:all .12s;background:transparent;border:1px solid transparent;min-width:64px;min-height:44px;}
+.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(14,14,26,.98);
+  border-top:1px solid var(--b1);padding:6px 0 max(10px,env(safe-area-inset-bottom));
+  z-index:200;min-height:var(--mob-nav-h);backdrop-filter:blur(16px);}
+.mob-nav-inner{display:flex;justify-content:space-around;gap:4px;padding:4px 10px;}
+.mob-nav-item{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:var(--t3);font-size:10px;
+  padding:6px 8px;border-radius:10px;transition:all .12s;background:transparent;border:1px solid transparent;min-width:60px;min-height:44px;}
+.mob-nav-item svg{width:18px;height:18px;}
 .mob-nav-item.active{color:var(--lime);background:var(--lime-d);border-color:rgba(184,255,0,.2);}
+.mob-nav-dot{position:absolute;top:6px;right:16px;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 6px var(--red);display:none;}
 
 /* ── NOTIF ── */
 .notif{position:fixed;bottom:80px;right:14px;background:var(--s2);border:1px solid rgba(184,255,0,.2);border-radius:10px;padding:12px 16px;font-size:12px;z-index:9001;animation:nIn .25s ease;box-shadow:0 8px 30px rgba(0,0,0,.5);max-width:300px;}
@@ -1275,8 +1344,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
 .sh .body{font-size:13px;}
 
 /* ── RESPONSIVE ── */
+@media(min-width:1100px){
+  .page-grid{grid-template-columns:minmax(0,1fr) 320px;}
+  .page-rail{display:flex;flex-direction:column;}
+}
 @media(max-width:900px){
   .stats-row,.adm-stats{grid-template-columns:repeat(2,1fr);}
+  .topbar-search{display:none;}
+  .fab{display:flex;}
   .writer-layout{flex-direction:column;}
   .side-panel{width:100%;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:10px;padding-bottom:4px;}
   .side-card{min-width:210px;}
@@ -1309,10 +1384,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   .settings-grid{grid-template-columns:1fr;}
   .credit-packages{grid-template-columns:1fr;}
   .tools-grid{grid-template-columns:1fr;}
+  .fab{display:flex;}
 }
 @media(max-width:720px){
   .topbar{height:auto;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));}
   .topbar-title{flex-basis:100%;font-size:14px;}
+  .topbar-actions{width:100%;justify-content:space-between;}
 }
 @media(max-width:600px){
   .screen{align-items:stretch;justify-content:flex-start;overflow:auto;}
@@ -1677,30 +1754,44 @@ body::after{
 <!-- MAIN -->
 <div class="main">
   <div class="topbar">
-    <div class="topbar-title" id="topbar-title">Dashboard <span class="dim">— CreatorOS</span></div>
-    <div class="ai-badge" onclick="promptAdminLogin()" style="cursor:pointer" title="Secret Admin Trigger">
-      <div class="ai-badge-dot"></div>
-      <span class="lbl-text" style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px">AI POWERED</span>
+    <div class="topbar-left">
+      <div class="topbar-title" id="topbar-title">Dashboard <span class="dim">— CreatorOS</span></div>
     </div>
-    <div class="credit-pill" onclick="openShopModal()">
-      <svg class="icon" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      <span class="val" id="credit-count">—</span>
-      <span class="lbl">credits</span>
+    <div class="topbar-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="global-search-input" type="search" placeholder="Search creators, posts, or topics" onkeydown="handleGlobalSearchKey(event)">
     </div>
-    <div class="notif-bell" onclick="toggleNotifications()" id="notif-bell-btn" style="padding:0 12px; width:auto; border-radius:20px; gap:6px;">
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-      <span style="font-size:11px; font-weight:600;">Notifications</span>
-      <div class="notif-dot" id="notif-dot" style="right:-2px; top:-2px;"></div>
+    <div class="topbar-actions">
+      <div class="ai-badge" onclick="promptAdminLogin()" style="cursor:pointer" title="Secret Admin Trigger">
+        <div class="ai-badge-dot"></div>
+        <span class="lbl-text" style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px">AI POWERED</span>
+      </div>
+      <div class="credit-pill" onclick="openShopModal()">
+        <svg class="icon" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span class="val" id="credit-count">—</span>
+        <span class="lbl">credits</span>
+      </div>
+      <div class="notif-bell" onclick="toggleNotifications()" id="notif-bell-btn" style="padding:0 12px; width:auto; border-radius:20px; gap:6px;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span style="font-size:11px; font-weight:600;">Notifications</span>
+        <div class="notif-dot" id="notif-dot" style="right:-2px; top:-2px;"></div>
+      </div>
+      <div class="topbar-avatar" id="topbar-user-avatar" onclick="tab('settings')">
+        <img id="topbar-user-avatar-img" alt="Profile">
+        <span id="topbar-user-avatar-fallback">C</span>
+      </div>
+      <button class="admin-pill" id="admin-btn" onclick="toggleAdmin()">Shield Admin</button>
     </div>
     <div class="notif-dropdown" id="notif-dropdown">
       <div class="notif-header">Notifications</div>
       <div id="notif-list"></div>
     </div>
-    <button class="admin-pill" id="admin-btn" onclick="toggleAdmin()">Shield Admin</button>
   </div>
 
   <!-- ════ DASHBOARD ════ -->
   <div class="content active" id="tab-dashboard">
+    <div class="page-grid">
+      <div class="page-main">
     <div class="hero">
       <div class="hero-label">&#10022; AI-Powered Creator Studio</div>
       <h1>Your creative empire,<br><em>automated.</em></h1>
@@ -1717,6 +1808,13 @@ body::after{
       <div class="stat-card sc-purple"><div class="stat-num sn-purple" id="ds-reach">—</div><div class="stat-lbl">Total Views / Reach</div><div class="stat-sub" id="ds-reach-sub">Connect platforms</div><div class="pbar"><div class="pfill pf-purple" id="ds-reach-p" style="width:0%"></div></div></div>
       <div class="stat-card sc-orange"><div class="stat-num sn-orange" id="ds-followers">—</div><div class="stat-lbl">Total Followers</div><div class="stat-sub" id="ds-followers-sub">Connect platforms</div><div class="pbar"><div class="pfill pf-orange" id="ds-followers-p" style="width:0%"></div></div></div>
       <div class="stat-card sc-blue"><div class="stat-num sn-blue" id="ds-scheduled">0</div><div class="stat-lbl">Scheduled Posts</div><div class="stat-sub">Upcoming</div><div class="pbar"><div class="pfill pf-blue" id="ds-sched-p" style="width:0%"></div></div></div>
+    </div>
+    <div class="sh"><h2>Featured Creators</h2><p class="body">Handpicked collaborators from the community</p></div>
+    <div class="h-scroll" id="featured-creators">
+      <div class="h-card">
+        <h4>No featured creators yet</h4>
+        <div class="meta">Complete your profile and connect platforms to be featured.</div>
+      </div>
     </div>
     <div id="youtube-snapshot" onclick="openPlatformAnalytics('youtube')" style="display:none;margin:10px 0 14px 0;padding:12px;border:1px solid var(--b1);border-radius:12px;background:var(--s1);cursor:pointer">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
@@ -1757,6 +1855,23 @@ body::after{
       <div class="tool-card" onclick="tab('publish')"><div class="t-icon" style="background:var(--blu-d)"><svg width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><h3>Upload & Publish</h3><p class="body">Upload content, AI caption, trending hashtags, publish or schedule — all in one.</p><span class="ttag">Multi-Platform</span></div>
       <div class="tool-card" onclick="tab('trends')"><div class="t-icon" style="background:var(--lime-d)"><svg width="18" height="18" fill="none" stroke="var(--lime)" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><h3>Trend Radar</h3><p class="body">Know what's exploding before your competitors even see it — AI-powered.</p><span class="ttag">Real-time</span><span class="ttag">AI-detected</span></div>
       <div class="tool-card" onclick="tab('repurpose')"><div class="t-icon" style="background:var(--pur-d)"><svg width="18" height="18" fill="none" stroke="var(--purple)" stroke-width="2" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div><h3>Content Multiplier</h3><p class="body">One script transformed into 10+ platform-native formats instantly.</p><span class="ttag">Auto-Format</span><span class="ttag">Multi-Platform</span></div>
+    </div>
+      </div>
+      <aside class="page-rail">
+        <div class="rail-card">
+          <h4>Quick Stats</h4>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--t2)">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span>Total Followers</span><strong id="rail-followers" style="color:var(--t1)">—</strong></div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span>Total Views</span><strong id="rail-views" style="color:var(--t1)">—</strong></div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span>Posts Created</span><strong id="rail-posts" style="color:var(--t1)">—</strong></div>
+          </div>
+        </div>
+        <div class="rail-card">
+          <h4>Trending Creators</h4>
+          <div class="notif-empty">No trending data yet.</div>
+          <button class="btn btn-ghost btn-sm" style="width:100%" onclick="tab('community')">Go to Community</button>
+        </div>
+      </aside>
     </div>
   </div>
 
@@ -1963,6 +2078,74 @@ body::after{
     </div>
   </div>
 
+  <!-- ════ SEARCH ════ -->
+  <div class="content" id="tab-search">
+    <div class="community-v2">
+      <div class="sh"><h2>Search</h2><p class="body">Discover creators and collaborators</p></div>
+      <div class="search-grid">
+        <aside class="c-rail">
+          <div class="c-rail-card">
+            <div class="c-rail-title">Find Creators</div>
+            <div class="c-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="c-input" id="user-search-input" placeholder="Search creators by name, niche, or @handle" oninput="queueUserSearch()">
+            </div>
+            <input class="c-hidden" id="user-search-category" placeholder="Category" oninput="queueUserSearch()">
+            <div class="c-filter-pills">
+              <button class="c-pill-filter active" data-category="" onclick="setCommunityCategory(this,'')">All</button>
+              <button class="c-pill-filter" data-category="Tech & AI" onclick="setCommunityCategory(this,'Tech & AI')">Tech & AI</button>
+              <button class="c-pill-filter" data-category="Creator" onclick="setCommunityCategory(this,'Creator')">Creator</button>
+              <button class="c-pill-filter" data-category="Lifestyle" onclick="setCommunityCategory(this,'Lifestyle')">Lifestyle</button>
+              <button class="c-pill-filter" data-category="Business" onclick="setCommunityCategory(this,'Business')">Business</button>
+              <button class="c-pill-filter" data-category="Finance" onclick="setCommunityCategory(this,'Finance')">Finance</button>
+            </div>
+            <div class="c-filter-row" id="user-search-platforms">
+              <button class="c-filter" data-platform="youtube" onclick="togglePlatformFilter(this)">YouTube</button>
+              <button class="c-filter" data-platform="instagram" onclick="togglePlatformFilter(this)">Instagram</button>
+              <button class="c-filter" data-platform="twitter" onclick="togglePlatformFilter(this)">Twitter</button>
+              <button class="c-filter" data-platform="tiktok" onclick="togglePlatformFilter(this)">TikTok</button>
+              <button class="c-filter" data-platform="linkedin" onclick="togglePlatformFilter(this)">LinkedIn</button>
+            </div>
+          </div>
+          <div class="c-rail-card">
+            <div class="c-rail-title">Search Tips</div>
+            <div class="c-rail-desc">Filter by platform or niche to find the right collaborators faster.</div>
+            <button class="btn btn-ghost btn-sm c-full" onclick="tab('community')">Open Community Feed</button>
+          </div>
+        </aside>
+        <main class="c-feed">
+          <div class="c-feed-head">
+            <div>
+              <div class="c-section-title">Search Results</div>
+              <div class="c-section-tag">Live profiles from connected creators</div>
+            </div>
+            <div class="c-section-count" id="community-count">0 creators</div>
+          </div>
+          <div class="c-creator-grid" id="user-search-results"></div>
+          <button class="btn btn-ghost btn-sm c-full" id="user-search-more" onclick="loadMoreUsers()">Load more</button>
+        </main>
+        <aside class="c-side">
+          <div class="c-side-card">
+            <div class="c-side-title">Get Discovered</div>
+            <div class="c-side-copy">Complete your profile and connect platforms to appear in search.</div>
+            <button class="btn btn-lime btn-sm c-full" onclick="tab('settings')">Update Profile</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ NOTIFICATIONS ════ -->
+  <div class="content" id="tab-notifications">
+    <div class="notif-page">
+      <div class="notif-page-header">
+        <h2>Notifications</h2>
+        <button class="btn btn-ghost btn-sm" onclick="fetchNotifications()">Refresh</button>
+      </div>
+      <div id="notif-page-list"></div>
+    </div>
+  </div>
+
   <!-- ════ COMMUNITY ════ -->
   <div class="content" id="tab-community">
     <div class="community-v2">
@@ -1993,29 +2176,6 @@ body::after{
       <div class="c-page active c-network" id="community-network">
         <aside class="c-rail">
           <div class="c-rail-card">
-            <div class="c-rail-title">Discover Creators</div>
-            <div class="c-search">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input class="c-input" id="user-search-input" placeholder="Search creators by name, niche, or @handle" oninput="queueUserSearch()">
-            </div>
-            <input class="c-hidden" id="user-search-category" placeholder="Category" oninput="queueUserSearch()">
-            <div class="c-filter-pills">
-              <button class="c-pill-filter active" data-category="" onclick="setCommunityCategory(this,'')">All</button>
-              <button class="c-pill-filter" data-category="Tech & AI" onclick="setCommunityCategory(this,'Tech & AI')">Tech & AI</button>
-              <button class="c-pill-filter" data-category="Creator" onclick="setCommunityCategory(this,'Creator')">Creator</button>
-              <button class="c-pill-filter" data-category="Lifestyle" onclick="setCommunityCategory(this,'Lifestyle')">Lifestyle</button>
-              <button class="c-pill-filter" data-category="Business" onclick="setCommunityCategory(this,'Business')">Business</button>
-              <button class="c-pill-filter" data-category="Finance" onclick="setCommunityCategory(this,'Finance')">Finance</button>
-            </div>
-            <div class="c-filter-row" id="user-search-platforms">
-              <button class="c-filter" data-platform="youtube" onclick="togglePlatformFilter(this)">YouTube</button>
-              <button class="c-filter" data-platform="instagram" onclick="togglePlatformFilter(this)">Instagram</button>
-              <button class="c-filter" data-platform="twitter" onclick="togglePlatformFilter(this)">Twitter</button>
-              <button class="c-filter" data-platform="tiktok" onclick="togglePlatformFilter(this)">TikTok</button>
-              <button class="c-filter" data-platform="linkedin" onclick="togglePlatformFilter(this)">LinkedIn</button>
-            </div>
-          </div>
-          <div class="c-rail-card">
             <div class="c-rail-title">Connection Inbox</div>
             <div class="c-rail-stats">
               <div class="c-stat">
@@ -2029,17 +2189,23 @@ body::after{
             </div>
             <button class="btn btn-ghost btn-sm c-full" onclick="switchCommunityTab('messages')">Open Messages</button>
           </div>
+          <div class="c-rail-card">
+            <div class="c-rail-title">Discover Creators</div>
+            <div class="c-rail-desc">Search verified creators, filter by niche, and send connection requests.</div>
+            <button class="btn btn-lime btn-sm c-full" onclick="tab('search')">Open Search</button>
+          </div>
         </aside>
         <main class="c-feed">
           <div class="c-feed-head">
             <div>
-              <div class="c-section-title">Creator Network</div>
-              <div class="c-section-tag">Live profiles from connected creators</div>
+              <div class="c-section-title">Community Feed</div>
+              <div class="c-section-tag">Updates from your connections</div>
             </div>
-            <div class="c-section-count" id="community-count">0 creators</div>
+            <div class="c-section-count" id="community-feed-count">0 updates</div>
           </div>
-          <div class="c-creator-grid" id="user-search-results"></div>
-          <button class="btn btn-ghost btn-sm c-full" id="user-search-more" onclick="loadMoreUsers()">Load more</button>
+          <div id="community-feed" class="c-feed-list">
+            <div class="notif-empty">No community posts yet.</div>
+          </div>
         </main>
         <aside class="c-side">
           <div class="c-side-card">
@@ -3378,14 +3544,32 @@ body::after{
   </div>
 </div>
 
+<button class="fab" id="fab-create" onclick="tab('publish')" aria-label="Create Post">+</button>
+
 <!-- MOBILE NAV -->
 <div class="mob-nav">
-  <div style="display:flex;gap:5px;justify-content:space-around;padding:8px">
-    <button class="mob-nav-item active" data-tab="dashboard" onclick="tab('dashboard')">Dashboard</button>
-    <button class="mob-nav-item" data-tab="writer" onclick="tab('writer')">Writer</button>
-    <button class="mob-nav-item" data-tab="publish" onclick="tab('publish')">Publish</button>
-    <button class="mob-nav-item" data-tab="community" onclick="tab('community')">Community</button>
-    <button class="mob-nav-item" data-tab="settings" onclick="tab('settings')">Settings</button>
+  <div class="mob-nav-inner">
+    <button class="mob-nav-item active" data-tab="dashboard" onclick="tab('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="mob-nav-item" data-tab="search" onclick="tab('search')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Search</span>
+    </button>
+    <button class="mob-nav-item" data-tab="community" onclick="tab('community')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-3-3.87"/><path d="M7 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 3-3.87"/></svg>
+      <span>Community</span>
+    </button>
+    <button class="mob-nav-item" data-tab="notifications" onclick="tab('notifications')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+      <span>Notifications</span>
+      <span class="mob-nav-dot" id="mob-notif-dot"></span>
+    </button>
+    <button class="mob-nav-item" data-tab="settings" onclick="tab('settings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 8.6 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>Profile</span>
+    </button>
   </div>
 </div>
 
@@ -3860,11 +4044,13 @@ async function checkAuth() {
 function showAuthScreen() {
   document.getElementById('auth-screen').classList.remove('hidden');
   document.getElementById('app').classList.add('hidden');
+  document.getElementById('fab-create')?.classList.add('is-hidden');
 }
 
 function showAppScreen() {
   document.getElementById('auth-screen').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
+  document.getElementById('fab-create')?.classList.remove('is-hidden');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════════════
@@ -4549,6 +4735,16 @@ function updateStatCard(id, subId, barId, value, label, maxForBar = 1) {
   }
 }
 
+function updateRailStat(id, value) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (value === null || value === undefined) {
+    el.textContent = '—';
+    return;
+  }
+  el.textContent = Number(value).toLocaleString();
+}
+
 async function loadDashboardAnalytics() {
   try {
     const response = await fetch(`${API_URL}/analytics/dashboard`, {
@@ -4587,6 +4783,9 @@ async function loadDashboardAnalytics() {
       updateStatCard('ds-posts', 'ds-posts-sub', 'ds-posts-p', hasData ? totalPosts : (hasConnected ? 0 : null), statusText, maxRef);
       updateStatCard('ds-reach', 'ds-reach-sub', 'ds-reach-p', hasData ? totalViews : (hasConnected ? 0 : null), statusText, maxRef);
       updateStatCard('ds-followers', 'ds-followers-sub', 'ds-followers-p', hasData ? totalFollowers : (hasConnected ? 0 : null), statusText, maxRef);
+      updateRailStat('rail-posts', hasData ? totalPosts : (hasConnected ? 0 : null));
+      updateRailStat('rail-views', hasData ? totalViews : (hasConnected ? 0 : null));
+      updateRailStat('rail-followers', hasData ? totalFollowers : (hasConnected ? 0 : null));
     }
   } catch (error) {
     console.error('Error loading analytics:', error);
@@ -4991,11 +5190,13 @@ function tab(name) {
   if (navEl) navEl.classList.add('active');
   
   const titles = {
-    dashboard: 'Dashboard — CreatorOS',
+    dashboard: 'Dashboard',
     writer: 'AI Content Studio',
     publish: 'Upload & Publish',
     analytics: 'Analytics',
     community: 'Community',
+    search: 'Search',
+    notifications: 'Notifications',
     trends: 'Trend Radar',
     repurpose: 'Content Multiplier',
     scheduler: 'Scheduler',
@@ -5016,6 +5217,15 @@ function tab(name) {
     switchCommunityTab('network');
   } else {
     stopCommunityPolling();
+  }
+  if (name === 'search') {
+    setTimeout(() => {
+      const input = document.getElementById('user-search-input');
+      if (input) input.focus();
+    }, 0);
+  }
+  if (name === 'notifications') {
+    fetchNotifications();
   }
   if (name !== 'admin') {
     stopAdminAutoRefresh();
@@ -5120,28 +5330,30 @@ async function fetchNotifications() {
 
 function renderNotifications(notifs, unreadTotal = 0) {
   const list = document.getElementById('notif-list');
+  const pageList = document.getElementById('notif-page-list');
   const dot = document.getElementById('notif-dot');
-  if (!list || !dot) return;
-  
-  list.innerHTML = '';
+  const mobDot = document.getElementById('mob-notif-dot');
+
+  let html = '';
   if (notifs.length === 0) {
-    list.innerHTML = '<div class="notif-empty">No new notifications</div>';
-    dot.style.display = 'none';
-    return;
+    html = '<div class="notif-empty">No new notifications</div>';
+  } else {
+    notifs.forEach(n => {
+      const cls = n.is_read ? 'notif-item' : 'notif-item unread';
+      const time = new Date(n.created_at).toLocaleString();
+      html += `
+        <div class="${cls}" onclick="markNotificationRead('${n.id}')">
+          <div class="notif-title">${escapeHtml(n.title)}</div>
+          <div class="notif-msg">${escapeHtml(n.message)}</div>
+          <div class="notif-time">${time}</div>
+        </div>
+      `;
+    });
   }
-  
-  notifs.forEach(n => {
-    let cls = n.is_read ? 'notif-item' : 'notif-item unread';
-    let time = new Date(n.created_at).toLocaleString();
-    list.innerHTML += `
-      <div class="${cls}" onclick="markNotificationRead('${n.id}')">
-        <div class="notif-title">${escapeHtml(n.title)}</div>
-        <div class="notif-msg">${escapeHtml(n.message)}</div>
-        <div class="notif-time">${time}</div>
-      </div>
-    `;
-  });
-  dot.style.display = unreadTotal > 0 ? 'block' : 'none';
+  if (list) list.innerHTML = html;
+  if (pageList) pageList.innerHTML = html;
+  if (dot) dot.style.display = unreadTotal > 0 ? 'block' : 'none';
+  if (mobDot) mobDot.style.display = unreadTotal > 0 ? 'block' : 'none';
 }
 
 function toggleNotifications() {
@@ -5234,7 +5446,23 @@ async function runUserSearch(reset = false) {
   }
   if (searchState.loading) return;
   if (!searchState.query && !searchState.category && searchState.platforms.length === 0 && reset) {
-    resultsEl.innerHTML = '<div class="notif-empty">Loading creators...</div>';
+    resultsEl.innerHTML = `
+      <div class="creator-skeleton">
+        <div class="avatar skeleton"></div>
+        <div class="line skeleton" style="width:70%"></div>
+        <div class="line skeleton" style="width:50%"></div>
+      </div>
+      <div class="creator-skeleton">
+        <div class="avatar skeleton"></div>
+        <div class="line skeleton" style="width:60%"></div>
+        <div class="line skeleton" style="width:40%"></div>
+      </div>
+      <div class="creator-skeleton">
+        <div class="avatar skeleton"></div>
+        <div class="line skeleton" style="width:65%"></div>
+        <div class="line skeleton" style="width:45%"></div>
+      </div>
+    `;
   }
 
   searchState.loading = true;
@@ -7375,6 +7603,9 @@ function syncAvatarUI(avatarUrl) {
   const navAvatar = document.getElementById('nav-user-avatar');
   const navAvatarImg = document.getElementById('nav-user-avatar-img');
   const navAvatarFallback = document.getElementById('nav-user-avatar-fallback');
+  const topbarAvatar = document.getElementById('topbar-user-avatar');
+  const topbarAvatarImg = document.getElementById('topbar-user-avatar-img');
+  const topbarAvatarFallback = document.getElementById('topbar-user-avatar-fallback');
   const communityAvatar = document.getElementById('community-avatar');
   const communityAvatarImg = document.getElementById('community-avatar-img');
   const communityAvatarFallback = document.getElementById('community-avatar-fallback');
@@ -7382,6 +7613,7 @@ function syncAvatarUI(avatarUrl) {
   if (avatarFallback) avatarFallback.textContent = fallbackLetter;
   if (previewFallback) previewFallback.textContent = fallbackLetter;
   if (navAvatarFallback) navAvatarFallback.textContent = fallbackLetter;
+  if (topbarAvatarFallback) topbarAvatarFallback.textContent = fallbackLetter;
   if (communityAvatarFallback) communityAvatarFallback.textContent = fallbackLetter;
 
   const hasUrl = Boolean(avatarUrl);
@@ -7410,6 +7642,15 @@ function syncAvatarUI(avatarUrl) {
     } else {
       navAvatarImg.removeAttribute('src');
       navAvatar.classList.remove('has-img');
+    }
+  }
+  if (topbarAvatar && topbarAvatarImg) {
+    if (hasUrl) {
+      topbarAvatarImg.src = avatarUrl;
+      topbarAvatar.classList.add('has-img');
+    } else {
+      topbarAvatarImg.removeAttribute('src');
+      topbarAvatar.classList.remove('has-img');
     }
   }
   if (communityAvatar && communityAvatarImg) {
@@ -7711,6 +7952,19 @@ async function downloadApp() {
   deferredInstallPrompt = null;
 }
 
+function handleGlobalSearchKey(e) {
+  if (e.key !== 'Enter') return;
+  const query = (e.target.value || '').trim();
+  if (!query) return;
+  tab('search');
+  const input = document.getElementById('user-search-input');
+  if (input) {
+    input.value = query;
+    queueUserSearch();
+    input.focus();
+  }
+}
+
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 200) + 'px';
@@ -7729,6 +7983,7 @@ function repurpose() {
 // Initialize on load
 (async () => {
   setupInstallPrompt();
+  document.querySelectorAll('img').forEach(img => img.setAttribute('loading', 'lazy'));
   await autoDetectApiUrl();
   hydrateAuthFromUrl();
   handleOAuthResultFromUrl();
