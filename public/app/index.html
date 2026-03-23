@@ -2113,19 +2113,35 @@ body::after{
         margin-bottom: 6px;
       }
       #tab-admin .admin-brand-logo {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
+        width: 42px;
+        height: 42px;
+        border-radius: 14px 14px 18px 18px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: conic-gradient(from 120deg, rgba(245,158,11,.95), rgba(184,255,0,.95), rgba(59,130,246,.85), rgba(245,158,11,.95));
+        background: linear-gradient(135deg, rgba(184,255,0,.95), rgba(139,92,246,.9), rgba(249,115,22,.9));
         color: #0b0b12;
         font-weight: 800;
         font-family: var(--admin-head);
-        box-shadow: 0 12px 24px rgba(0,0,0,.35);
+        box-shadow: 0 14px 30px rgba(0,0,0,.4);
+        clip-path: polygon(50% 0%, 90% 12%, 100% 38%, 82% 88%, 50% 100%, 18% 88%, 0 38%, 10% 12%);
+        position: relative;
+        overflow: hidden;
       }
-      #tab-admin .admin-brand-logo span { letter-spacing:-.5px; }
+      #tab-admin .admin-brand-logo::after {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        background: linear-gradient(145deg, rgba(255,255,255,.35), rgba(255,255,255,0));
+        opacity: .6;
+      }
+      #tab-admin .admin-brand-logo span {
+        position: relative;
+        z-index: 1;
+        font-size: 11px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
       #tab-admin .admin-brand-name { font-size: 16px; font-weight: 700; }
       #tab-admin .admin-brand-role { font-size: 11px; color: rgba(229,231,235,.6); }
       #tab-admin .admin-brand-sub {
@@ -2399,6 +2415,60 @@ body::after{
         color: rgba(229,231,235,.4);
         font-size: 12px;
       }
+      #tab-admin .admin-metric-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 10px;
+      }
+      #tab-admin .admin-metric-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--admin-border);
+        background: rgba(12,12,20,.9);
+        font-size: 12px;
+      }
+      #tab-admin .admin-metric-key {
+        color: var(--admin-muted);
+      }
+      #tab-admin .admin-metric-val {
+        color: var(--admin-text);
+        font-family: var(--font-mono);
+      }
+      #tab-admin .admin-trending-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      #tab-admin .admin-mini-title {
+        font-size: 10px;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+        color: rgba(229,231,235,.6);
+        font-family: var(--font-mono);
+        margin-bottom: 8px;
+      }
+      #tab-admin .admin-trending-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      #tab-admin .admin-trending-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--admin-border);
+        background: rgba(12,12,20,.9);
+        font-size: 12px;
+      }
+      #tab-admin .admin-trending-item span {
+        color: var(--admin-muted);
+      }
       #tab-admin .admin-table {
         width: 100%;
         border-collapse: collapse;
@@ -2503,13 +2573,13 @@ body::after{
       <aside class="admin-rail">
         <div class="admin-brand">
           <div class="admin-brand-title">
-            <div class="admin-brand-logo"><span>CO</span></div>
+            <div class="admin-brand-logo"><span>ADM</span></div>
             <div>
               <div class="admin-brand-name">CreatorOS</div>
-              <div class="admin-brand-role">Admin Console</div>
+              <div class="admin-brand-role">Admin Suite</div>
             </div>
           </div>
-          <div class="admin-brand-sub">Live Ops · Creator Network</div>
+          <div class="admin-brand-sub">Operations · Trust & Safety</div>
         </div>
         <div class="admin-rail-section">
           <div class="admin-nav-item active" onclick="switchAdminTab('overview')" id="nav-admin-overview">
@@ -2628,8 +2698,8 @@ body::after{
             
             <div class="admin-grid-2">
               <div class="admin-card" style="min-height:320px; display:flex; flex-direction:column;">
-                <h4>Complaints Trend</h4>
-                <div class="admin-chart">Chart.js Area</div>
+                <h4>Reports Snapshot</h4>
+                <div class="admin-metric-stack" id="admin-reports-snapshot"></div>
               </div>
               <div class="admin-card" style="min-height:320px; display:flex; flex-direction:column;">
                 <h4>Most Active Platforms</h4>
@@ -2643,7 +2713,20 @@ body::after{
             <div class="admin-card">
               <h3>Social Platform Analytics</h3>
               <p class="body">Integrated engagement, retention, and sentiment across connected accounts.</p>
-              <div class="admin-chart" style="height:320px;">Platform Comparison Chart (Mock)</div>
+              <div style="overflow-x:auto;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Platform</th>
+                      <th>Followers</th>
+                      <th>Views</th>
+                      <th>Engagement</th>
+                      <th>Posts</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-social-body"></tbody>
+                </table>
+              </div>
             </div>
           </div>
 
@@ -2679,8 +2762,9 @@ body::after{
                     <tr>
                       <th>User</th>
                       <th>Joined</th>
+                      <th>Last Login</th>
+                      <th>Credits</th>
                       <th>Status</th>
-                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody id="admin-users-body"></tbody>
@@ -2719,7 +2803,20 @@ body::after{
             <div class="admin-card">
               <h3>Content Monitoring</h3>
               <p class="body">Flagged content requiring review.</p>
-              <div class="admin-chart" style="height:180px;">No flagged content found.</div>
+              <div style="overflow-x:auto;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Report ID</th>
+                      <th>Post ID</th>
+                      <th>Type</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-content-body"></tbody>
+                </table>
+              </div>
             </div>
           </div>
 
@@ -2729,15 +2826,15 @@ body::after{
               <h3>Sentiment Analysis</h3>
               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
                 <div class="admin-card" style="padding:16px;text-align:center;">
-                  <div style="font-size:34px;margin-bottom:8px;">😊 65%</div>
+                  <div style="font-size:34px;margin-bottom:8px;" id="admin-sentiment-positive">—</div>
                   <div style="color:var(--admin-muted);">Positive Sentiment</div>
                 </div>
                 <div class="admin-card" style="padding:16px;text-align:center;">
-                  <div style="font-size:34px;margin-bottom:8px;">😐 20%</div>
+                  <div style="font-size:34px;margin-bottom:8px;" id="admin-sentiment-neutral">—</div>
                   <div style="color:var(--admin-muted);">Neutral Sentiment</div>
                 </div>
                 <div class="admin-card" style="padding:16px;text-align:center;">
-                  <div style="font-size:34px;margin-bottom:8px;">😡 15%</div>
+                  <div style="font-size:34px;margin-bottom:8px;" id="admin-sentiment-negative">—</div>
                   <div style="color:var(--admin-muted);">Negative Sentiment</div>
                 </div>
               </div>
@@ -2748,10 +2845,15 @@ body::after{
           <div class="admin-section-v2" id="sec-admin-trending">
             <div class="admin-card">
               <h3>Trending Issues</h3>
-              <div style="display:flex;flex-direction:column;gap:10px;">
-                <div class="admin-badge warn">Login Authentication Errors · 32 reports</div>
-                <div class="admin-badge warn">Spam Accounts on Twitter · 15 reports</div>
-                <div class="admin-badge warn">UI Glitch on Mobile View · 8 reports</div>
+              <div class="admin-trending-grid">
+                <div>
+                  <div class="admin-mini-title">Complaints by Type</div>
+                  <div class="admin-trending-list" id="admin-trending-complaints"></div>
+                </div>
+                <div>
+                  <div class="admin-mini-title">Content Reports</div>
+                  <div class="admin-trending-list" id="admin-trending-reports"></div>
+                </div>
               </div>
             </div>
             
@@ -2779,7 +2881,19 @@ body::after{
             <div class="admin-card">
               <h3>Activity Logs</h3>
               <p class="body">Audit trail of admin actions.</p>
-              <div class="admin-chart" style="height:180px;">No recent admin activity.</div>
+              <div style="overflow-x:auto;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Action</th>
+                      <th>Target</th>
+                      <th>Platform</th>
+                      <th>When</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-activity-body"></tbody>
+                </table>
+              </div>
             </div>
           </div>
 
@@ -6044,14 +6158,200 @@ function renderAdminFeedback() {
   `;
 }
 
+function renderAdminReportsSnapshot(overview) {
+  const container = document.getElementById('admin-reports-snapshot');
+  if (!container) return;
+  const complaintsToday = Number(overview?.complaints_today || 0);
+  const contentReportsToday = Number(overview?.content_reports_today || 0);
+  const totalToday = Number(overview?.reports_today || (complaintsToday + contentReportsToday));
+  container.innerHTML = `
+    <div class="admin-metric-row">
+      <div class="admin-metric-key">Reports today</div>
+      <div class="admin-metric-val">${totalToday}</div>
+    </div>
+    <div class="admin-metric-row">
+      <div class="admin-metric-key">Complaints today</div>
+      <div class="admin-metric-val">${complaintsToday}</div>
+    </div>
+    <div class="admin-metric-row">
+      <div class="admin-metric-key">Content reports today</div>
+      <div class="admin-metric-val">${contentReportsToday}</div>
+    </div>
+  `;
+}
+
+function renderAdminPlatforms(platforms) {
+  const pContainer = document.getElementById('admin-v2-platforms');
+  if (!pContainer) return;
+  const list = platforms || [];
+  if (!list.length) {
+    pContainer.innerHTML = '<div class="admin-metric-row"><span class="admin-metric-key">No platform data yet</span><span class="admin-metric-val">—</span></div>';
+    return;
+  }
+  pContainer.innerHTML = list.map(p => `
+    <div class="admin-metric-row">
+      <div class="admin-metric-key">${escapeHtml(p.platform || '-')}</div>
+      <div class="admin-metric-val">${Number(p.count || 0).toLocaleString()}</div>
+    </div>
+  `).join('');
+}
+
+function renderAdminComplaints(complaints) {
+  const tb = document.getElementById('admin-v2-complaints-body');
+  if (!tb) return;
+  const rows = complaints || [];
+  if (!rows.length) {
+    tb.innerHTML = '<tr><td colspan="6" style="padding:14px;color:var(--t3)">No complaints yet.</td></tr>';
+    return;
+  }
+  tb.innerHTML = '';
+  rows.forEach(c => {
+    let statusColor = c.status === 'resolved' ? 'var(--lime)' : 'var(--gold)';
+    tb.innerHTML += `
+      <tr style="border-bottom:1px solid var(--b1);font-size:12px">
+        <td style="padding:12px; font-family:var(--font-mono); color:var(--t3);">${escapeHtml((c.id || '').substring(0,8))}...</td>
+        <td style="padding:12px; font-weight:600">${escapeHtml(c.user_name || 'Unknown')}</td>
+        <td style="padding:12px; color:var(--t2)">${escapeHtml(c.platform || '-')}</td>
+        <td style="padding:12px; color:var(--t2)">${escapeHtml(c.complaint_type || '-')}</td>
+        <td style="padding:12px; font-weight:600; color:${statusColor}">${String(c.status || 'pending').toUpperCase()}</td>
+        <td style="padding:12px; color:var(--t3)">${c.created_at ? new Date(c.created_at).toLocaleDateString() : '-'}</td>
+      </tr>
+    `;
+  });
+}
+
+function renderAdminSocial(metrics) {
+  const body = document.getElementById('admin-social-body');
+  if (!body) return;
+  const rows = metrics || [];
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="5" style="padding:14px;color:var(--t3)">No social analytics yet.</td></tr>';
+    return;
+  }
+  body.innerHTML = '';
+  rows.forEach(m => {
+    body.innerHTML += `
+      <tr>
+        <td>${escapeHtml(m.platform || '-')}</td>
+        <td>${Number(m.followers || 0).toLocaleString()}</td>
+        <td>${Number(m.views || 0).toLocaleString()}</td>
+        <td>${Number(m.engagement || 0).toLocaleString()}</td>
+        <td>${Number(m.posts_count || 0).toLocaleString()}</td>
+      </tr>
+    `;
+  });
+}
+
+function renderAdminContentReports(reports) {
+  const body = document.getElementById('admin-content-body');
+  if (!body) return;
+  const rows = reports || [];
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="5" style="padding:14px;color:var(--t3)">No content reports yet.</td></tr>';
+    return;
+  }
+  body.innerHTML = '';
+  rows.forEach(r => {
+    body.innerHTML += `
+      <tr>
+        <td>${escapeHtml((r.id || '').substring(0,8))}...</td>
+        <td>${escapeHtml(r.post_id || '-')}</td>
+        <td>${escapeHtml(r.report_type || '-')}</td>
+        <td>${escapeHtml((r.status || 'pending').toUpperCase())}</td>
+        <td>${r.created_at ? new Date(r.created_at).toLocaleDateString() : '-'}</td>
+      </tr>
+    `;
+  });
+}
+
+function renderAdminActivity(logs) {
+  const body = document.getElementById('admin-activity-body');
+  if (!body) return;
+  const rows = logs || [];
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="4" style="padding:14px;color:var(--t3)">No recent admin activity.</td></tr>';
+    return;
+  }
+  body.innerHTML = '';
+  rows.forEach(l => {
+    body.innerHTML += `
+      <tr>
+        <td>${escapeHtml(l.action || '-')}</td>
+        <td>${escapeHtml(l.target || '-')}</td>
+        <td>${escapeHtml(l.platform || '-')}</td>
+        <td>${l.created_at ? new Date(l.created_at).toLocaleString() : '-'}</td>
+      </tr>
+    `;
+  });
+}
+
+function renderAdminTrending(data) {
+  const complaintsEl = document.getElementById('admin-trending-complaints');
+  const reportsEl = document.getElementById('admin-trending-reports');
+  if (complaintsEl) {
+    const items = data?.complaints_by_type || [];
+    complaintsEl.innerHTML = items.length
+      ? items.map(item => `
+          <div class="admin-trending-item">
+            <div>${escapeHtml(item.label || '-')}</div>
+            <span>${Number(item.count || 0).toLocaleString()}</span>
+          </div>
+        `).join('')
+      : '<div class="admin-trending-item"><div>No complaint trends</div><span>—</span></div>';
+  }
+  if (reportsEl) {
+    const items = data?.reports_by_type || [];
+    reportsEl.innerHTML = items.length
+      ? items.map(item => `
+          <div class="admin-trending-item">
+            <div>${escapeHtml(item.label || '-')}</div>
+            <span>${Number(item.count || 0).toLocaleString()}</span>
+          </div>
+        `).join('')
+      : '<div class="admin-trending-item"><div>No report trends</div><span>—</span></div>';
+  }
+}
+
+function updateAdminSentimentFromFeedback(feedback) {
+  const positiveEl = document.getElementById('admin-sentiment-positive');
+  const neutralEl = document.getElementById('admin-sentiment-neutral');
+  const negativeEl = document.getElementById('admin-sentiment-negative');
+  if (!positiveEl || !neutralEl || !negativeEl) return;
+  const list = feedback || [];
+  if (!list.length) {
+    positiveEl.textContent = '—';
+    neutralEl.textContent = '—';
+    negativeEl.textContent = '—';
+    return;
+  }
+  let pos = 0;
+  let neu = 0;
+  let neg = 0;
+  list.forEach(f => {
+    const rating = Number(f.rating || 0);
+    if (rating >= 4) pos += 1;
+    else if (rating === 3) neu += 1;
+    else if (rating > 0) neg += 1;
+  });
+  const total = list.length || 1;
+  positiveEl.textContent = `😊 ${Math.round((pos / total) * 100)}%`;
+  neutralEl.textContent = `😐 ${Math.round((neu / total) * 100)}%`;
+  negativeEl.textContent = `😡 ${Math.round((neg / total) * 100)}%`;
+}
+
 async function loadAdminData({ silent = false } = {}) {
   if (!adminToken || adminRefreshInFlight) return;
   adminRefreshInFlight = true;
   try {
-    const [resU, resF, resA] = await Promise.all([
+    const [resU, resF, resA, resC, resS, resR, resT, resL] = await Promise.all([
       fetch(`${API_URL}/admin/users`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
       fetch(`${API_URL}/admin/feedback`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
-      fetch(`${API_URL}/admin_advanced/overview`, { headers: { 'Authorization': `Bearer ${adminToken}` } })
+      fetch(`${API_URL}/admin_advanced/overview`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/complaints`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/social-metrics`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/content-reports`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/trending`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/activity`, { headers: { 'Authorization': `Bearer ${adminToken}` } })
     ]);
     if (resU.ok) {
       const dU = await resU.json();
@@ -6076,6 +6376,7 @@ async function loadAdminData({ silent = false } = {}) {
       adminFeedback = dF.feedback || [];
       adminFeedbackPage = 1;
       renderAdminFeedback();
+      updateAdminSentimentFromFeedback(adminFeedback);
     }
     if (resA.ok) {
       const dA = await resA.json();
@@ -6083,38 +6384,29 @@ async function loadAdminData({ silent = false } = {}) {
       document.getElementById('admin-v2-complaints').textContent = dA.total_complaints;
       document.getElementById('admin-v2-resolved').textContent = dA.resolved_complaints;
       document.getElementById('admin-v2-pending').textContent = dA.pending_complaints;
-      
-      const pContainer = document.getElementById('admin-v2-platforms');
-      if (pContainer) {
-        pContainer.innerHTML = '';
-        dA.active_platforms.forEach(p => {
-            pContainer.innerHTML += `<div style="padding:10px; border-radius:10px; font-size:12px; font-weight:600;">${p}</div>`;
-        });
-      }
+      renderAdminPlatforms(dA.active_platforms || []);
+      renderAdminReportsSnapshot(dA);
     }
-    
-    // Also load complaints for the Complaints tab
-    fetch(`${API_URL}/admin_advanced/complaints`, { headers: { 'Authorization': `Bearer ${adminToken}` } })
-      .then(r => r.json())
-      .then(data => {
-          const tb = document.getElementById('admin-v2-complaints-body');
-          if (tb) {
-              tb.innerHTML = '';
-              (data.complaints || []).forEach(c => {
-                  let statusColor = c.status === 'resolved' ? 'var(--lime)' : 'var(--gold)';
-                  tb.innerHTML += `
-                    <tr style="border-bottom:1px solid var(--b1);font-size:12px">
-                      <td style="padding:12px; font-family:var(--font-mono); color:var(--t3);">${c.id.substring(0,8)}...</td>
-                      <td style="padding:12px; font-weight:600">${escapeHtml(c.user_name)}</td>
-                      <td style="padding:12px; color:var(--t2)">${c.platform || '-'}</td>
-                      <td style="padding:12px; color:var(--t2)">${c.complaint_type || '-'}</td>
-                      <td style="padding:12px; font-weight:600; color:${statusColor}">${c.status.toUpperCase()}</td>
-                      <td style="padding:12px; color:var(--t3)">${new Date(c.created_at).toLocaleDateString()}</td>
-                    </tr>
-                  `;
-              });
-          }
-      }).catch(e => console.error(e));
+    if (resC.ok) {
+      const dC = await resC.json();
+      renderAdminComplaints(dC.complaints || []);
+    }
+    if (resS.ok) {
+      const dS = await resS.json();
+      renderAdminSocial(dS.metrics || []);
+    }
+    if (resR.ok) {
+      const dR = await resR.json();
+      renderAdminContentReports(dR.reports || []);
+    }
+    if (resT.ok) {
+      const dT = await resT.json();
+      renderAdminTrending(dT);
+    }
+    if (resL.ok) {
+      const dL = await resL.json();
+      renderAdminActivity(dL.logs || []);
+    }
       
   } catch(err) {
     console.error('Failed to load admin data:', err);
@@ -6126,13 +6418,77 @@ async function loadAdminData({ silent = false } = {}) {
   }
 }
 
+async function loadAdminRealtime({ silent = true } = {}) {
+  if (!adminToken || adminRefreshInFlight) return;
+  adminRefreshInFlight = true;
+  try {
+    const [resU, resF, resA, resC, resS, resR, resT, resL] = await Promise.all([
+      fetch(`${API_URL}/admin/users`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin/feedback`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/overview`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/complaints`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/social-metrics`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/content-reports`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/trending`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
+      fetch(`${API_URL}/admin_advanced/activity`, { headers: { 'Authorization': `Bearer ${adminToken}` } })
+    ]);
+    if (resU.ok) {
+      const dU = await resU.json();
+      adminUsers = dU.users || [];
+      renderAdminUsers();
+    }
+    if (resF.ok) {
+      const dF = await resF.json();
+      adminFeedback = dF.feedback || [];
+      renderAdminFeedback();
+      updateAdminSentimentFromFeedback(adminFeedback);
+    }
+    if (resA.ok) {
+      const dA = await resA.json();
+      document.getElementById('admin-v2-users').textContent = dA.total_users;
+      document.getElementById('admin-v2-complaints').textContent = dA.total_complaints;
+      document.getElementById('admin-v2-resolved').textContent = dA.resolved_complaints;
+      document.getElementById('admin-v2-pending').textContent = dA.pending_complaints;
+      renderAdminPlatforms(dA.active_platforms || []);
+      renderAdminReportsSnapshot(dA);
+    }
+    if (resC.ok) {
+      const dC = await resC.json();
+      renderAdminComplaints(dC.complaints || []);
+    }
+    if (resS.ok) {
+      const dS = await resS.json();
+      renderAdminSocial(dS.metrics || []);
+    }
+    if (resR.ok) {
+      const dR = await resR.json();
+      renderAdminContentReports(dR.reports || []);
+    }
+    if (resT.ok) {
+      const dT = await resT.json();
+      renderAdminTrending(dT);
+    }
+    if (resL.ok) {
+      const dL = await resL.json();
+      renderAdminActivity(dL.logs || []);
+    }
+  } catch (err) {
+    console.error('Failed to refresh admin realtime data:', err);
+    if (!silent) {
+      showToast('Admin Error', 'Failed to refresh admin data.', 'error');
+    }
+  } finally {
+    adminRefreshInFlight = false;
+  }
+}
+
 function startAdminAutoRefresh() {
   stopAdminAutoRefresh();
   if (!adminToken) return;
-  loadAdminData({ silent: true });
+  loadAdminRealtime({ silent: true });
   adminRefreshInterval = setInterval(() => {
-    loadAdminData({ silent: true });
-  }, 8000);
+    loadAdminRealtime({ silent: true });
+  }, 12000);
 }
 
 function stopAdminAutoRefresh() {
