@@ -1,4 +1,4 @@
-const CACHE_NAME = 'creatoros-app-v1';
+const CACHE_NAME = 'creatoros-app-v2';
 const CORE_ASSETS = [
   '/app/',
   '/app/index.html',
@@ -6,7 +6,8 @@ const CORE_ASSETS = [
   '/app/icon.svg',
   '/app/icon-180.png',
   '/app/icon-192.png',
-  '/app/icon-512.png'
+  '/app/icon-512.png',
+  '/app/icon-512-maskable.png'
 ];
 
 self.addEventListener('install', (event) => {
