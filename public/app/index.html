@@ -2037,25 +2037,25 @@ body::after{
         position: fixed;
         inset: 0;
         z-index: 2000;
-        background: #0b0f1a;
+        background: var(--bg);
         display: flex;
         flex-direction: row;
         height: 100vh;
       }
       #tab-admin {
-        --admin-bg: #0b0f1a;
-        --admin-panel: #121826;
-        --admin-panel-2: #0f1522;
-        --admin-border: rgba(255,255,255,.08);
-        --admin-border-strong: rgba(255,255,255,.14);
-        --admin-accent: #22d3ee;
-        --admin-accent-2: #34d399;
-        --admin-warn: #f59e0b;
-        --admin-danger: #ef4444;
-        --admin-text: #e5e7eb;
-        --admin-muted: #94a3b8;
-        --admin-head: 'Sora', sans-serif;
-        --admin-body: 'Inter', sans-serif;
+        --admin-bg: var(--bg);
+        --admin-panel: var(--s1);
+        --admin-panel-2: var(--s2);
+        --admin-border: var(--b1);
+        --admin-border-strong: var(--b2);
+        --admin-accent: var(--lime);
+        --admin-accent-2: var(--purple);
+        --admin-warn: var(--gold);
+        --admin-danger: var(--red);
+        --admin-text: var(--t1);
+        --admin-muted: var(--t2);
+        --admin-head: var(--font-head);
+        --admin-body: var(--font-body);
       }
       #tab-admin .admin-shell {
         position: relative;
@@ -2063,9 +2063,9 @@ body::after{
         flex: 1;
         height: 100%;
         background:
-          radial-gradient(900px 420px at -10% -20%, rgba(34,211,238,.08), transparent 60%),
-          radial-gradient(900px 420px at 110% 10%, rgba(52,211,153,.08), transparent 60%),
-          linear-gradient(160deg, rgba(12,16,28,.96), rgba(8,12,20,.98));
+          radial-gradient(900px 420px at -10% -20%, rgba(184,255,0,.08), transparent 60%),
+          radial-gradient(900px 420px at 110% 10%, rgba(139,92,246,.12), transparent 60%),
+          linear-gradient(160deg, rgba(10,10,18,.96), rgba(7,7,14,.98));
       }
       #tab-admin .admin-shell::before {
         content: '';
@@ -2080,7 +2080,7 @@ body::after{
       }
       #tab-admin .admin-rail {
         width: 280px;
-        background: linear-gradient(180deg, rgba(14,18,30,.98), rgba(10,14,24,.98));
+        background: linear-gradient(180deg, rgba(14,14,24,.98), rgba(8,8,14,.98));
         border-right: 1px solid var(--admin-border);
         display: flex;
         flex-direction: column;
@@ -2093,7 +2093,7 @@ body::after{
         position: absolute;
         inset: 0;
         pointer-events: none;
-        background: radial-gradient(400px 120px at 10% 0%, rgba(34,211,238,.18), transparent 60%);
+        background: radial-gradient(400px 120px at 10% 0%, rgba(184,255,0,.18), transparent 60%);
         opacity: .8;
       }
       #tab-admin .admin-brand {
@@ -2119,12 +2119,15 @@ body::after{
         display: flex;
         align-items: center;
         justify-content: center;
-        background: conic-gradient(from 120deg, var(--admin-accent), var(--admin-accent-2), #60a5fa, var(--admin-accent));
-        color: #0b0f1a;
+        background: conic-gradient(from 120deg, rgba(245,158,11,.95), rgba(184,255,0,.95), rgba(59,130,246,.85), rgba(245,158,11,.95));
+        color: #0b0b12;
         font-weight: 800;
         font-family: var(--admin-head);
         box-shadow: 0 12px 24px rgba(0,0,0,.35);
       }
+      #tab-admin .admin-brand-logo span { letter-spacing:-.5px; }
+      #tab-admin .admin-brand-name { font-size: 16px; font-weight: 700; }
+      #tab-admin .admin-brand-role { font-size: 11px; color: rgba(229,231,235,.6); }
       #tab-admin .admin-brand-sub {
         font-size: 11px;
         letter-spacing: 1.8px;
@@ -2160,7 +2163,7 @@ body::after{
       #tab-admin .admin-nav-item.active {
         background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(52,211,153,.12));
         color: var(--admin-text);
-        border-color: rgba(34,211,238,.3);
+        border-color: rgba(184,255,0,.35);
         box-shadow: 0 12px 24px rgba(0,0,0,.35);
         font-weight: 600;
       }
@@ -2168,7 +2171,7 @@ body::after{
         width: 28px;
         height: 28px;
         border-radius: 8px;
-        background: rgba(255,255,255,.06);
+        background: rgba(184,255,0,.08);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -2205,8 +2208,8 @@ body::after{
         gap: 8px;
         padding: 8px 10px;
         border-radius: 999px;
-        background: rgba(34,211,238,.1);
-        border: 1px solid rgba(34,211,238,.3);
+        background: rgba(184,255,0,.1);
+        border: 1px solid rgba(184,255,0,.3);
         color: var(--admin-accent);
         font-family: var(--font-mono);
         letter-spacing: 1px;
@@ -2219,7 +2222,7 @@ body::after{
         height: 6px;
         border-radius: 50%;
         background: var(--admin-accent);
-        box-shadow: 0 0 10px rgba(34,211,238,.8);
+        box-shadow: 0 0 10px rgba(184,255,0,.8);
       }
       #tab-admin .admin-workspace {
         flex: 1;
@@ -2236,7 +2239,7 @@ body::after{
         align-items: center;
         justify-content: space-between;
         padding: 0 32px;
-        background: rgba(10,14,24,.92);
+        background: rgba(7,7,14,.92);
         backdrop-filter: blur(18px);
         position: sticky;
         top: 0;
@@ -2269,7 +2272,7 @@ body::after{
         display: flex;
         align-items: center;
         gap: 8px;
-        background: rgba(15,20,32,.85);
+        background: rgba(14,14,22,.85);
         border: 1px solid var(--admin-border);
         border-radius: 999px;
         padding: 8px 12px;
@@ -2302,8 +2305,8 @@ body::after{
         transform: translateY(-1px);
       }
       #tab-admin .admin-btn-primary {
-        background: linear-gradient(135deg, rgba(34,211,238,.25), rgba(52,211,153,.25));
-        border-color: rgba(34,211,238,.4);
+        background: linear-gradient(135deg, rgba(184,255,0,.22), rgba(139,92,246,.18));
+        border-color: rgba(184,255,0,.4);
       }
       #tab-admin .admin-btn-danger {
         background: rgba(239,68,68,.15);
@@ -2330,7 +2333,7 @@ body::after{
         gap: 16px;
       }
       #tab-admin .admin-kpi {
-        background: linear-gradient(160deg, rgba(16,22,36,.95), rgba(10,14,24,.98));
+        background: linear-gradient(160deg, rgba(16,16,26,.95), rgba(10,10,18,.98));
         border: 1px solid var(--admin-border);
         border-radius: 16px;
         padding: 18px 20px;
@@ -2362,7 +2365,7 @@ body::after{
         gap: 18px;
       }
       #tab-admin .admin-card {
-        background: linear-gradient(160deg, rgba(15,20,32,.96), rgba(8,12,20,.98));
+        background: linear-gradient(160deg, rgba(15,15,26,.96), rgba(8,8,14,.98));
         border: 1px solid var(--admin-border);
         border-radius: 18px;
         padding: 20px;
@@ -2388,7 +2391,7 @@ body::after{
       #tab-admin .admin-chart {
         flex: 1;
         border-radius: 12px;
-        background: rgba(10,14,24,.7);
+        background: rgba(10,10,18,.7);
         border: 1px dashed rgba(255,255,255,.12);
         display: flex;
         align-items: center;
@@ -2454,7 +2457,7 @@ body::after{
         font-family: var(--font-mono);
       }
       #tab-admin .admin-form-group .field {
-        background: rgba(12,16,26,.9);
+        background: rgba(12,12,20,.9);
         border: 1px solid var(--admin-border);
         color: var(--admin-text);
       }
@@ -2500,10 +2503,13 @@ body::after{
       <aside class="admin-rail">
         <div class="admin-brand">
           <div class="admin-brand-title">
-            <div class="admin-brand-logo">A</div>
-            Admin Console
+            <div class="admin-brand-logo"><span>CO</span></div>
+            <div>
+              <div class="admin-brand-name">CreatorOS</div>
+              <div class="admin-brand-role">Admin Console</div>
+            </div>
           </div>
-          <div class="admin-brand-sub">CreatorOS Control Room</div>
+          <div class="admin-brand-sub">Live Ops · Creator Network</div>
         </div>
         <div class="admin-rail-section">
           <div class="admin-nav-item active" onclick="switchAdminTab('overview')" id="nav-admin-overview">
@@ -2571,7 +2577,7 @@ body::after{
           </div>
         </div>
         <div class="admin-rail-foot">
-          <div class="admin-status"><span></span> System Live</div>
+          <div class="admin-status"><span></span> Live Sync</div>
           <div>Role: Super Admin</div>
         </div>
       </aside>
@@ -4609,6 +4615,8 @@ async function logout() {
       presenceInterval = null;
     }
     stopCommunityPolling();
+    stopAdminAutoRefresh();
+    adminToken = null;
     disconnectChatSocket();
     location.reload();
   }
@@ -4642,7 +4650,8 @@ function tab(name) {
   document.getElementById('topbar-title').innerHTML = `${title} <span class="dim">— CreatorOS</span>`;
   
   if (name === 'admin') {
-    loadAdminData();
+    loadAdminData({ silent: false });
+    startAdminAutoRefresh();
   }
   if (name === 'community') {
     startCommunityPolling();
@@ -4650,11 +4659,16 @@ function tab(name) {
   } else {
     stopCommunityPolling();
   }
+  if (name !== 'admin') {
+    stopAdminAutoRefresh();
+  }
 }
 
 // --- FEEDBACK & ADMIN LOGIC --- //
 let currentFeedbackRating = 0;
 let adminToken = null;
+let adminRefreshInterval = null;
+let adminRefreshInFlight = false;
 
 function openFeedbackModal() {
   currentFeedbackRating = 0;
@@ -6030,8 +6044,9 @@ function renderAdminFeedback() {
   `;
 }
 
-async function loadAdminData() {
-  if (!adminToken) return;
+async function loadAdminData({ silent = false } = {}) {
+  if (!adminToken || adminRefreshInFlight) return;
+  adminRefreshInFlight = true;
   try {
     const [resU, resF, resA] = await Promise.all([
       fetch(`${API_URL}/admin/users`, { headers: { 'Authorization': `Bearer ${adminToken}` } }),
@@ -6073,7 +6088,7 @@ async function loadAdminData() {
       if (pContainer) {
         pContainer.innerHTML = '';
         dA.active_platforms.forEach(p => {
-            pContainer.innerHTML += `<div style="padding:10px; border-radius:8px; background:var(--s3); font-size:13px; font-weight:600; color:var(--lime); text-align:center;">${p}</div>`;
+            pContainer.innerHTML += `<div style="padding:10px; border-radius:10px; font-size:12px; font-weight:600;">${p}</div>`;
         });
       }
     }
@@ -6103,7 +6118,29 @@ async function loadAdminData() {
       
   } catch(err) {
     console.error('Failed to load admin data:', err);
+    if (!silent) {
+      showToast('Admin Error', 'Failed to sync admin data.', 'error');
+    }
+  } finally {
+    adminRefreshInFlight = false;
   }
+}
+
+function startAdminAutoRefresh() {
+  stopAdminAutoRefresh();
+  if (!adminToken) return;
+  loadAdminData({ silent: true });
+  adminRefreshInterval = setInterval(() => {
+    loadAdminData({ silent: true });
+  }, 8000);
+}
+
+function stopAdminAutoRefresh() {
+  if (adminRefreshInterval) {
+    clearInterval(adminRefreshInterval);
+    adminRefreshInterval = null;
+  }
+  adminRefreshInFlight = false;
 }
 
 function switchAdminTab(tabId) {
