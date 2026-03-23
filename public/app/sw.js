@@ -3,7 +3,10 @@ const CORE_ASSETS = [
   '/app/',
   '/app/index.html',
   '/app/manifest.json',
-  '/app/icon.svg'
+  '/app/icon.svg',
+  '/app/icon-180.png',
+  '/app/icon-192.png',
+  '/app/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
