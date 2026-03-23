@@ -6,6 +6,10 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="CreatorOS">
+<link rel="manifest" href="/app/manifest.json">
+<link rel="icon" href="/app/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/app/icon.svg">
 <title>CreatorOS — AI-Powered Creator Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://js.stripe.com/v3/"></script>
@@ -245,6 +249,7 @@ h3,h4{font-family:var(--font-head);font-weight:600;}
 .btn-danger{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2);}
 .btn-danger:hover{background:rgba(239,68,68,.18);}
 button,.btn,.nav-item,.mob-nav-item,.credit-pill,.notif-bell,.admin-pill{touch-action:manipulation;}
+#save-app-btn.is-ready{border-color:rgba(184,255,0,.55);box-shadow:0 6px 18px rgba(184,255,0,.18);}
 .btn-danger:hover{background:rgba(239,68,68,.18);}
 .btn-gold{background:rgba(245,158,11,.12);color:var(--gold);border:1px solid rgba(245,158,11,.25);}
 .btn-gold:hover{background:rgba(245,158,11,.2);}
@@ -574,6 +579,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   border:1px solid var(--c-border);color:var(--c-t2);
   font-family:var(--font-mono);
 }
+.community-v2 .c-pill span{letter-spacing:0;font-weight:700;margin-left:4px;color:var(--c-t1);}
 .community-v2 .c-pill-live{color:var(--c-lime);border-color:var(--c-lime-b);background:var(--c-lime-d);}
 .community-v2 .c-pill-soft{color:var(--c-t2);}
 .community-v2 .c-avatar{
@@ -895,7 +901,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   min-height:0;
 }
 .community-v2 .c-page{min-height:0;}
-.community-v2 .c-page.active{display:flex;flex-direction:column;flex:1;min-height:0;}
+.community-v2 .c-page.active{min-height:0;}
 #community-network,
 #community-leaderboard{
   overflow:auto;
@@ -936,15 +942,106 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;heigh
   background:rgba(14,14,22,.92);
   box-shadow:0 12px 28px rgba(0,0,0,.35);
 }
-.community-v2 .c-net-bar{
-  position:sticky;
-  top:0;
-  z-index:4;
-  padding:12px;
-  border-radius:14px;
+.community-v2{
+  display:grid;
+  grid-template-rows:auto 1fr;
+  gap:16px;
+}
+.community-v2 .c-page.active{
+  display:grid;
+  gap:16px;
+}
+.community-v2 .c-network{
+  grid-template-columns:260px minmax(0,1fr) 320px;
+}
+.community-v2 .c-leaderboard{
+  grid-template-columns:minmax(0,1fr) 320px;
+}
+.community-v2 .c-rail,
+.community-v2 .c-feed,
+.community-v2 .c-side{min-width:0;}
+.community-v2 .c-rail{display:flex;flex-direction:column;gap:12px;}
+.community-v2 .c-side{display:flex;flex-direction:column;gap:12px;}
+.community-v2 .c-rail-card,
+.community-v2 .c-side-card{
   border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
   background:rgba(12,12,20,.92);
-  backdrop-filter:blur(12px);
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.community-v2 .c-rail-title,
+.community-v2 .c-side-title{
+  font-family:var(--font-head);
+  font-size:14px;
+  font-weight:700;
+}
+.community-v2 .c-rail-stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.community-v2 .c-stat{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  padding:10px;
+}
+.community-v2 .c-stat .label{
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--c-t3);
+  font-family:var(--font-mono);
+}
+.community-v2 .c-stat .value{
+  font-family:var(--font-head);
+  font-size:16px;
+  margin-top:4px;
+}
+.community-v2 .c-feed{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:rgba(12,12,20,.92);
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.community-v2 .c-feed-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.community-v2 .c-info-panel{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.community-v2 .c-info-list{display:flex;flex-direction:column;gap:8px;}
+.community-v2 .c-info-item{
+  font-size:12px;
+  color:var(--c-t2);
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.02);
+}
+@media(max-width:1100px){
+  .community-v2 .c-network,
+  .community-v2 .c-leaderboard{grid-template-columns:1fr;}
+  .community-v2 .c-rail{order:1;}
+  .community-v2 .c-feed{order:2;}
+  .community-v2 .c-side{order:3;}
+}
+@media(max-width:720px){
+  .community-v2 .c-topnav{flex-wrap:wrap;gap:10px;}
+  .community-v2 .c-tabs{width:100%;justify-content:space-between;}
+  .community-v2 .c-rail-stats{grid-template-columns:1fr;}
 }
 .community-v2 .c-logo{
   border-radius:10px;
@@ -1611,7 +1708,7 @@ body::after{
         <button class="btn btn-lime" onclick="tab('writer')">Start Writing &#8594;</button>
         <button class="btn btn-ghost" onclick="tab('connect')">Connect Platforms</button>
         <button class="btn btn-ghost" onclick="refreshLiveStats()">Refresh Live Stats</button>
-        <button class="btn btn-ghost" onclick="downloadApp()">&#8595; Save App</button>
+        <button class="btn btn-ghost" id="save-app-btn" onclick="downloadApp()">&#8595; Save App</button>
       </div>
     </div>
     <div class="stats-row">
@@ -1883,6 +1980,8 @@ body::after{
         </div>
         <div class="c-actions">
           <div class="c-pill" id="presence-pill">Checking...</div>
+          <div class="c-pill c-pill-soft">Requests <span id="community-requests-count">0</span></div>
+          <div class="c-pill c-pill-soft">Connections <span id="community-friends-count">0</span></div>
           <div class="c-avatar" id="community-avatar">
             <img id="community-avatar-img" alt="Profile">
             <span id="community-avatar-fallback">C</span>
@@ -1890,55 +1989,73 @@ body::after{
         </div>
       </div>
 
-      <div class="c-page active" id="community-network">
-        <div class="c-net-bar">
-          <div class="c-search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input class="c-input" id="user-search-input" placeholder="Search creators by name, niche, or @handle" oninput="queueUserSearch()">
+      <div class="c-page active c-network" id="community-network">
+        <aside class="c-rail">
+          <div class="c-rail-card">
+            <div class="c-rail-title">Discover Creators</div>
+            <div class="c-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="c-input" id="user-search-input" placeholder="Search creators by name, niche, or @handle" oninput="queueUserSearch()">
+            </div>
+            <input class="c-hidden" id="user-search-category" placeholder="Category" oninput="queueUserSearch()">
+            <div class="c-filter-pills">
+              <button class="c-pill-filter active" data-category="" onclick="setCommunityCategory(this,'')">All</button>
+              <button class="c-pill-filter" data-category="Tech & AI" onclick="setCommunityCategory(this,'Tech & AI')">Tech & AI</button>
+              <button class="c-pill-filter" data-category="Creator" onclick="setCommunityCategory(this,'Creator')">Creator</button>
+              <button class="c-pill-filter" data-category="Lifestyle" onclick="setCommunityCategory(this,'Lifestyle')">Lifestyle</button>
+              <button class="c-pill-filter" data-category="Business" onclick="setCommunityCategory(this,'Business')">Business</button>
+              <button class="c-pill-filter" data-category="Finance" onclick="setCommunityCategory(this,'Finance')">Finance</button>
+            </div>
+            <div class="c-filter-row" id="user-search-platforms">
+              <button class="c-filter" data-platform="youtube" onclick="togglePlatformFilter(this)">YouTube</button>
+              <button class="c-filter" data-platform="instagram" onclick="togglePlatformFilter(this)">Instagram</button>
+              <button class="c-filter" data-platform="twitter" onclick="togglePlatformFilter(this)">Twitter</button>
+              <button class="c-filter" data-platform="tiktok" onclick="togglePlatformFilter(this)">TikTok</button>
+              <button class="c-filter" data-platform="linkedin" onclick="togglePlatformFilter(this)">LinkedIn</button>
+            </div>
           </div>
-          <input class="c-hidden" id="user-search-category" placeholder="Category" oninput="queueUserSearch()">
-          <div class="c-filter-pills">
-            <button class="c-pill-filter active" data-category="" onclick="setCommunityCategory(this,'')">All</button>
-            <button class="c-pill-filter" data-category="Tech & AI" onclick="setCommunityCategory(this,'Tech & AI')">Tech & AI</button>
-            <button class="c-pill-filter" data-category="Creator" onclick="setCommunityCategory(this,'Creator')">Creator</button>
-            <button class="c-pill-filter" data-category="Lifestyle" onclick="setCommunityCategory(this,'Lifestyle')">Lifestyle</button>
-            <button class="c-pill-filter" data-category="Business" onclick="setCommunityCategory(this,'Business')">Business</button>
-            <button class="c-pill-filter" data-category="Finance" onclick="setCommunityCategory(this,'Finance')">Finance</button>
+          <div class="c-rail-card">
+            <div class="c-rail-title">Connection Inbox</div>
+            <div class="c-rail-stats">
+              <div class="c-stat">
+                <div class="label">Requests</div>
+                <div class="value" id="community-requests-count-rail">0</div>
+              </div>
+              <div class="c-stat">
+                <div class="label">Connections</div>
+                <div class="value" id="community-friends-count-rail">0</div>
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-sm c-full" onclick="switchCommunityTab('messages')">Open Messages</button>
           </div>
-        </div>
-        <div class="c-filter-row" id="user-search-platforms">
-          <button class="c-filter" data-platform="youtube" onclick="togglePlatformFilter(this)">YouTube</button>
-          <button class="c-filter" data-platform="instagram" onclick="togglePlatformFilter(this)">Instagram</button>
-          <button class="c-filter" data-platform="twitter" onclick="togglePlatformFilter(this)">Twitter</button>
-          <button class="c-filter" data-platform="tiktok" onclick="togglePlatformFilter(this)">TikTok</button>
-          <button class="c-filter" data-platform="linkedin" onclick="togglePlatformFilter(this)">LinkedIn</button>
-        </div>
-
-        <div class="c-section-head">
-          <div class="c-section-title">Featured Creator</div>
-          <div class="c-section-line"></div>
-          <div class="c-section-tag">Spotlight · Live</div>
-        </div>
-        <div class="c-featured is-empty" id="community-spotlight">
-          <div class="c-featured-empty">Search creators to reveal the spotlight.</div>
-        </div>
-
-        <div class="c-section-head">
-          <div class="c-section-title">All Creators</div>
-          <div class="c-section-count" id="community-count">0 creators</div>
-          <div class="c-section-line"></div>
-          <div class="c-section-tag">Click any card to view profile</div>
-        </div>
-        <div class="c-creator-grid" id="user-search-results"></div>
-        <button class="btn btn-ghost btn-sm c-full" id="user-search-more" onclick="loadMoreUsers()">Load more</button>
+        </aside>
+        <main class="c-feed">
+          <div class="c-feed-head">
+            <div>
+              <div class="c-section-title">Creator Network</div>
+              <div class="c-section-tag">Live profiles from connected creators</div>
+            </div>
+            <div class="c-section-count" id="community-count">0 creators</div>
+          </div>
+          <div class="c-creator-grid" id="user-search-results"></div>
+          <button class="btn btn-ghost btn-sm c-full" id="user-search-more" onclick="loadMoreUsers()">Load more</button>
+        </main>
+        <aside class="c-side">
+          <div class="c-side-card">
+            <div class="c-side-title">Spotlight</div>
+            <div class="c-featured is-empty" id="community-spotlight">
+              <div class="c-featured-empty">No creators available yet.</div>
+            </div>
+          </div>
+        </aside>
       </div>
 
-      <div class="c-page" id="community-leaderboard">
+      <div class="c-page c-leaderboard" id="community-leaderboard">
         <div class="c-panel">
           <div class="c-panel-head">
             <div>
               <div class="c-panel-title">Top Creators</div>
-              <div class="c-panel-sub">Ranked by reach across platforms</div>
+              <div class="c-panel-sub">Ranked by reach across connected platforms</div>
             </div>
             <div class="c-select-wrap">
               <label for="leaderboard-sort">Sort by</label>
@@ -1954,6 +2071,15 @@ body::after{
           </div>
           <div class="leaderboard-list" id="leaderboard-list"></div>
           <button class="btn btn-ghost btn-sm c-full" onclick="loadLeaderboard(true)">Refresh leaderboard</button>
+        </div>
+        <div class="c-panel c-info-panel">
+          <div class="c-panel-title">How Rankings Work</div>
+          <div class="c-panel-sub">We aggregate the latest connected platform analytics for each creator.</div>
+          <div class="c-info-list">
+            <div class="c-info-item">Only verified, connected platform data is counted.</div>
+            <div class="c-info-item">Sorting updates instantly when you change the filter.</div>
+            <div class="c-info-item">Rankings refresh as new analytics sync in.</div>
+          </div>
         </div>
       </div>
 
@@ -3538,6 +3664,46 @@ function installFetchWrapper() {
 }
 
 installFetchWrapper();
+
+let deferredInstallPrompt = null;
+
+function isStandaloneMode() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function updateInstallButton(canInstall = false, installed = false) {
+  const btn = document.getElementById('save-app-btn');
+  if (!btn) return;
+  if (installed || isStandaloneMode()) {
+    btn.disabled = true;
+    btn.innerHTML = 'App Installed';
+    return;
+  }
+  btn.disabled = false;
+  btn.innerHTML = '&#8595; Save App';
+  if (canInstall) {
+    btn.classList.add('is-ready');
+  } else {
+    btn.classList.remove('is-ready');
+  }
+}
+
+function setupInstallPrompt() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/app/sw.js').catch(() => {});
+  }
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    updateInstallButton(true);
+  });
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    updateInstallButton(false, true);
+    showToast('Installed', 'CreatorOS is ready on your home screen.', 'success');
+  });
+  updateInstallButton(!!deferredInstallPrompt);
+}
 
 function showToast(title, message = '', type = 'info', ttlMs = 2600) {
   const wrap = document.getElementById('toast-wrap');
@@ -5557,20 +5723,23 @@ async function loadFriendRequests() {
     const data = await parseJsonSafely(res);
     if (!res.ok) {
       container.innerHTML = '<div class="notif-empty">Failed to load requests.</div>';
+      setCommunityRequestsCount(0);
       return;
     }
     const requests = data.requests || [];
-    if (!requests.length) {
+    const pending = requests.filter(req => req.status === 'pending');
+    setCommunityRequestsCount(pending.length);
+    if (!pending.length) {
       container.innerHTML = '<div class="notif-empty">No pending requests.</div>';
       return;
     }
     container.innerHTML = '';
-    requests.forEach(req => {
+    pending.forEach(req => {
       const incoming = req.recipient_id === currentUser?.id;
-      if (req.status !== 'pending') return;
       const other = incoming ? req.requester : req.recipient;
-      const safeName = escapeHtml(other?.name || 'Creator');
-      const initial = escapeHtml((other?.name || 'C')[0]);
+      const displayName = other?.name || other?.username || '';
+      const safeName = escapeHtml(displayName || '—');
+      const initial = escapeHtml((displayName || '?')[0]);
       const preview = incoming ? 'Incoming request' : 'Request sent';
       const timeLabel = incoming ? 'Now' : 'Pending';
       container.innerHTML += `
@@ -5594,6 +5763,7 @@ async function loadFriendRequests() {
     });
   } catch (err) {
     container.innerHTML = '<div class="notif-empty">Failed to load requests.</div>';
+    setCommunityRequestsCount(0);
   }
 }
 
@@ -5733,6 +5903,22 @@ function maybeNotifyMessage(msg, peerName) {
   }
 }
 
+function setCommunityRequestsCount(count) {
+  const value = Number(count || 0);
+  const headerEl = document.getElementById('community-requests-count');
+  const railEl = document.getElementById('community-requests-count-rail');
+  if (headerEl) headerEl.textContent = String(value);
+  if (railEl) railEl.textContent = String(value);
+}
+
+function setCommunityFriendsCount(count) {
+  const value = Number(count || 0);
+  const headerEl = document.getElementById('community-friends-count');
+  const railEl = document.getElementById('community-friends-count-rail');
+  if (headerEl) headerEl.textContent = String(value);
+  if (railEl) railEl.textContent = String(value);
+}
+
 async function loadFriends() {
   const container = document.getElementById('friends-list');
   if (!container) return;
@@ -5743,13 +5929,16 @@ async function loadFriends() {
     const data = await parseJsonSafely(res);
     if (!res.ok) {
       container.innerHTML = '<div class="notif-empty">Failed to load friends.</div>';
+      setCommunityFriendsCount(0);
       return;
     }
     const friends = data.friends || [];
     if (!friends.length) {
       container.innerHTML = '<div class="notif-empty">No friends yet.</div>';
+      setCommunityFriendsCount(0);
       return;
     }
+    setCommunityFriendsCount(friends.length);
     friends.sort((a, b) => {
       const ta = a.last_message?.created_at ? new Date(a.last_message.created_at).getTime() : 0;
       const tb = b.last_message?.created_at ? new Date(b.last_message.created_at).getTime() : 0;
@@ -5758,19 +5947,20 @@ async function loadFriends() {
     container.innerHTML = '';
     friends.forEach(friend => {
       const online = friend.last_seen ? isOnline(friend.last_seen) : false;
-      const safeName = escapeHtml(friend.name || 'Creator');
-      const encodedName = encodeURIComponent(friend.name || 'Creator');
+      const displayName = friend.name || friend.username || '';
+      const safeName = escapeHtml(displayName || '—');
+      const encodedName = encodeURIComponent(displayName || '—');
       const lastMsg = friend.last_message;
       const previewPrefix = lastMsg?.from_me ? 'You: ' : '';
       const previewContent = lastMsg?.content ? lastMsg.content : ((lastMsg?.attachments || []).length ? 'Attachment' : '');
-      const preview = lastMsg ? `${previewPrefix}${previewContent}`.trim() : (online ? 'Active now' : 'Tap to chat');
+      const preview = lastMsg ? `${previewPrefix}${previewContent}`.trim() : 'No messages yet';
       const safePreview = escapeHtml(preview);
       const timeLabel = lastMsg ? formatChatTime(lastMsg.created_at) : (online ? 'Online' : 'Offline');
       const unread = Number(friend.unread_count || 0);
       container.innerHTML += `
         <div class="chat-item ${chatState.activeUser?.id === friend.id ? 'active' : ''}" data-id="${friend.id}" data-name="${encodedName}" data-online="${online ? '1' : '0'}" onclick="openChatFromElement(this)">
           <div class="avatar">
-            ${escapeHtml((friend.name || 'C')[0])}
+            ${escapeHtml((displayName || '?')[0])}
             <span class="status-dot ${online ? '' : 'offline'}"></span>
           </div>
           <div class="chat-info">
@@ -5788,6 +5978,7 @@ async function loadFriends() {
     });
   } catch (err) {
     container.innerHTML = '<div class="notif-empty">Failed to load friends.</div>';
+    setCommunityFriendsCount(0);
   }
 }
 
@@ -5803,7 +5994,7 @@ function isOnline(lastSeen) {
 function openChatFromElement(el) {
   if (!el) return;
   const userId = el.dataset.id;
-  const name = decodeURIComponent(el.dataset.name || 'Creator');
+  const name = decodeURIComponent(el.dataset.name || '—');
   const online = el.dataset.online === '1';
   openChat(userId, name, online);
 }
@@ -5811,11 +6002,11 @@ function openChatFromElement(el) {
 async function openChat(userId, name, online = true) {
   chatState.activeUser = { id: userId, name };
   chatState.messagesPage = 1;
-  const safeName = name || 'Creator';
+  const safeName = name || '—';
   const header = document.getElementById('chat-header');
   if (header) header.textContent = safeName;
   const chatAvatar = document.querySelector('#chat-avatar span');
-  if (chatAvatar) chatAvatar.textContent = (safeName || 'C')[0].toUpperCase();
+  if (chatAvatar) chatAvatar.textContent = (safeName || '?')[0].toUpperCase();
   const chatStatus = document.getElementById('chat-status');
   if (chatStatus) chatStatus.textContent = online ? 'Active now' : 'Offline';
   clearChatUnread(userId);
@@ -7501,8 +7692,22 @@ function repurpose() {
   alert('Repurposing content... (AI would generate multiple formats)');
 }
 
-function downloadApp() {
-  alert('App download would be available as PWA/Electron in production.');
+async function downloadApp() {
+  if (isStandaloneMode()) {
+    showToast('Installed', 'CreatorOS is already installed.', 'info');
+    return;
+  }
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    if (choice && choice.outcome === 'accepted') {
+      showToast('Installed', 'CreatorOS was added to your home screen.', 'success');
+      updateInstallButton(false, true);
+    }
+    deferredInstallPrompt = null;
+    return;
+  }
+  showToast('Install', 'Open the Share menu and tap "Add to Home Screen".', 'info', 4200);
 }
 
 function autoResize(el) {
@@ -7522,6 +7727,7 @@ function repurpose() {
 
 // Initialize on load
 (async () => {
+  setupInstallPrompt();
   await autoDetectApiUrl();
   hydrateAuthFromUrl();
   handleOAuthResultFromUrl();

@@ -105,6 +105,14 @@ def send_friend_request():
             actor_user_id=user_id,
             data={"request_id": fr.id, "from_user_id": user_id},
         )
+        create_notification(
+            user_id=user_id,
+            title="Request sent",
+            message="Your connection request was sent.",
+            notif_type="friend_request_sent",
+            actor_user_id=recipient_id,
+            data={"request_id": fr.id, "to_user_id": recipient_id},
+        )
         db.session.commit()
         return {"message": "Request sent", "request": fr.to_dict()}, 201
     except Exception:
@@ -171,6 +179,23 @@ def respond_friend_request(request_id):
                 title="Connection accepted",
                 message="Your connection request was accepted.",
                 notif_type="friend_accept",
+                actor_user_id=user_id,
+                data={"friend_id": user_id},
+            )
+            create_notification(
+                user_id=user_id,
+                title="Connection confirmed",
+                message="You are now connected.",
+                notif_type="friend_accept",
+                actor_user_id=fr.requester_id,
+                data={"friend_id": fr.requester_id},
+            )
+        if action == "reject":
+            create_notification(
+                user_id=fr.requester_id,
+                title="Connection declined",
+                message="Your connection request was declined.",
+                notif_type="friend_reject",
                 actor_user_id=user_id,
                 data={"friend_id": user_id},
             )
