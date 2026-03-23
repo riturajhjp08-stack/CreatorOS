@@ -36,7 +36,7 @@
   --font-mono:'JetBrains Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{
   font-family:var(--font-body);
   color:var(--ink);
@@ -253,6 +253,14 @@ section{position:relative;z-index:2;}
   .hero h1{font-size:clamp(30px,9vw,44px);}
   .section-head h2{font-size:24px;}
   .plan-card{padding:18px;}
+}
+@media(max-width:640px){
+  .btn{min-height:44px;}
+  body::after{opacity:.08;}
+}
+@media (hover: none) and (pointer: coarse){
+  .btn:hover,.feature:hover,.plan-card:hover,.mini-card:hover{transform:none;}
+  .tilt::after{opacity:0;}
 }
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
@@ -501,7 +509,8 @@ section{position:relative;z-index:2;}
       if (ambient && !ambient.querySelector('.starfield')) {
         const starfield = document.createElement('div');
         starfield.className = 'starfield';
-        for (let i = 0; i < 36; i += 1) {
+        const starCount = window.matchMedia('(max-width: 640px)').matches ? 18 : 36;
+        for (let i = 0; i < starCount; i += 1) {
           const star = document.createElement('span');
           star.style.left = `${gsap.utils.random(0, 100)}%`;
           star.style.top = `${gsap.utils.random(0, 100)}%`;
