@@ -1,4 +1,4 @@
-const CACHE_NAME = 'creatoros-app-v3';
+const CACHE_NAME = 'creatoros-app-v4';
 const CORE_ASSETS = [
   '/app/',
   '/app/index.html',
