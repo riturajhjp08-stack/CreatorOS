@@ -3680,11 +3680,12 @@ function updateInstallButton(canInstall = false, installed = false) {
     btn.innerHTML = 'App Installed';
     return;
   }
-  btn.disabled = false;
   btn.innerHTML = '&#8595; Save App';
   if (canInstall) {
+    btn.disabled = false;
     btn.classList.add('is-ready');
   } else {
+    btn.disabled = true;
     btn.classList.remove('is-ready');
   }
 }
@@ -7698,17 +7699,16 @@ async function downloadApp() {
     showToast('Installed', 'CreatorOS is already installed.', 'info');
     return;
   }
-  if (deferredInstallPrompt) {
-    deferredInstallPrompt.prompt();
-    const choice = await deferredInstallPrompt.userChoice;
-    if (choice && choice.outcome === 'accepted') {
-      showToast('Installed', 'CreatorOS was added to your home screen.', 'success');
-      updateInstallButton(false, true);
-    }
-    deferredInstallPrompt = null;
+  if (!deferredInstallPrompt) {
     return;
   }
-  showToast('Install', 'Open the Share menu and tap "Add to Home Screen".', 'info', 4200);
+  deferredInstallPrompt.prompt();
+  const choice = await deferredInstallPrompt.userChoice;
+  if (choice && choice.outcome === 'accepted') {
+    showToast('Installed', 'CreatorOS was added to your home screen.', 'success');
+    updateInstallButton(false, true);
+  }
+  deferredInstallPrompt = null;
 }
 
 function autoResize(el) {
